@@ -66,6 +66,7 @@ public class AdvertisementController {
         log.info("Fetching advertisement ID: {}", id);
         AdvertisementDto ad = advertisementService.getAdvertisement(id);
         
+        
         // Record view
         String ipAddress = request.getRemoteAddr();
         String userAgent = request.getHeader("User-Agent");

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NearProp Chat Testing</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <script>
+    window.onerror = function(message, source, lineno, colno, error) {
+      console.log('[GLOBAL ERROR]', message, 'at', source + ':' + lineno + ':' + colno, error);
+      alert('[GLOBAL ERROR] ' + message + ' at ' + source + ':' + lineno + ':' + colno);
+    };
+    window.onunhandledrejection = function(event) {
+      console.log('[GLOBAL PROMISE REJECTION]', event.reason);
+      alert('[GLOBAL PROMISE REJECTION] ' + event.reason);
+    };
+    </script>
+    <div class="container">
+        <div class="header">
+            <h1>NearProp Chat Testing</h1>
+            <p>Test the chat system with all three roles (User, Seller, Admin)</p>
+        </div>
+        
+        <div class="connection-panel">
+            <div class="tabs">
+                <div class="tab active" data-tab="connection-tab">Connection</div>
+                <div class="tab" data-tab="api-test-tab">API Testing</div>
+            </div>
+            
+            <div id="connection-tab" class="tab-content active">
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1">
+                        <label for="chatRoomId">Chat Room ID:</label>
+                        <input type="number" id="chatRoomId" value="1">
+                    </div>
+                    <div class="form-group" style="flex: 1">
+                        <label for="propertyId">Property ID (for new room):</label>
+                        <input type="number" id="propertyId" value="3">
+                    </div>
+                    <div class="form-group" style="flex: 2">
+                        <label for="serverUrl">WebSocket URL:</label>
+                        <input type="text" id="serverUrl" value="ws://localhost:8080/api/ws">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="userToken">Buyer JWT Token:</label>
+                    <input type="text" id="userToken" value="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4NiIsInJvbGVzIjpbIlVTRVIiLCJGUkFOQ0hJU0VFIl0sInNlc3Npb25JZCI6IjlkMzgyMjFiLTVlNmMtNGNlZC04MjVjLTVlODE5MmVjZWNiMyIsImlhdCI6MTc1MTQ0ODI4MCwiZXhwIjoxNzUyMDUzMDgwLCJpc3MiOiJOZWFycHJvcEJhY2tlbmQifQ.3iaOWImTDDLXbHvjaRF4BnjKLZU9xSdoLMVX8oTQb56kmjBaNTpABA5GRgejs3W66dQtj2kw6lsNcjRa9nwunA">
+                </div>
+                
+                <div class="form-group">
+                    <label for="sellerToken">Seller JWT Token:</label>
+                    <input type="text" id="sellerToken" value="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMCIsInJvbGVzIjpbIlVTRVIiLCJTRUxMRVIiLCJERVZFTE9QRVIiLCJBRFZJU09SIl0sInNlc3Npb25JZCI6IjgyMGU0YmMyLWM1OTQtNDE2Zi05MmU3LTRmZTlkNWQwZmFmZSIsImlhdCI6MTc1MTQ0ODIwNSwiZXhwIjoxNzUyMDUzMDA1LCJpc3MiOiJOZWFycHJvcEJhY2tlbmQifQ.TWs4pgA3D8IxYA7BYmbRqgqlb2DC9Nol82HVvPMP8o3k4ZCd-cBXrgKTvgtM9Q4GVZfzHoIt5VmMWGPjyrXY_Q">
+                </div>
+                
+                <div class="form-group">
+                    <label for="adminToken">Admin JWT Token:</label>
+                    <input type="text" id="adminToken" value="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMSIsInJvbGVzIjpbIlVTRVIiLCJBRE1JTiJdLCJzZXNzaW9uSWQiOiJlYzVmZTAzMi01ZWZmLTRmMGMtYTY3MS1kMTU0MDBkN2FkYjgiLCJpYXQiOjE3NTE0MzgyMzMsImV4cCI6MTc1MjA0MzAzMywiaXNzIjoiTmVhcnByb3BCYWNrZW5kIn0.OwNopPs_NnBkI0BWKTAzCSZZpACW8LPBFj92eVoW1oOUHFZeSOC4CJWm9SVql2bjeJYbrETIOJDJc4K32yr2Iw">
+                </div>
+                
+                <div class="form-group">
+                    <button id="connectBtn">Connect All</button>
+                    <button id="connectBuyerSellerBtn">Connect Buyer & Seller</button>
+                    <button id="disconnectBtn" disabled>Disconnect All</button>
+                    <button id="createRoomBtn">Create New Chat Room</button>
+                    <span id="userStatus" class="badge badge-warning">User: Disconnected</span>
+                    <span id="sellerStatus" class="badge badge-warning">Seller: Disconnected</span>
+                    <span id="adminStatus" class="badge badge-warning">Admin: Disconnected</span>
+                </div>
+                
+                <!-- Debug Log Section -->
+                <div class="form-group" style="margin-top: 10px;">
+                    <label>Debug Log:</label>
+                    <div id="debugLog" style="max-height: 150px; overflow-y: auto; background-color: #f5f5f5; padding: 5px; font-family: monospace; font-size: 12px;"></div>
+                    <button id="clearDebugBtn" style="margin-top: 5px; font-size: 12px; padding: 3px 6px;">Clear Debug Log</button>
+                </div>
+            </div>
+            
+            <div id="api-test-tab" class="tab-content">
+                <div class="form-group">
+                    <label>API Testing:</label>
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1">
+                            <label for="apiMethodSelect">Method:</label>
+                            <select id="apiMethodSelect">
+                                <option value="GET">GET</option>
+                                <option value="POST">POST</option>
+                                <option value="PUT">PUT</option>
+                                <option value="PATCH">PATCH</option>
+                                <option value="DELETE">DELETE</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex: 3">
+                            <label for="apiEndpointInput">Endpoint:</label>
+                            <input type="text" id="apiEndpointInput" placeholder="/api/chat/rooms/3">
+                        </div>
+                        <div class="form-group" style="flex: 1">
+                            <label for="apiRoleSelect">Role:</label>
+                            <select id="apiRoleSelect">
+                                <option value="user">User</option>
+                                <option value="seller">Seller</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="apiParamsInput">Query Parameters (JSON):</label>
+                        <textarea id="apiParamsInput" rows="2" placeholder='{"page": 0, "size": 10}'></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="apiBodyInput">Request Body (JSON):</label>
+                        <textarea id="apiBodyInput" rows="3" placeholder='{"content": "Hello world!"}'></textarea>
+                    </div>
+                    
+                    <button id="apiSendBtn">Send Request</button>
+                    
+                    <div class="form-group">
+                        <label>Response:</label>
+                        <pre id="apiResponseArea" class="response-area">Response will appear here...</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="notification-area" id="notificationArea"></div>
+        <div class="chat-panels">
+            <!-- User/Buyer Chat Panel -->
+            <div class="chat-panel user-panel">
+                <div class="chat-header">
+                    <h2>Buyer/User</h2>
+                    <div>
+                        <span id="userTyping" class="typing-indicator"></span>
+                    </div>
+                </div>
+                <div id="userMessages" class="chat-messages"></div>
+                <div class="chat-input">
+                    <textarea id="userInput" placeholder="Type your message as buyer..." rows="3" disabled></textarea>
+                    <div class="input-actions">
+                        <button id="userSendBtn" disabled>Send</button>
+                        <button id="userTypingBtn" disabled>Start Typing</button>
+                        <button id="userTypingStopBtn" disabled>Stop Typing</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Seller Chat Panel -->
+            <div class="chat-panel seller-panel">
+                <div class="chat-header">
+                    <h2>Seller/Owner</h2>
+                    <div>
+                        <span id="sellerTyping" class="typing-indicator"></span>
+                    </div>
+                </div>
+                <div id="sellerMessages" class="chat-messages"></div>
+                <div class="chat-input">
+                    <textarea id="sellerInput" placeholder="Type your message as property owner..." rows="3" disabled></textarea>
+                    <div class="input-actions">
+                        <button id="sellerSendBtn" disabled class="seller-button">Send</button>
+                        <button id="sellerTypingBtn" disabled class="seller-button">Start Typing</button>
+                        <button id="sellerTypingStopBtn" disabled class="seller-button">Stop Typing</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Admin Chat Panel -->
+            <div class="chat-panel admin-panel">
+                <div class="chat-header">
+                    <h2>Admin View</h2>
+                    <div>
+                        <span id="adminTyping" class="typing-indicator"></span>
+                    </div>
+                </div>
+                <div id="adminMessages" class="chat-messages"></div>
+                <div class="chat-input">
+                    <textarea id="adminInput" placeholder="Type your message as admin..." rows="3" disabled></textarea>
+                    <div class="input-actions">
+                        <button id="adminSendBtn" disabled class="admin-button">Send</button>
+                        <button id="adminTypingBtn" disabled class="admin-button">Start Typing</button>
+                        <button id="adminTypingStopBtn" disabled class="admin-button">Stop Typing</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+    <script src="js/ApiService.js"></script>
+    <script src="js/WebSocketService.js"></script>
+    <script src="js/ChatUIService.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html> 

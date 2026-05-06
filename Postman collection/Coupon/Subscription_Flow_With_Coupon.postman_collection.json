@@ -1,0 +1,346 @@
+{
+	"info": {
+		"_postman_id": "f4e5d6c7-b8a9-0123-4567-89abcdef0123",
+		"name": "NearProp Subscription Flow with Coupon",
+		"description": "Collection for testing the complete subscription flow with coupon integration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Get Subscription Plans",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}{{apiPrefix}}/subscriptions/plans?type=SELLER",
+					"host": [
+						"{{baseUrl}}{{apiPrefix}}"
+					],
+					"path": [
+						"subscriptions",
+						"plans"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "SELLER"
+						}
+					]
+				},
+				"description": "Get available subscription plans by type"
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has success flag\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"});",
+							"",
+							"pm.test(\"Response contains subscription plans\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data).to.be.an('array');",
+							"    ",
+							"    if (jsonData.data.length > 0) {",
+							"        // Store the first plan ID for later use",
+							"        pm.environment.set(\"planId\", jsonData.data[0].id);",
+							"        pm.environment.set(\"planPrice\", jsonData.data[0].price);",
+							"        console.log(\"Stored plan ID: \" + jsonData.data[0].id);",
+							"        console.log(\"Stored plan price: \" + jsonData.data[0].price);",
+							"    }",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Validate Coupon",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\": \"WELCOME25\",\n    \"orderAmount\": {{planPrice}},\n    \"planId\": {{planId}}\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{apiPrefix}}/coupons/validate",
+					"host": [
+						"{{baseUrl}}{{apiPrefix}}"
+					],
+					"path": [
+						"coupons",
+						"validate"
+					]
+				},
+				"description": "Validate a coupon code for a specific plan"
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has success flag\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.exist;",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"if (jsonData.success && jsonData.data.valid) {",
+							"    pm.test(\"Coupon is valid\", function () {",
+							"        pm.expect(jsonData.data.valid).to.eql(true);",
+							"        ",
+							"        // Store discount information for later use",
+							"        pm.environment.set(\"couponCode\", jsonData.data.code);",
+							"        pm.environment.set(\"discountAmount\", jsonData.data.discountAmount);",
+							"        pm.environment.set(\"finalPrice\", jsonData.data.finalPrice);",
+							"        ",
+							"        console.log(\"Coupon code: \" + jsonData.data.code);",
+							"        console.log(\"Discount amount: \" + jsonData.data.discountAmount);",
+							"        console.log(\"Final price: \" + jsonData.data.finalPrice);",
+							"    });",
+							"} else {",
+							"    console.log(\"Coupon is invalid: \" + jsonData.data.message);",
+							"}"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "3. Initiate Payment with Coupon",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{userToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"planId\": {{planId}},\n    \"couponCode\": \"{{couponCode}}\",\n    \"paymentMethod\": \"RAZORPAY\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{apiPrefix}}/payments/subscription/initiate",
+					"host": [
+						"{{baseUrl}}{{apiPrefix}}"
+					],
+					"path": [
+						"payments",
+						"subscription",
+						"initiate"
+					]
+				},
+				"description": "Initiate a subscription payment with coupon code"
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has success flag\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"});",
+							"",
+							"pm.test(\"Response contains payment details\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data).to.have.property('orderId');",
+							"    pm.expect(jsonData.data).to.have.property('amount');",
+							"    ",
+							"    // Store payment reference for later use",
+							"    pm.environment.set(\"paymentReferenceId\", jsonData.data.orderId);",
+							"    console.log(\"Payment reference ID: \" + jsonData.data.orderId);",
+							"    ",
+							"    // Verify the discounted amount is applied",
+							"    pm.expect(parseFloat(jsonData.data.amount)).to.eql(parseFloat(pm.environment.get(\"finalPrice\")));",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "4. Create Subscription with Payment Reference",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{userToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"planId\": {{planId}},\n    \"autoRenew\": false,\n    \"paymentMethod\": \"RAZORPAY\",\n    \"paymentReferenceId\": \"{{paymentReferenceId}}\",\n    \"couponCode\": \"{{couponCode}}\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{apiPrefix}}/subscriptions",
+					"host": [
+						"{{baseUrl}}{{apiPrefix}}"
+					],
+					"path": [
+						"subscriptions"
+					]
+				},
+				"description": "Create a new subscription with payment reference and coupon code"
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response has success flag\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"});",
+							"",
+							"pm.test(\"Response contains subscription with coupon data\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data).to.have.property('id');",
+							"    pm.expect(jsonData.data).to.have.property('plan');",
+							"    pm.expect(jsonData.data).to.have.property('price');",
+							"    ",
+							"    // Verify the discounted price is applied",
+							"    pm.expect(parseFloat(jsonData.data.price)).to.eql(parseFloat(pm.environment.get(\"finalPrice\")));",
+							"    ",
+							"    // Verify subscription is active",
+							"    pm.expect(jsonData.data.status).to.eql(\"ACTIVE\");",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "5. Get User Subscriptions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{userToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}{{apiPrefix}}/subscriptions/user",
+					"host": [
+						"{{baseUrl}}{{apiPrefix}}"
+					],
+					"path": [
+						"subscriptions",
+						"user"
+					]
+				},
+				"description": "Get all subscriptions for the current user"
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response has success flag\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.success).to.eql(true);",
+							"});",
+							"",
+							"pm.test(\"Response contains subscriptions\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data).to.be.an('array');",
+							"    ",
+							"    if (jsonData.data.length > 0) {",
+							"        // Verify the latest subscription has the correct plan ID",
+							"        const latestSubscription = jsonData.data[0];",
+							"        pm.expect(latestSubscription.plan.id).to.eql(parseInt(pm.environment.get(\"planId\")));",
+							"    }",
+							"});"
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "apiPrefix",
+			"value": "/api",
+			"type": "string"
+		},
+		{
+			"key": "userToken",
+			"value": "{{userToken}}",
+			"type": "string"
+		}
+	]
+} 

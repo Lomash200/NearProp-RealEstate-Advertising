@@ -1,0 +1,538 @@
+{
+    "name": "Advertisement Management",
+    "description": "Endpoints for creating, updating, and managing advertisements",
+    "item": [
+        {
+            "name": "Create Advertisement",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{adminToken}}"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"title\": \"Exclusive Real Estate Offer\",\n    \"description\": \"Special offer on premium properties in central location. Contact us for exclusive deals.\",\n    \"bannerImageUrl\": \"https://example.com/images/banner.jpg\",\n    \"websiteUrl\": \"https://example.com\",\n    \"whatsappNumber\": \"+919876543210\",\n    \"targetLocation\": \"Indore, Madhya Pradesh\",\n    \"latitude\": 22.7196,\n    \"longitude\": 75.8577,\n    \"radiusKm\": 10.0,\n    \"districtId\": 1,\n    \"validFrom\": \"{{$isoTimestamp}}\",\n    \"validUntil\": \"{{$isoTimestampXDaysFromNow(30)}}\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/v1/advertisements",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "advertisements"
+                    ]
+                },
+                "description": "Creates a new advertisement. Only admins can create advertisements.\n\n**Request Body:**\n- `title`: Title of the advertisement\n- `description`: Description of the advertisement\n- `bannerImageUrl`: URL of the banner image\n- `websiteUrl`: Optional website URL\n- `whatsappNumber`: Optional WhatsApp contact number\n- `targetLocation`: Location description for targeting\n- `latitude`: Latitude for geo-targeting\n- `longitude`: Longitude for geo-targeting\n- `radiusKm`: Radius in kilometers for geo-targeting\n- `districtId`: ID of the district to target (optional)\n- `districtName`: Name of the district if districtId not provided (optional)\n- `validFrom`: Start date for the advertisement validity\n- `validUntil`: End date for the advertisement validity\n\n**Required Auth:**\n- Bearer token (admin only)"
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Parse the response",
+                            "var jsonData = JSON.parse(responseBody);",
+                            "",
+                            "// Check if the request was successful",
+                            "pm.test(\"Status code is 201\", function () {",
+                            "    pm.response.to.have.status(201);",
+                            "});",
+                            "",
+                            "pm.test(\"Advertisement created successfully\", function () {",
+                            "    pm.expect(jsonData).to.have.property(\"id\");",
+                            "    pm.expect(jsonData).to.have.property(\"title\");",
+                            "    pm.expect(jsonData).to.have.property(\"description\");",
+                            "});",
+                            "",
+                            "// Store advertisement ID for later use",
+                            "if (jsonData.id) {",
+                            "    pm.environment.set(\"advertisementId\", jsonData.id);",
+                            "    console.log(\"Advertisement ID stored: \" + jsonData.id);",
+                            "}"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Update Advertisement",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{adminToken}}"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"title\": \"Updated Real Estate Offer\",\n    \"description\": \"Updated offer on premium properties in central location. Limited time offer!\",\n    \"bannerImageUrl\": \"https://example.com/images/updated-banner.jpg\",\n    \"websiteUrl\": \"https://example.com/updated\",\n    \"whatsappNumber\": \"+919876543210\",\n    \"targetLocation\": \"Indore, Madhya Pradesh\",\n    \"latitude\": 22.7196,\n    \"longitude\": 75.8577,\n    \"radiusKm\": 15.0,\n    \"districtId\": 1,\n    \"validFrom\": \"{{$isoTimestamp}}\",\n    \"validUntil\": \"{{$isoTimestampXDaysFromNow(45)}}\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/v1/advertisements/{{advertisementId}}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "advertisements",
+                        "{{advertisementId}}"
+                    ]
+                },
+                "description": "Updates an existing advertisement. Only the creator or an admin can update an advertisement.\n\n**Path Parameters:**\n- `advertisementId`: ID of the advertisement to update\n\n**Request Body:**\n- Same fields as in Create Advertisement\n\n**Required Auth:**\n- Bearer token (admin or creator of the advertisement)"
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Parse the response",
+                            "var jsonData = JSON.parse(responseBody);",
+                            "",
+                            "// Check if the request was successful",
+                            "pm.test(\"Status code is 200\", function () {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"Advertisement updated successfully\", function () {",
+                            "    pm.expect(jsonData.title).to.equal(\"Updated Real Estate Offer\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get Advertisement",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/v1/advertisements/{{advertisementId}}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "advertisements",
+                        "{{advertisementId}}"
+                    ]
+                },
+                "description": "Retrieves details of a specific advertisement.\n\n**Path Parameters:**\n- `advertisementId`: ID of the advertisement\n\n**No auth required**"
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Parse the response",
+                            "var jsonData = JSON.parse(responseBody);",
+                            "",
+                            "// Check if the request was successful",
+                            "pm.test(\"Status code is 200\", function () {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"Advertisement details retrieved successfully\", function () {",
+                            "    pm.expect(jsonData).to.have.property(\"id\");",
+                            "    pm.expect(jsonData).to.have.property(\"title\");",
+                            "    pm.expect(jsonData).to.have.property(\"description\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get All Active Advertisements",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/v1/advertisements?page=0&size=10&sortBy=createdAt&direction=DESC",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "advertisements"
+                    ],
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": "0"
+                        },
+                        {
+                            "key": "size",
+                            "value": "10"
+                        },
+                        {
+                            "key": "sortBy",
+                            "value": "createdAt"
+                        },
+                        {
+                            "key": "direction",
+                            "value": "DESC"
+                        }
+                    ]
+                },
+                "description": "Retrieves all active advertisements.\n\n**Query Parameters:**\n- `page`: Page number (zero-based, default: 0)\n- `size`: Number of items per page (default: 10)\n- `sortBy`: Field to sort by (default: createdAt)\n- `direction`: Sort direction (ASC or DESC, default: DESC)\n\n**No auth required**"
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Parse the response",
+                            "var jsonData = JSON.parse(responseBody);",
+                            "",
+                            "// Check if the request was successful",
+                            "pm.test(\"Status code is 200\", function () {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"Advertisements retrieved successfully\", function () {",
+                            "    pm.expect(jsonData).to.have.property(\"content\");",
+                            "    pm.expect(jsonData.content).to.be.an(\"array\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get Advertisements by District",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/v1/advertisements/district/Indore?page=0&size=10&sortBy=createdAt&direction=DESC",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "advertisements",
+                        "district",
+                        "Indore"
+                    ],
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": "0"
+                        },
+                        {
+                            "key": "size",
+                            "value": "10"
+                        },
+                        {
+                            "key": "sortBy",
+                            "value": "createdAt"
+                        },
+                        {
+                            "key": "direction",
+                            "value": "DESC"
+                        }
+                    ]
+                },
+                "description": "Retrieves advertisements targeting a specific district.\n\n**Path Parameters:**\n- `districtName`: Name of the district\n\n**Query Parameters:**\n- `page`: Page number (zero-based, default: 0)\n- `size`: Number of items per page (default: 10)\n- `sortBy`: Field to sort by (default: createdAt)\n- `direction`: Sort direction (ASC or DESC, default: DESC)\n\n**No auth required**"
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Parse the response",
+                            "var jsonData = JSON.parse(responseBody);",
+                            "",
+                            "// Check if the request was successful",
+                            "pm.test(\"Status code is 200\", function () {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"District advertisements retrieved successfully\", function () {",
+                            "    pm.expect(jsonData).to.have.property(\"content\");",
+                            "    pm.expect(jsonData.content).to.be.an(\"array\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get Advertisements Near Location",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/v1/advertisements/nearby?latitude=22.7196&longitude=75.8577&page=0&size=10",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "advertisements",
+                        "nearby"
+                    ],
+                    "query": [
+                        {
+                            "key": "latitude",
+                            "value": "22.7196"
+                        },
+                        {
+                            "key": "longitude",
+                            "value": "75.8577"
+                        },
+                        {
+                            "key": "page",
+                            "value": "0"
+                        },
+                        {
+                            "key": "size",
+                            "value": "10"
+                        }
+                    ]
+                },
+                "description": "Retrieves advertisements near a specific location.\n\n**Query Parameters:**\n- `latitude`: Latitude of the location\n- `longitude`: Longitude of the location\n- `page`: Page number (zero-based, default: 0)\n- `size`: Number of items per page (default: 10)\n\n**No auth required**"
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Parse the response",
+                            "var jsonData = JSON.parse(responseBody);",
+                            "",
+                            "// Check if the request was successful",
+                            "pm.test(\"Status code is 200\", function () {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"Nearby advertisements retrieved successfully\", function () {",
+                            "    pm.expect(jsonData).to.have.property(\"content\");",
+                            "    pm.expect(jsonData.content).to.be.an(\"array\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Set Advertisement Active Status",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{adminToken}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/v1/advertisements/{{advertisementId}}/active/true",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "advertisements",
+                        "{{advertisementId}}",
+                        "active",
+                        "true"
+                    ]
+                },
+                "description": "Activates or deactivates an advertisement. Only the creator or an admin can change the status.\n\n**Path Parameters:**\n- `advertisementId`: ID of the advertisement\n- `status`: true to activate, false to deactivate\n\n**Required Auth:**\n- Bearer token (admin or creator of the advertisement)"
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Parse the response",
+                            "var jsonData = JSON.parse(responseBody);",
+                            "",
+                            "// Check if the request was successful",
+                            "pm.test(\"Status code is 200\", function () {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"Advertisement status updated successfully\", function () {",
+                            "    pm.expect(jsonData.active).to.equal(true);",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Delete Advertisement",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{adminToken}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/v1/advertisements/{{advertisementId}}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "advertisements",
+                        "{{advertisementId}}"
+                    ]
+                },
+                "description": "Deletes an advertisement. Only the creator or an admin can delete an advertisement.\n\n**Path Parameters:**\n- `advertisementId`: ID of the advertisement to delete\n\n**Required Auth:**\n- Bearer token (admin or creator of the advertisement)"
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Check if the request was successful",
+                            "pm.test(\"Status code is 204\", function () {",
+                            "    pm.response.to.have.status(204);",
+                            "});",
+                            "",
+                            "console.log(\"Advertisement deleted successfully\");"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get User's Advertisements",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{adminToken}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/v1/advertisements/user/{{userId}}?page=0&size=10&sortBy=createdAt&direction=DESC",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "advertisements",
+                        "user",
+                        "{{userId}}"
+                    ],
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": "0"
+                        },
+                        {
+                            "key": "size",
+                            "value": "10"
+                        },
+                        {
+                            "key": "sortBy",
+                            "value": "createdAt"
+                        },
+                        {
+                            "key": "direction",
+                            "value": "DESC"
+                        }
+                    ]
+                },
+                "description": "Retrieves advertisements created by a specific user. Users can only view their own advertisements, while admins can view anyone's advertisements.\n\n**Path Parameters:**\n- `userId`: ID of the user\n\n**Query Parameters:**\n- `page`: Page number (zero-based, default: 0)\n- `size`: Number of items per page (default: 10)\n- `sortBy`: Field to sort by (default: createdAt)\n- `direction`: Sort direction (ASC or DESC, default: DESC)\n\n**Required Auth:**\n- Bearer token (admin or the user themselves)"
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Parse the response",
+                            "var jsonData = JSON.parse(responseBody);",
+                            "",
+                            "// Check if the request was successful",
+                            "pm.test(\"Status code is 200\", function () {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"User advertisements retrieved successfully\", function () {",
+                            "    pm.expect(jsonData).to.have.property(\"content\");",
+                            "    pm.expect(jsonData.content).to.be.an(\"array\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        }
+    ]
+} 

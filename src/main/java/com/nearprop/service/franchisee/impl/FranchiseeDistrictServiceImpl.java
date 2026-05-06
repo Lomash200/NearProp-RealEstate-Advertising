@@ -1,0 +1,984 @@
+package com.nearprop.service.franchisee.impl;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.nearprop.dto.ActiveFranchiseeDTO;
+import com.nearprop.repository.franchisee.FranchiseRequestRepository;
+import com.nearprop.dto.UserSummaryDto;
+import com.nearprop.dto.franchisee.CreateFranchiseeDistrictDto;
+import com.nearprop.dto.franchisee.FranchiseeDistrictDto;
+import com.nearprop.dto.franchisee.FranchiseeRevenueDto;
+import com.nearprop.dto.franchisee.FranchiseeDistrictSubscriptionAnalyticsDto;
+import com.nearprop.entity.FranchiseeDistrict;
+import com.nearprop.entity.FranchiseeDistrict.FranchiseeStatus;
+import com.nearprop.entity.User;
+import com.nearprop.entity.Subscription;
+import com.nearprop.entity.District;
+import com.nearprop.entity.Property;
+import com.nearprop.entity.DistrictRevenue;
+import com.nearprop.entity.DistrictRevenue.PaymentStatus;
+import com.nearprop.entity.FranchiseeWithdrawalRequest;
+import com.nearprop.entity.FranchiseeWithdrawalRequest.WithdrawalStatus;
+import com.nearprop.entity.MonthlyRevenueReport;
+import com.nearprop.entity.FranchiseeBankDetail;
+import com.nearprop.exception.ResourceNotFoundException;
+import com.nearprop.repository.UserRepository;
+import com.nearprop.repository.franchisee.FranchiseeDistrictRepository;
+import com.nearprop.repository.SubscriptionRepository;
+import com.nearprop.repository.franchisee.DistrictRevenueRepository;
+import com.nearprop.repository.MonthlyRevenueReportRepository;
+import com.nearprop.repository.FranchiseeBankDetailRepository;
+import com.nearprop.service.franchisee.FranchiseeDistrictService;
+import com.nearprop.service.franchisee.WithdrawalRequestService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import com.nearprop.service.impl.SubscriptionServiceImpl;
+import com.nearprop.dto.SubscriptionDto;
+import com.nearprop.repository.DistrictRepository;
+import com.nearprop.repository.PropertyRepository;
+import com.nearprop.repository.franchisee.WithdrawalRequestRepository;
+
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class FranchiseeDistrictServiceImpl implements FranchiseeDistrictService {
+
+    private final FranchiseeDistrictRepository franchiseeDistrictRepository;
+    private final UserRepository userRepository;
+    private final SubscriptionRepository subscriptionRepository;
+    private final ObjectMapper objectMapper;
+    private final SubscriptionServiceImpl subscriptionServiceImpl;
+    private final DistrictRepository districtRepository;
+    private final PropertyRepository propertyRepository;
+    private final DistrictRevenueRepository districtRevenueRepository;
+    private final WithdrawalRequestRepository withdrawalRequestRepository;
+    private final MonthlyRevenueReportRepository monthlyRevenueReportRepository;
+    private final WithdrawalRequestService withdrawalRequestService;
+    private final FranchiseeBankDetailRepository bankDetailRepository;
+    private final FranchiseRequestRepository franchiseeRequestRepository;
+
+
+    // Removed self-reference to avoid circular dependency
+
+    
+
+    @Override
+    @Transactional
+    public FranchiseeDistrictDto assignFranchiseeToDistrict(CreateFranchiseeDistrictDto createDto) {
+        User franchiseeUser = userRepository.findById(createDto.getFranchiseeUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + createDto.getFranchiseeUserId()));
+
+        // Add FRANCHISEE role to user if not present
+        if (!franchiseeUser.getRoles().contains(com.nearprop.entity.Role.FRANCHISEE)) {
+            java.util.Set<com.nearprop.entity.Role> roles = new java.util.HashSet<>(franchiseeUser.getRoles());
+            roles.add(com.nearprop.entity.Role.FRANCHISEE);
+            franchiseeUser.setRoles(roles);
+            userRepository.save(franchiseeUser);
+        }
+
+        // Check if there's already an active franchisee for this district
+        if (franchiseeDistrictRepository.existsActiveFranchiseeForDistrict(createDto.getDistrictId())) {
+            throw new IllegalStateException("There is already an active franchisee for district with ID: " + createDto.getDistrictId());
+        }
+
+        FranchiseeDistrict franchiseeDistrict = FranchiseeDistrict.builder()
+                .user(franchiseeUser)
+                .districtId(createDto.getDistrictId())
+                .districtName("District " + createDto.getDistrictId()) // This should be fetched from District entity
+                .state("Unknown") // This should be fetched from District entity
+                .startDate(createDto.getStartDate())
+                .endDate(createDto.getEndDate())
+                .active(createDto.getActive())
+                .revenueSharePercentage(createDto.getRevenueSharePercentage())
+                .totalProperties(0)
+                .totalTransactions(0)
+                .totalRevenue(java.math.BigDecimal.ZERO)
+                .totalCommission(java.math.BigDecimal.ZERO)
+                .status(createDto.getStatus())
+                .officeAddress(createDto.getOfficeAddress())
+                .contactPhone(createDto.getContactPhone())
+                .contactEmail(createDto.getContactEmail())
+                .build();
+
+        FranchiseeDistrict savedFranchiseeDistrict = franchiseeDistrictRepository.save(franchiseeDistrict);
+        return mapToDto(savedFranchiseeDistrict);
+    }
+
+    @Override
+    public FranchiseeDistrictDto getFranchiseeDistrict(Long franchiseeDistrictId) {
+        FranchiseeDistrict franchiseeDistrict = franchiseeDistrictRepository.findById(franchiseeDistrictId)
+                .orElseThrow(() -> new ResourceNotFoundException("Franchisee district not found with ID: " + franchiseeDistrictId));
+        return mapToDto(franchiseeDistrict);
+    }
+
+    @Override
+    @Transactional
+    public FranchiseeDistrictDto updateFranchiseeDistrict(Long franchiseeDistrictId, CreateFranchiseeDistrictDto updateDto) {
+        FranchiseeDistrict franchiseeDistrict = franchiseeDistrictRepository.findById(franchiseeDistrictId)
+                .orElseThrow(() -> new ResourceNotFoundException("Franchisee district not found with ID: " + franchiseeDistrictId));
+
+        // Only update if the franchisee user ID has changed
+        if (!franchiseeDistrict.getUser().getId().equals(updateDto.getFranchiseeUserId())) {
+            User newFranchiseeUser = userRepository.findById(updateDto.getFranchiseeUserId())
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + updateDto.getFranchiseeUserId()));
+            franchiseeDistrict.setUser(newFranchiseeUser);
+        }
+
+        franchiseeDistrict.setStartDate(updateDto.getStartDate());
+        franchiseeDistrict.setEndDate(updateDto.getEndDate());
+        franchiseeDistrict.setActive(updateDto.getActive());
+        franchiseeDistrict.setRevenueSharePercentage(updateDto.getRevenueSharePercentage());
+        franchiseeDistrict.setStatus(updateDto.getStatus());
+        franchiseeDistrict.setOfficeAddress(updateDto.getOfficeAddress());
+        franchiseeDistrict.setContactPhone(updateDto.getContactPhone());
+        franchiseeDistrict.setContactEmail(updateDto.getContactEmail());
+
+        FranchiseeDistrict updatedFranchiseeDistrict = franchiseeDistrictRepository.save(franchiseeDistrict);
+        return mapToDto(updatedFranchiseeDistrict);
+    }
+
+    @Override
+    @Transactional
+    public void terminateFranchiseeDistrict(Long franchiseeDistrictId) {
+        FranchiseeDistrict franchiseeDistrict = franchiseeDistrictRepository.findById(franchiseeDistrictId)
+                .orElseThrow(() -> new ResourceNotFoundException("Franchisee district not found with ID: " + franchiseeDistrictId));
+
+        // Check if already terminated
+        if (franchiseeDistrict.getStatus() == FranchiseeStatus.TERMINATED) {
+            throw new IllegalStateException("Franchisee district is already terminated");
+        }
+        
+        // Check if there are any active transactions or pending operations
+        // This would be a business rule specific to your application
+        // For example, check if there are any pending payments, active listings, etc.
+        
+        // For demonstration purposes, we'll just log a message
+        log.info("Checking for pending operations before terminating franchisee district: {}", franchiseeDistrictId);
+        
+        // Update the status and other fields
+        franchiseeDistrict.setActive(false);
+        franchiseeDistrict.setStatus(FranchiseeStatus.TERMINATED);
+        franchiseeDistrict.setEndDate(LocalDateTime.now());
+
+        // Save the updated entity
+        franchiseeDistrictRepository.save(franchiseeDistrict);
+        
+        // Log the termination
+        log.info("Franchisee district terminated: {}", franchiseeDistrictId);
+        
+        // Here you might want to trigger other actions:
+        // - Notify the franchisee via email
+        // - Update any dependent systems
+        // - Archive associated data
+        // - etc.
+    }
+
+    @Override
+    public Page<FranchiseeDistrictDto> getAllFranchiseeDistricts(Pageable pageable) {
+        Page<FranchiseeDistrict> franchiseeDistricts = franchiseeDistrictRepository.findAll(pageable);
+        return franchiseeDistricts.map(this::mapToDto);
+    }
+
+    @Override
+    public List<FranchiseeDistrictDto> getFranchiseeDistrictsByUserId(Long franchiseeUserId) {
+        List<FranchiseeDistrict> franchiseeDistricts = franchiseeDistrictRepository.findByUserId(franchiseeUserId);
+        return franchiseeDistricts.stream().map(this::mapToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FranchiseeDistrictDto> getFranchiseeDistrictsByDistrictId(Long districtId) {
+        List<FranchiseeDistrict> franchiseeDistricts = franchiseeDistrictRepository.findByDistrictId(districtId);
+        return franchiseeDistricts.stream().map(this::mapToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<FranchiseeDistrictDto> getFranchiseeDistrictsByStatus(FranchiseeStatus status, Pageable pageable) {
+        Page<FranchiseeDistrict> franchiseeDistricts = franchiseeDistrictRepository.findActiveByStatus(status, pageable);
+        return franchiseeDistricts.map(this::mapToDto);
+    }
+
+    @Override
+    public FranchiseeDistrictDto getActiveFranchiseeForDistrict(Long districtId) {
+        if (districtId == null) {
+            throw new IllegalArgumentException("District ID cannot be null");
+        }
+        
+        // Try to find the active franchisee for the district
+        FranchiseeDistrict franchiseeDistrict = franchiseeDistrictRepository.findActiveFranchiseeForDistrict(districtId)
+                .orElseThrow(() -> new ResourceNotFoundException("No active franchisee found for district with ID: " + districtId));
+        
+        // Additional validation to ensure the franchisee is truly active
+        if (!franchiseeDistrict.isActive() || franchiseeDistrict.getStatus() != FranchiseeStatus.ACTIVE) {
+            log.warn("Franchisee district {} is marked as active but has status {}", 
+                    franchiseeDistrict.getId(), franchiseeDistrict.getStatus());
+            throw new ResourceNotFoundException("No active franchisee found for district with ID: " + districtId);
+        }
+        
+        // Check if the assignment has expired
+        if (franchiseeDistrict.getEndDate() != null && franchiseeDistrict.getEndDate().isBefore(LocalDateTime.now())) {
+            log.warn("Franchisee district {} has expired but is still marked as active", franchiseeDistrict.getId());
+            throw new ResourceNotFoundException("No active franchisee found for district with ID: " + districtId);
+        }
+        
+        // Log the result
+        log.info("Found active franchisee {} for district {}", 
+                franchiseeDistrict.getUser().getId(), districtId);
+        
+        return mapToDto(franchiseeDistrict);
+    }
+
+    @Override
+    public List<FranchiseeDistrictDto> getTopPerformingFranchisees(int limit) {
+        // Validate input
+        if (limit <= 0) {
+            limit = 5; // Default to 5 if invalid limit provided
+        }
+        
+        // Set minimum criteria for top performers
+        // These could be configurable or based on business rules
+        Integer minProperties = 1;
+        Integer minTransactions = 1;
+        
+        // Create pageable with appropriate sort
+        // We're sorting by totalRevenue in descending order as the primary metric
+        // You could also consider sorting by multiple fields if needed
+        Pageable pageable = PageRequest.of(0, limit, 
+                Sort.by("totalRevenue").descending()
+                    .and(Sort.by("totalProperties").descending()));
+        
+        // Get top performers from repository
+        List<FranchiseeDistrict> topFranchisees = franchiseeDistrictRepository
+                .findTopPerformingFranchisees(minProperties, minTransactions, pageable);
+        
+        // If no results match the criteria, try with relaxed criteria
+        if (topFranchisees.isEmpty()) {
+            log.info("No franchisees match the top performer criteria, retrieving with relaxed criteria");
+            topFranchisees = franchiseeDistrictRepository.findAll(pageable).getContent();
+        }
+        
+        // Log the results
+        log.info("Found {} top performing franchisees", topFranchisees.size());
+        
+        // Map entities to DTOs
+        return topFranchisees.stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void updateFranchiseePerformanceMetrics(Long franchiseeDistrictId) {
+        // This would typically involve calculating metrics from various sources
+        // For now, we'll just implement a placeholder
+        log.info("Updating performance metrics for franchisee district with ID: {}", franchiseeDistrictId);
+    }
+
+    @Override
+    @Transactional
+    public void processExpiredFranchiseeAssignments() {
+        List<FranchiseeDistrict> expiredFranchises = franchiseeDistrictRepository.findExpiredFranchises(LocalDateTime.now());
+        
+        for (FranchiseeDistrict franchiseeDistrict : expiredFranchises) {
+            franchiseeDistrict.setActive(false);
+            franchiseeDistrict.setStatus(FranchiseeStatus.TERMINATED);
+            franchiseeDistrictRepository.save(franchiseeDistrict);
+            
+            log.info("Processed expired franchisee assignment with ID: {}", franchiseeDistrict.getId());
+        }
+    }
+
+    @Override
+    @Transactional
+    public FranchiseeDistrictDto updateFranchiseeDistrictFields(Long franchiseeDistrictId, Map<String, Object> updateFields) {
+        FranchiseeDistrict franchiseeDistrict = franchiseeDistrictRepository.findById(franchiseeDistrictId)
+                .orElseThrow(() -> new ResourceNotFoundException("Franchisee district not found with ID: " + franchiseeDistrictId));
+
+        if (updateFields.containsKey("active")) {
+            franchiseeDistrict.setActive((Boolean) updateFields.get("active"));
+        }
+        
+        if (updateFields.containsKey("status")) {
+            String statusStr = (String) updateFields.get("status");
+            franchiseeDistrict.setStatus(FranchiseeStatus.valueOf(statusStr));
+        }
+        
+        if (updateFields.containsKey("startDate")) {
+            String startDateStr = (String) updateFields.get("startDate");
+            franchiseeDistrict.setStartDate(LocalDateTime.parse(startDateStr));
+        }
+        
+        if (updateFields.containsKey("endDate")) {
+            String endDateStr = (String) updateFields.get("endDate");
+            franchiseeDistrict.setEndDate(LocalDateTime.parse(endDateStr));
+        }
+        
+        if (updateFields.containsKey("revenueSharePercentage")) {
+            franchiseeDistrict.setRevenueSharePercentage(
+                    new BigDecimal(updateFields.get("revenueSharePercentage").toString()));
+        }
+        
+        if (updateFields.containsKey("officeAddress")) {
+            franchiseeDistrict.setOfficeAddress((String) updateFields.get("officeAddress"));
+        }
+        
+        if (updateFields.containsKey("contactPhone")) {
+            franchiseeDistrict.setContactPhone((String) updateFields.get("contactPhone"));
+        }
+        
+        if (updateFields.containsKey("contactEmail")) {
+            franchiseeDistrict.setContactEmail((String) updateFields.get("contactEmail"));
+        }
+
+        FranchiseeDistrict updatedFranchiseeDistrict = franchiseeDistrictRepository.save(franchiseeDistrict);
+        return mapToDto(updatedFranchiseeDistrict);
+    }
+
+    @Override
+    @Transactional
+    public FranchiseeDistrictDto deactivateFranchiseeDistrict(Long franchiseeDistrictId, String reason) {
+        FranchiseeDistrict franchiseeDistrict = franchiseeDistrictRepository.findById(franchiseeDistrictId)
+                .orElseThrow(() -> new ResourceNotFoundException("Franchisee district not found with ID: " + franchiseeDistrictId));
+
+        franchiseeDistrict.setActive(false);
+        franchiseeDistrict.setStatus(FranchiseeStatus.TERMINATED);
+        franchiseeDistrict.setEndDate(LocalDateTime.now());
+        // Store the reason in some way - this could be in a separate audit log table
+        // or as a note field in the entity if available
+        
+        // Log the deactivation reason
+        log.info("Franchisee district {} deactivated. Reason: {}", franchiseeDistrictId, reason);
+        
+        FranchiseeDistrict updatedFranchiseeDistrict = franchiseeDistrictRepository.save(franchiseeDistrict);
+        return mapToDto(updatedFranchiseeDistrict);
+    }
+
+    @Override
+    public FranchiseeRevenueDto getFranchiseeRevenue(Long franchiseeDistrictId, LocalDate startDate, LocalDate endDate) {
+        FranchiseeDistrict franchiseeDistrict = franchiseeDistrictRepository.findById(franchiseeDistrictId)
+                .orElseThrow(() -> new ResourceNotFoundException("Franchisee district not found with ID: " + franchiseeDistrictId));
+        
+        // In a real implementation, you would query a transaction or revenue repository
+        // for the actual revenue data within the specified date range
+        
+        // For demo purposes, we'll generate some mock revenue data
+        
+        // Create monthly breakdown
+        List<FranchiseeRevenueDto.MonthlyRevenue> monthlyBreakdown = new ArrayList<>();
+        YearMonth currentYearMonth = YearMonth.from(startDate);
+        YearMonth endYearMonth = YearMonth.from(endDate);
+        
+        BigDecimal totalRevenue = BigDecimal.ZERO;
+        BigDecimal franchiseeCommission = BigDecimal.ZERO;
+        BigDecimal platformCommission = BigDecimal.ZERO;
+        int totalTransactions = 0;
+        
+        // Create sample property type revenue breakdown
+        Map<String, BigDecimal> revenueByPropertyType = new HashMap<>();
+        revenueByPropertyType.put("Apartment", new BigDecimal("2500.00"));
+        revenueByPropertyType.put("House", new BigDecimal("4200.00"));
+        revenueByPropertyType.put("Villa", new BigDecimal("3800.00"));
+        revenueByPropertyType.put("Commercial", new BigDecimal("5500.00"));
+        
+        while (!currentYearMonth.isAfter(endYearMonth)) {
+            // Generate random data for each month
+            BigDecimal monthlyRevenue = new BigDecimal(String.format("%.2f", 2000 + Math.random() * 8000));
+            BigDecimal monthlyCommission = monthlyRevenue.multiply(franchiseeDistrict.getRevenueSharePercentage())
+                    .divide(new BigDecimal("100"));
+            int monthlyTransactions = (int) (10 + Math.random() * 40);
+            
+            monthlyBreakdown.add(FranchiseeRevenueDto.MonthlyRevenue.builder()
+                    .year(currentYearMonth.getYear())
+                    .month(currentYearMonth.getMonthValue())
+                    .revenue(monthlyRevenue)
+                    .commission(monthlyCommission)
+                    .transactions(monthlyTransactions)
+                    .build());
+            
+            totalRevenue = totalRevenue.add(monthlyRevenue);
+            franchiseeCommission = franchiseeCommission.add(monthlyCommission);
+            totalTransactions += monthlyTransactions;
+            
+            currentYearMonth = currentYearMonth.plusMonths(1);
+        }
+        
+        platformCommission = totalRevenue.subtract(franchiseeCommission);
+        
+        // Get user name as business name since User entity doesn't have a businessName field
+        String businessName = franchiseeDistrict.getUser().getName() + "'s Franchise";
+        
+        return FranchiseeRevenueDto.builder()
+                .districtId(franchiseeDistrict.getDistrictId())
+                .districtName(franchiseeDistrict.getDistrictName())
+                .state(franchiseeDistrict.getState())
+                .franchiseeId(franchiseeDistrict.getUser().getId())
+                .franchiseeName(franchiseeDistrict.getUser().getName())
+                .businessName(businessName)
+                .totalRevenue(totalRevenue)
+                .franchiseeCommission(franchiseeCommission)
+                .platformCommission(platformCommission)
+                .startDate(startDate)
+                .endDate(endDate)
+                .totalTransactions(totalTransactions)
+                .totalProperties((int) (totalTransactions * 0.8)) // Approximation
+                .monthlyBreakdown(monthlyBreakdown)
+                .revenueByPropertyType(revenueByPropertyType)
+                .build();
+    }
+
+    @Override
+    public FranchiseeDistrictSubscriptionAnalyticsDto getSubscriptionAnalytics(User franchiseeUser) {
+        List<FranchiseeDistrict> franchiseeDistricts = franchiseeDistrictRepository.findByUserId(franchiseeUser.getId());
+        if (franchiseeDistricts.isEmpty()) {
+            return FranchiseeDistrictSubscriptionAnalyticsDto.builder()
+                    .district(null)
+                    .franchisee(null)
+                    .subscriptions(List.of())
+                    .analytics(FranchiseeDistrictSubscriptionAnalyticsDto.Analytics.builder().build())
+                    .build();
+        }
+        FranchiseeDistrict fd = franchiseeDistricts.get(0);
+        Long districtId = fd.getDistrictId();
+        District district = districtRepository.findById(districtId).orElse(null);
+        FranchiseeDistrictSubscriptionAnalyticsDto.District districtDto = null;
+        if (district != null) {
+            districtDto = FranchiseeDistrictSubscriptionAnalyticsDto.District.builder()
+                .id(district.getId())
+                .name(district.getName())
+                .city(district.getCity())
+                .state(district.getState())
+                .pincode(district.getPincode())
+                .latitude(district.getLatitude() != null ? district.getLatitude().doubleValue() : null)
+                .longitude(district.getLongitude() != null ? district.getLongitude().doubleValue() : null)
+                .build();
+        }
+        FranchiseeDistrictSubscriptionAnalyticsDto.Franchisee franchiseeDto = FranchiseeDistrictSubscriptionAnalyticsDto.Franchisee.builder()
+            .id(franchiseeUser.getId())
+            .name(franchiseeUser.getName())
+            .email(franchiseeUser.getEmail())
+            .mobileNumber(franchiseeUser.getMobileNumber())
+            .build();
+            
+        // Get all subscriptions for this district directly by districtId
+        List<Subscription> subscriptions = subscriptionRepository.findByDistrictId(districtId);
+        
+        int totalSubscriptions = subscriptions.size();
+        BigDecimal totalAmount = subscriptions.stream().map(Subscription::getPrice).filter(java.util.Objects::nonNull).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal totalDiscount = subscriptions.stream().map(Subscription::getDiscountAmount).filter(java.util.Objects::nonNull).reduce(BigDecimal.ZERO, BigDecimal::add);
+        int withCoupon = (int) subscriptions.stream().filter(s -> s.getCouponCode() != null && !s.getCouponCode().isEmpty()).count();
+        int withoutCoupon = totalSubscriptions - withCoupon;
+        BigDecimal franchiseeShare = totalAmount.multiply(BigDecimal.valueOf(0.5));
+        BigDecimal adminShare = totalAmount.subtract(franchiseeShare);
+        FranchiseeDistrictSubscriptionAnalyticsDto.Analytics analytics = FranchiseeDistrictSubscriptionAnalyticsDto.Analytics.builder()
+                .totalSubscriptions(totalSubscriptions)
+                .totalAmount(totalAmount)
+                .franchiseeShare(franchiseeShare)
+                .adminShare(adminShare)
+                .subscriptionsWithCoupon(withCoupon)
+                .subscriptionsWithoutCoupon(withoutCoupon)
+                .totalDiscountGiven(totalDiscount)
+                .build();
+        List<FranchiseeDistrictSubscriptionAnalyticsDto.Subscription> subscriptionDtos = subscriptions.stream().map(sub -> {
+            com.nearprop.entity.User subUser = sub.getUser();
+            FranchiseeDistrictSubscriptionAnalyticsDto.User userDto = FranchiseeDistrictSubscriptionAnalyticsDto.User.builder()
+                .id(subUser.getId())
+                .name(subUser.getName())
+                .email(subUser.getEmail())
+                .mobileNumber(subUser.getMobileNumber())
+                .build();
+            FranchiseeDistrictSubscriptionAnalyticsDto.Plan planDto = FranchiseeDistrictSubscriptionAnalyticsDto.Plan.builder()
+                .id(sub.getPlan().getId())
+                .name(sub.getPlan().getName())
+                .type(sub.getPlan().getType().name())
+                .build();
+            FranchiseeDistrictSubscriptionAnalyticsDto.Coupon couponDto = null;
+            if (sub.getCoupon() != null) {
+                couponDto = FranchiseeDistrictSubscriptionAnalyticsDto.Coupon.builder()
+                    .id(sub.getCoupon().getId())
+                    .code(sub.getCoupon().getCode())
+                    .discountAmount(sub.getDiscountAmount())
+                    .build();
+            }
+            List<Property> properties = propertyRepository.findByOwnerIdAndDistrictId(subUser.getId(), districtId);
+            List<FranchiseeDistrictSubscriptionAnalyticsDto.Property> propertyDtos = properties.stream().map(prop ->
+                FranchiseeDistrictSubscriptionAnalyticsDto.Property.builder()
+                    .id(prop.getId())
+                    .title(prop.getTitle())
+                    .address(prop.getAddress())
+                    .status(prop.getStatus().name())
+                    .build()
+            ).toList();
+            return FranchiseeDistrictSubscriptionAnalyticsDto.Subscription.builder()
+                .id(sub.getId())
+                .user(userDto)
+                .plan(planDto)
+                .coupon(couponDto)
+                .price(sub.getPrice())
+                .discountAmount(sub.getDiscountAmount())
+                .originalPrice(sub.getOriginalPrice())
+                .startDate(sub.getStartDate() != null ? sub.getStartDate().toString() : null)
+                .endDate(sub.getEndDate() != null ? sub.getEndDate().toString() : null)
+                .properties(propertyDtos)
+                .build();
+        }).toList();
+        return FranchiseeDistrictSubscriptionAnalyticsDto.builder()
+                .district(districtDto)
+                .franchisee(franchiseeDto)
+                .subscriptions(subscriptionDtos)
+                .analytics(analytics)
+                .build();
+    }
+    
+    @Override
+    public FranchiseeDistrictDto createFranchiseeDistrict(CreateFranchiseeDistrictDto dto) {
+        return assignFranchiseeToDistrict(dto);
+    }
+
+   /* @Override
+    @Transactional
+    public Map<String, Object> deleteFranchisee(Long franchiseeId, String reason) {
+        log.info("Deleting franchisee with ID: {}, reason: {}", franchiseeId, reason);
+
+        // 1. Check if user exists and has franchisee role
+        User franchisee = userRepository.findById(franchiseeId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + franchiseeId));
+
+        if (!franchisee.getRoles().contains(com.nearprop.entity.Role.FRANCHISEE)) {
+            throw new IllegalArgumentException("User is not a franchisee");
+        }
+
+        // 2. ✅ CHANGED: Fetch only ACTIVE franchisee districts for this user
+        // Earlier: findByUserId(franchiseeId) → fetched all records (active + inactive)
+        // Now: findByUserIdAndActiveTrue(franchiseeId) → fetches only active records
+        List<FranchiseeDistrict> districts = franchiseeDistrictRepository.findByUserIdAndActiveTrue(franchiseeId);
+        if (districts.isEmpty()) {
+            throw new IllegalStateException("No active franchisee districts found for user with ID: " + franchiseeId);
+        }
+
+        // 3. Prepare result object
+        Map<String, Object> result = new HashMap<>();
+        result.put("franchiseeId", franchiseeId);
+        result.put("franchiseeName", franchisee.getName());
+        result.put("deletionReason", reason);
+        result.put("timestamp", LocalDateTime.now());
+
+        List<Map<String, Object>> affectedDistricts = new ArrayList<>();
+        int totalRevenueEntries = 0;
+        int totalWithdrawalRequests = 0;
+        int totalMonthlyReports = 0;
+
+        // 4. Process each district
+        for (FranchiseeDistrict district : districts) {
+            Map<String, Object> districtInfo = new HashMap<>();
+            districtInfo.put("id", district.getId());
+            districtInfo.put("districtId", district.getDistrictId());
+            districtInfo.put("districtName", district.getDistrictName());
+
+            // 4.1 Cancel pending district revenue entries
+            List<DistrictRevenue> revenues = districtRevenueRepository.findByFranchiseeDistrictId(district.getId());
+            totalRevenueEntries += revenues.size();
+
+            for (DistrictRevenue revenue : revenues) {
+                if (revenue.getPaymentStatus() == PaymentStatus.PENDING) {
+                    revenue.setPaymentStatus(PaymentStatus.CANCELLED);
+                    districtRevenueRepository.save(revenue);
+                }
+            }
+
+            // 4.2 Cancel pending withdrawal requests
+            List<FranchiseeWithdrawalRequest> withdrawals = withdrawalRequestRepository.findByFranchiseeDistrictId(district.getId());
+            totalWithdrawalRequests += withdrawals.size();
+
+            for (FranchiseeWithdrawalRequest withdrawal : withdrawals) {
+                if (withdrawal.getStatus() == WithdrawalStatus.PENDING) {
+                    withdrawal.setStatus(WithdrawalStatus.REJECTED);
+                    withdrawal.setAdminComments("Franchisee deleted: " + reason);
+                    withdrawalRequestRepository.save(withdrawal);
+                }
+            }
+
+            // 4.3 Cancel pending monthly reports
+            List<MonthlyRevenueReport> reports = monthlyRevenueReportRepository.findByFranchiseeDistrictId(district.getId());
+            totalMonthlyReports += reports.size();
+
+            for (MonthlyRevenueReport report : reports) {
+                if (report.getReportStatus() == MonthlyRevenueReport.ReportStatus.PENDING) {
+                    report.setReportStatus(MonthlyRevenueReport.ReportStatus.CANCELLED);
+                    report.setAdminComments("Franchisee deleted: " + reason);
+                    monthlyRevenueReportRepository.save(report);
+                }
+            }
+
+            // 4.4 Mark district as terminated
+            // ✅ CHANGED: We are NOT deleting rows. Just marking as inactive for history.
+            district.setActive(false);
+            district.setStatus(FranchiseeStatus.TERMINATED);
+            district.setEndDate(LocalDateTime.now());
+            franchiseeDistrictRepository.save(district);
+
+            affectedDistricts.add(districtInfo);
+        }
+
+        // 5. Remove franchisee role from user (same as before)
+        Set<com.nearprop.entity.Role> roles = new HashSet<>(franchisee.getRoles());
+        roles.remove(com.nearprop.entity.Role.FRANCHISEE);
+        franchisee.setRoles(roles);
+        userRepository.save(franchisee);
+
+        // 6. Add summary to result
+        result.put("affectedDistricts", affectedDistricts);
+        result.put("totalDistricts", districts.size());
+        result.put("totalRevenueEntries", totalRevenueEntries);
+        result.put("totalWithdrawalRequests", totalWithdrawalRequests);
+        result.put("totalMonthlyReports", totalMonthlyReports);
+
+        log.info("Successfully deleted franchisee with ID: {}, affected {} districts",
+                franchiseeId, districts.size());
+
+        return result;
+    }*/
+
+
+   /* @Override
+    @Transactional
+    public Map<String, Object> deleteFranchisee(Long franchiseeId, String reason) {
+        log.info("Deleting franchisee with ID: {}, reason: {}", franchiseeId, reason);
+
+        // 1. Check if user exists and has franchisee role
+        User franchisee = userRepository.findById(franchiseeId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + franchiseeId));
+
+        if (!franchisee.getRoles().contains(com.nearprop.entity.Role.FRANCHISEE)) {
+            throw new IllegalArgumentException("User is not a franchisee");
+        }
+
+        // 2. ✅ CHANGED: Fetch only ACTIVE franchisee districts for this user
+        // Earlier: findByUserId(franchiseeId) → fetched all records (active + inactive)
+        // Now: findByUserIdAndActiveTrue(franchiseeId) → fetches only active records
+        List<FranchiseeDistrict> districts = franchiseeDistrictRepository.findByUserIdAndActiveTrue(franchiseeId);
+        if (districts.isEmpty()) {
+            throw new IllegalStateException("No active franchisee districts found for user with ID: " + franchiseeId);
+        }
+
+        // 3. Prepare result object
+        Map<String, Object> result = new HashMap<>();
+        result.put("franchiseeId", franchiseeId);
+        result.put("franchiseeName", franchisee.getName());
+        result.put("deletionReason", reason);
+        result.put("timestamp", LocalDateTime.now());
+
+        List<Map<String, Object>> affectedDistricts = new ArrayList<>();
+        int totalRevenueEntries = 0;
+        int totalWithdrawalRequests = 0;
+        int totalMonthlyReports = 0;
+
+        // 4. Process each district
+        for (FranchiseeDistrict district : districts) {
+            Map<String, Object> districtInfo = new HashMap<>();
+            districtInfo.put("id", district.getId());
+            districtInfo.put("districtId", district.getDistrictId());
+            districtInfo.put("districtName", district.getDistrictName());
+
+            // 4.1 Cancel pending district revenue entries
+            List<DistrictRevenue> revenues = districtRevenueRepository.findByFranchiseeDistrictId(district.getId());
+            totalRevenueEntries += revenues.size();
+
+            for (DistrictRevenue revenue : revenues) {
+                if (revenue.getPaymentStatus() == PaymentStatus.PENDING) {
+                    revenue.setPaymentStatus(PaymentStatus.CANCELLED);
+                    districtRevenueRepository.save(revenue);
+                }
+            }
+
+            // 4.2 Cancel pending withdrawal requests
+            List<FranchiseeWithdrawalRequest> withdrawals = withdrawalRequestRepository.findByFranchiseeDistrictId(district.getId());
+            totalWithdrawalRequests += withdrawals.size();
+
+            for (FranchiseeWithdrawalRequest withdrawal : withdrawals) {
+                if (withdrawal.getStatus() == WithdrawalStatus.PENDING) {
+                    withdrawal.setStatus(WithdrawalStatus.REJECTED);
+                    withdrawal.setAdminComments("Franchisee deleted: " + reason);
+                    withdrawalRequestRepository.save(withdrawal);
+                }
+            }
+
+            // 4.3 Cancel pending monthly reports
+            List<MonthlyRevenueReport> reports = monthlyRevenueReportRepository.findByFranchiseeDistrictId(district.getId());
+            totalMonthlyReports += reports.size();
+
+            for (MonthlyRevenueReport report : reports) {
+                if (report.getReportStatus() == MonthlyRevenueReport.ReportStatus.PENDING) {
+                    report.setReportStatus(MonthlyRevenueReport.ReportStatus.CANCELLED);
+                    report.setAdminComments("Franchisee deleted: " + reason);
+                    monthlyRevenueReportRepository.save(report);
+                }
+            }
+
+            // 4.4 Mark district as terminated
+            // ✅ CHANGED: We are NOT deleting rows. Just marking as inactive for history.
+            district.setActive(false);
+            district.setStatus(FranchiseeStatus.TERMINATED);
+            district.setEndDate(LocalDateTime.now());
+            franchiseeDistrictRepository.save(district);
+            // new Added
+            franchiseeRequestRepository.deleteByUserIdAndDistrictId(franchiseeId, district.getDistrictId());
+
+            affectedDistricts.add(districtInfo);
+        }
+
+        // 5. Remove franchisee role from user (same as before)
+        Set<com.nearprop.entity.Role> roles = new HashSet<>(franchisee.getRoles());
+        roles.remove(com.nearprop.entity.Role.FRANCHISEE);
+        franchisee.setRoles(roles);
+        userRepository.save(franchisee);
+
+        // 6. Add summary to result
+        result.put("affectedDistricts", affectedDistricts);
+        result.put("totalDistricts", districts.size());
+        result.put("totalRevenueEntries", totalRevenueEntries);
+        result.put("totalWithdrawalRequests", totalWithdrawalRequests);
+        result.put("totalMonthlyReports", totalMonthlyReports);
+
+        log.info("Successfully deleted franchisee with ID: {}, affected {} districts",
+                franchiseeId, districts.size());
+
+
+
+
+
+        return result;
+    }*/
+
+    @Override
+	@Transactional
+	public Map<String, Object> deleteFranchisee(Long franchiseeId, String reason) {
+		// Log the start of the permanent deletion process
+		log.info("Permanently deleting franchisee with ID: {}, reason: {}", franchiseeId, reason);
+
+		// 1. Find the User record and check if they are a franchisee
+		User franchisee = userRepository.findById(franchiseeId)
+				.orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + franchiseeId));
+
+		if (!franchisee.getRoles().contains(com.nearprop.entity.Role.FRANCHISEE)) {
+			throw new IllegalArgumentException("User is not a franchisee");
+		}
+
+		// 2. Find all associated FranchiseeDistrict records
+		List<FranchiseeDistrict> districts = franchiseeDistrictRepository.findByUserId(franchiseeId);
+
+		if (districts.isEmpty()) {
+			throw new IllegalStateException("No franchisee districts found for user with ID: " + franchiseeId);
+		}
+
+		// 3. Get the franchise request ID from the first district.
+		// This is the correct ID to use for deleting the parent record.
+		Long franchiseRequestId = districts.get(0).getFranchiseRequest().getId();
+
+		Map<String, Object> result = new HashMap<>();
+		result.put("franchiseeId", franchiseeId);
+		result.put("franchiseeName", franchisee.getName());
+		result.put("deletionReason", reason);
+		result.put("timestamp", LocalDateTime.now());
+
+		List<Map<String, Object>> affectedDistricts = new ArrayList<>();
+
+		// 4. Process and delete each child district record
+		for (FranchiseeDistrict district : districts) {
+			Map<String, Object> districtInfo = new HashMap<>();
+			districtInfo.put("id", district.getId());
+			districtInfo.put("districtId", district.getDistrictId());
+			districtInfo.put("districtName", district.getDistrictName());
+
+			// Update any pending records in related tables before deletion
+			// These blocks are kept to maintain the business logic from your original code.
+			List<DistrictRevenue> revenues = districtRevenueRepository.findByFranchiseeDistrictId(district.getId());
+			for (DistrictRevenue revenue : revenues) {
+				if (revenue.getPaymentStatus() == PaymentStatus.PENDING) {
+					revenue.setPaymentStatus(PaymentStatus.CANCELLED);
+					districtRevenueRepository.save(revenue);
+				}
+			}
+
+			List<FranchiseeWithdrawalRequest> withdrawals = withdrawalRequestRepository
+					.findByFranchiseeDistrictId(district.getId());
+			for (FranchiseeWithdrawalRequest withdrawal : withdrawals) {
+				if (withdrawal.getStatus() == WithdrawalStatus.PENDING) {
+					withdrawal.setStatus(WithdrawalStatus.REJECTED);
+					withdrawal.setAdminComments("Franchisee deleted: " + reason);
+					withdrawalRequestRepository.save(withdrawal);
+				}
+			}
+
+			List<MonthlyRevenueReport> reports = monthlyRevenueReportRepository
+					.findByFranchiseeDistrictId(district.getId());
+			for (MonthlyRevenueReport report : reports) {
+				if (report.getReportStatus() == MonthlyRevenueReport.ReportStatus.PENDING) {
+					report.setReportStatus(MonthlyRevenueReport.ReportStatus.CANCELLED);
+					report.setAdminComments("Franchisee deleted: " + reason);
+					monthlyRevenueReportRepository.save(report);
+				}
+			}
+
+			// Permanently delete the child record from the franchisee_districts table.
+			// This is crucial for satisfying the foreign key constraint.
+			franchiseeDistrictRepository.delete(district);
+
+			affectedDistricts.add(districtInfo);
+		}
+
+		// 5. Permanently delete the parent record from the franchise_requests table.
+		// This step is now possible because all child records have been deleted.
+		franchiseeRequestRepository.deleteById(franchiseRequestId);
+
+		// 6. Remove the franchisee role from the user
+		java.util.Set<com.nearprop.entity.Role> roles = new java.util.HashSet<>(franchisee.getRoles());
+		roles.remove(com.nearprop.entity.Role.FRANCHISEE);
+		franchisee.setRoles(roles);
+		userRepository.save(franchisee);
+
+		// Add summary to the result map
+		result.put("affectedDistricts", affectedDistricts);
+		result.put("totalDistrictsDeleted", districts.size());
+
+		// Log the successful completion of the deletion process
+		log.info("Successfully deleted franchisee with ID: {}, deleted {} districts and the parent request record.",
+				franchiseeId, districts.size());
+
+		return result;
+	}
+
+
+    @Override
+    public FranchiseeDistrict getDistrictById(Long districtId) {
+        return franchiseeDistrictRepository.findById(districtId)
+                .orElseThrow(() -> new ResourceNotFoundException("Franchisee district not found with ID: " + districtId));
+    }
+
+    private FranchiseeDistrictDto mapToDto(FranchiseeDistrict franchiseeDistrict) {
+        return FranchiseeDistrictDto.builder()
+                .id(franchiseeDistrict.getId())
+                .franchisee(UserSummaryDto.builder()
+                        .id(franchiseeDistrict.getUser().getId())
+                        .name(franchiseeDistrict.getUser().getName())
+                        .email(franchiseeDistrict.getUser().getEmail())
+                        .phone(franchiseeDistrict.getUser().getMobileNumber())
+                        .build())
+                .districtId(franchiseeDistrict.getDistrictId())
+                .districtName(franchiseeDistrict.getDistrictName())
+                .state(franchiseeDistrict.getState())
+                .startDate(franchiseeDistrict.getStartDate())
+                .endDate(franchiseeDistrict.getEndDate())
+                .active(franchiseeDistrict.isActive())
+                .revenueSharePercentage(franchiseeDistrict.getRevenueSharePercentage())
+                .totalProperties(franchiseeDistrict.getTotalProperties())
+                .totalTransactions(franchiseeDistrict.getTotalTransactions())
+                .totalRevenue(franchiseeDistrict.getTotalRevenue())
+                .totalCommission(franchiseeDistrict.getTotalCommission())
+                .status(franchiseeDistrict.getStatus())
+                .officeAddress(franchiseeDistrict.getOfficeAddress())
+                .contactPhone(franchiseeDistrict.getContactPhone())
+                .contactEmail(franchiseeDistrict.getContactEmail())
+                .createdAt(franchiseeDistrict.getCreatedAt())
+                .updatedAt(franchiseeDistrict.getUpdatedAt())
+                .build();
+    }
+
+    private SubscriptionDto mapToDto(Subscription subscription) {
+        // Copy the logic from SubscriptionServiceImpl.mapToDto
+        boolean isActive = subscription.isActive();
+        boolean isInGracePeriod = subscription.isInGracePeriod();
+        long daysRemaining = java.time.temporal.ChronoUnit.DAYS.between(java.time.LocalDateTime.now(), subscription.getEndDate());
+        boolean contentVisible = isActive || isInGracePeriod;
+        return SubscriptionDto.builder()
+                .id(subscription.getId())
+                .user(null) // Optionally map user summary if needed
+                .plan(null) // Optionally map plan if needed
+                .price(subscription.getPrice())
+                .marketingFee(subscription.getMarketingFee())
+                .totalAmount(subscription.getTotalAmount())
+                .isRenewal(subscription.isRenewal())
+                .previousSubscriptionId(subscription.getPreviousSubscriptionId())
+                .startDate(subscription.getStartDate())
+                .endDate(subscription.getEndDate())
+                .status(subscription.getStatus())
+                .paymentReference(subscription.getPaymentReference())
+                .autoRenew(subscription.isAutoRenew())
+                .cancelledAt(subscription.getCancelledAt())
+                .contentHiddenAt(subscription.getContentHiddenAt())
+                .contentDeletedAt(subscription.getContentDeletedAt())
+                .createdAt(subscription.getCreatedAt())
+                .updatedAt(subscription.getUpdatedAt())
+                .isActive(isActive)
+                .isInGracePeriod(isInGracePeriod)
+                .daysRemaining((int) daysRemaining)
+                .contentVisible(contentVisible)
+                .couponCode(subscription.getCouponCode())
+                .originalPrice(subscription.getOriginalPrice())
+                .discountAmount(subscription.getDiscountAmount())
+                .build();
+    }
+
+    public List<ActiveFranchiseeDTO> getAllActiveFranchisees() {
+        return franchiseeDistrictRepository.findAllActiveFranchiseesWithDistrict()
+                .stream()
+                .map(this::toDTO)
+                .toList();
+    }
+
+    private ActiveFranchiseeDTO toDTO(FranchiseeDistrict fd) {
+//        int withdrawalCount = parseWithdrawalCount(fd.getWithdrawalHistory());
+        return ActiveFranchiseeDTO.builder()
+                .id(fd.getId())
+                .active(fd.isActive())
+                .availableBalance(fd.getAvailableBalance())
+                .contactEmail(fd.getContactEmail())
+                .contactPhone(fd.getContactPhone())
+                .createdAt(fd.getCreatedAt())
+                .totalProperties(fd.getTotalProperties() != null ? fd.getTotalProperties() : 0)
+                .districtName(fd.getDistrictName())
+                .endDate(fd.getEndDate())
+                .officeAddress(fd.getOfficeAddress())
+                .revenueSharePercentage(fd.getRevenueSharePercentage())
+                .startDate(fd.getStartDate())
+                .state(fd.getState())
+                .status(fd.getStatus())
+                .totalRevenue(fd.getTotalRevenue() != null ? fd.getTotalRevenue() : BigDecimal.ZERO)
+                .totalTransactions(fd.getTotalTransactions() != null ? fd.getTotalTransactions() : 0)
+                .totalCommission(fd.getTotalCommission() != null ? fd.getTotalCommission() : BigDecimal.ZERO)
+                .updatedAt(fd.getUpdatedAt())
+//                .withdrawalHistory(fd.getWithdrawalHistory())
+                .userId(fd.getUser().getId())
+                .districtId(fd.getDistrictId())
+                .build();
+    }
+    private int parseWithdrawalCount(String json) {
+        if (json == null || json.trim().equals("[]") || json.isBlank()) return 0;
+        try {
+            JsonNode arr = objectMapper.readTree(json);
+            return arr.isArray() ? arr.size() : 0;
+        } catch (JsonProcessingException e) {
+            log.warn("Failed to parse withdrawalHistory JSON: {}", json);
+            return 0;
+        }
+    }
+}

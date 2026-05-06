@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Temporarily Held</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #ffc107;
+        }
+        .content {
+            padding: 20px;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        .button {
+            display: inline-block;
+            background-color: #ffc107;
+            color: #333;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .property-details {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 3px solid #ffc107;
+        }
+        .subscription-info {
+            background-color: #fff3cd;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Property Temporarily Held</h1>
+    </div>
+    
+    <div class="content">
+        <p>Dear <span th:text="${user.name}">User</span>,</p>
+        
+        <p>We're writing to inform you that your property listing has been temporarily held by an administrator.</p>
+        
+        <div class="property-details">
+            <p><strong>Property ID:</strong> <span th:text="${property.id}">12345</span></p>
+            <p><strong>Title:</strong> <span th:text="${property.title}">Property Title</span></p>
+            <p><strong>Address:</strong> <span th:text="${property.address}">Property Address</span></p>
+        </div>
+        
+        <p><strong>Reason:</strong> <span th:text="${reason}">Administrative review</span></p>
+        
+        <div class="subscription-info" th:if="${remainingDays != null}">
+            <p><strong>Important Subscription Information:</strong></p>
+            <p>Your subscription has been paused during this hold period. The remaining <span th:text="${remainingDays}">30</span> days on your subscription will be preserved and restored when the property is reactivated.</p>
+        </div>
+        
+        <p>Our team is reviewing your property listing. We'll notify you once the review is complete and your property is reactivated.</p>
+        
+        <p>If you have any questions or need further information, please contact our support team.</p>
+        
+        <a th:href="${appUrl} + '/contact'" class="button">Contact Support</a>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2023</span> NearProp. All rights reserved.</p>
+        <p>This is an automated message, please do not reply to this email.</p>
+    </div>
+</body>
+</html> 

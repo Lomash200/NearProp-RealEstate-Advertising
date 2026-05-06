@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Request Rejected - NearProp</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #455A64, #263238);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 30px 25px;
+            line-height: 1.6;
+        }
+        .footer {
+            background-color: #f5f5f5;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+        .highlight {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #607D8B;
+        }
+        .reject-badge {
+            display: inline-block;
+            background-color: #F44336;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .info-box {
+            background-color: #fff3e0;
+            border: 1px solid #ffe0b2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid #FF9800;
+        }
+        .info-label {
+            font-weight: bold;
+            display: inline-block;
+            width: 120px;
+        }
+        .next-steps {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid #2196F3;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .social-links {
+            margin-top: 20px;
+        }
+        .social-links a {
+            margin: 0 10px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Role Request Status Update</h1>
+        </div>
+        <div class="content">
+            <p>Hello <span th:text="${userName}">User</span>,</p>
+            
+            <div style="text-align: center; margin: 25px 0;">
+                <div class="reject-badge">NOT APPROVED</div>
+                <h2>We reviewed your <span th:text="${roleName}">SELLER</span> role request</h2>
+                <p>Unfortunately, we are unable to approve your request at this time.</p>
+            </div>
+            
+            <div class="highlight">
+                <p>Your request details:</p>
+                <div><span class="info-label">Role:</span> <span th:text="${roleName}">SELLER</span></div>
+                <div><span class="info-label">Request ID:</span> <span th:text="${requestId}">123</span></div>
+                <div><span class="info-label">Processed On:</span> <span th:text="${processedDate}">June 14, 2025</span></div>
+                <div><span class="info-label">Status:</span> <span style="color: #F44336; font-weight: bold;">REJECTED</span></div>
+            </div>
+            
+            <div class="info-box">
+                <p><strong>Admin Feedback:</strong></p>
+                <p th:text="${comment}">We are unable to verify the information provided. Please submit a new request with valid documentation.</p>
+            </div>
+            
+            <div class="next-steps">
+                <h3>What can you do next?</h3>
+                <ul>
+                    <li>Review the admin feedback carefully</li>
+                    <li>Update your information or provide additional documentation</li>
+                    <li>Submit a new role request once you've addressed the concerns</li>
+                </ul>
+            </div>
+            
+            <p>If you believe there has been an error or you need further clarification, please contact our support team.</p>
+            
+            <div style="text-align: center;">
+                <a class="cta-button" href="http://nearprop.com/contact-support" style="color: white;">Contact Support</a>
+            </div>
+            
+            <p>We appreciate your interest in becoming a <span th:text="${roleName}">SELLER</span> on NearProp and hope to see your revised application soon.</p>
+            
+            <p>Best regards,<br>The NearProp Team</p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2025 NearProp. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://facebook.com/nearprop">Facebook</a> |
+                <a href="https://twitter.com/nearprop">Twitter</a> |
+                <a href="https://instagram.com/nearprop">Instagram</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

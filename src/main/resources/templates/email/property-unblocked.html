@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Unblocked</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #28a745;
+        }
+        .content {
+            padding: 20px;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        .button {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .property-details {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 3px solid #28a745;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Property Unblocked</h1>
+    </div>
+    
+    <div class="content">
+        <p>Dear <span th:text="${user.name}">User</span>,</p>
+        
+        <p>Good news! Your property listing has been unblocked and is now in the approval queue.</p>
+        
+        <div class="property-details">
+            <p><strong>Property ID:</strong> <span th:text="${property.id}">12345</span></p>
+            <p><strong>Title:</strong> <span th:text="${property.title}">Property Title</span></p>
+            <p><strong>Address:</strong> <span th:text="${property.address}">Property Address</span></p>
+        </div>
+        
+        <div class="success">
+            <p><strong>Status:</strong> Unblocked - Pending Approval</p>
+            <p th:if="${subscriptionExpiry != null}"><strong>Subscription Expiry:</strong> <span th:text="${#temporals.format(subscriptionExpiry, 'dd MMM yyyy')}">01 Jan 2024</span></p>
+        </div>
+        
+        <p>Your property listing is now in our approval queue. Once approved by our team, it will be visible on the platform again.</p>
+        
+        <p>Any subscription time that was paused during the block period has been restored.</p>
+        
+        <p>Thank you for your patience and cooperation.</p>
+        
+        <a th:href="${appUrl} + '/dashboard/properties'" class="button">View Your Properties</a>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2023</span> NearProp. All rights reserved.</p>
+        <p>This is an automated message, please do not reply to this email.</p>
+    </div>
+</body>
+</html> 

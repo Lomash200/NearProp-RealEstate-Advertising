@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NearProp Dual Chat View</title>
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #2196F3;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --mid-gray: #888;
+            --danger: #F44336;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --seller: #2196F3;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fafafa;
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 10px;
+        }
+        
+        .header {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+            margin-bottom: 20px;
+        }
+        
+        .dual-view {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .chat-panel {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 150px);
+        }
+        
+        .user-panel {
+            border-top: 5px solid var(--primary);
+        }
+        
+        .seller-panel {
+            border-top: 5px solid var(--seller);
+        }
+        
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: var(--light-gray);
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 80%;
+        }
+        
+        .message.received {
+            background-color: white;
+            margin-right: auto;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .message.sent {
+            background-color: #e8f5e9;
+            margin-left: auto;
+            border-right: 4px solid var(--primary);
+        }
+        
+        .admin-message {
+            background-color: #ffebee !important;
+            border-color: var(--danger) !important;
+        }
+        
+        .seller-message {
+            background-color: #e3f2fd !important;
+            border-color: var(--seller) !important;
+        }
+        
+        .message-meta {
+            font-size: 12px;
+            color: var(--mid-gray);
+            margin-top: 5px;
+        }
+        
+        .message-sender {
+            font-weight: bold;
+        }
+        
+        .message-actions {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        
+        .message-action-btn {
+            font-size: 11px;
+            padding: 2px 6px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .message-action-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .typing-indicator {
+            font-style: italic;
+            color: var(--mid-gray);
+            height: 20px;
+            padding: 0 10px;
+        }
+        
+        .chat-input {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        textarea {
+            resize: none;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 8px;
+            margin-bottom: 10px;
+            font-family: inherit;
+        }
+        
+        .input-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        button {
+            padding: 8px 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .seller-button {
+            background-color: var(--seller);
+        }
+        
+        button:hover {
+            opacity: 0.9;
+        }
+        
+        button:disabled {
+            background-color: var(--mid-gray);
+            cursor: not-allowed;
+        }
+        
+        .connection-panel {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        
+        .badge-success {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .badge-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .badge-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>NearProp Dual Chat View</h1>
+            <p>Test the chat from both user and property owner perspectives simultaneously</p>
+        </div>
+        
+        <div class="connection-panel">
+            <div class="form-row">
+                <div class="form-group" style="flex: 1">
+                    <label for="chatRoomId">Chat Room ID:</label>
+                    <input type="number" id="chatRoomId" value="3">
+                </div>
+                <div class="form-group" style="flex: 2">
+                    <label for="serverUrl">WebSocket URL:</label>
+                    <input type="text" id="serverUrl" value="ws://localhost:8080/api/ws">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="buyerToken">Buyer JWT Token:</label>
+                <input type="text" id="buyerToken" value="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMiIsInJvbGVzIjpbIlVTRVIiXSwic2Vzc2lvbklkIjoiMjY5ZjFhMmEtNGY2My00NDI0LTgzNGMtZThhOWU3NDhlYTA0IiwiaWF0IjoxNzQ4MzQzOTUxLCJleHAiOjQ5MDE5NDM5NTEsImlzcyI6Ik5lYXJwcm9wQmFja2VuZCJ9.NJM5kwIOWIrxoT9bnc9dErm8wJrB_9Nhg6vr9IJl1oIj9xj-FDATyyvBgAGI3vc70_OY5vyBlcVbYg1vH8AASw">
+            </div>
+            
+            <div class="form-group">
+                <label for="sellerToken">Seller JWT Token:</label>
+                <input type="text" id="sellerToken" value="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0Iiwicm9sZXMiOlsiVVNFUiIsIlNFTExFUiJdLCJzZXNzaW9uSWQiOiJhYmFjMDZkNC02NzNiLTRkOTItODQ5Yy02ZGFkODc3NzlhYmEiLCJpYXQiOjE3NDgzNTAzNzEsImV4cCI6MTc0ODk1NTE3MSwiaXNzIjoiTmVhcnByb3BCYWNrZW5kIn0.zxu0F2hjxzF18s0d67N7oKvCEBrFgPl6SfmVR7cgOyTWW4ZMIdGp2VBW0DueWTbvAFAYUhEv__GZgG2kvnUTnQ">
+            </div>
+            
+            <div class="form-group">
+                <button id="connectBtn">Connect Both</button>
+                <button id="disconnectBtn" disabled>Disconnect Both</button>
+                <span id="buyerStatus" class="badge badge-warning">Buyer: Disconnected</span>
+                <span id="sellerStatus" class="badge badge-warning">Seller: Disconnected</span>
+            </div>
+            
+            <!-- Debug Log Section -->
+            <div class="form-group" style="margin-top: 10px;">
+                <div id="debugLog" style="max-height: 100px; overflow-y: auto; background-color: #f5f5f5; padding: 5px; font-family: monospace; font-size: 12px;"></div>
+                <button id="clearDebugBtn" style="margin-top: 5px; font-size: 12px; padding: 3px 6px;">Clear Debug Log</button>
+            </div>
+        </div>
+        
+        <div class="dual-view">
+            <!-- User/Buyer Chat Panel -->
+            <div class="chat-panel user-panel">
+                <div class="chat-header">
+                    <h2>Buyer View</h2>
+                    <div>
+                        <span id="buyerTyping" class="typing-indicator"></span>
+                    </div>
+                </div>
+                <div id="buyerMessages" class="chat-messages"></div>
+                <div class="chat-input">
+                    <textarea id="buyerInput" placeholder="Type your message as buyer..." rows="3" disabled></textarea>
+                    <div class="input-actions">
+                        <button id="buyerSendBtn" disabled>Send</button>
+                        <button id="buyerTypingBtn" disabled>Start Typing</button>
+                        <button id="buyerTypingStopBtn" disabled>Stop Typing</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Seller Chat Panel -->
+            <div class="chat-panel seller-panel">
+                <div class="chat-header">
+                    <h2>Property Owner View</h2>
+                    <div>
+                        <span id="sellerTyping" class="typing-indicator"></span>
+                    </div>
+                </div>
+                <div id="sellerMessages" class="chat-messages"></div>
+                <div class="chat-input">
+                    <textarea id="sellerInput" placeholder="Type your message as property owner..." rows="3" disabled></textarea>
+                    <div class="input-actions">
+                        <button id="sellerSendBtn" disabled class="seller-button">Send</button>
+                        <button id="sellerTypingBtn" disabled class="seller-button">Start Typing</button>
+                        <button id="sellerTypingStopBtn" disabled class="seller-button">Stop Typing</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+    <script>
+        // DOM Elements - Connection
+        const chatRoomIdInput = document.getElementById('chatRoomId');
+        const serverUrlInput = document.getElementById('serverUrl');
+        const buyerTokenInput = document.getElementById('buyerToken');
+        const sellerTokenInput = document.getElementById('sellerToken');
+        const connectBtn = document.getElementById('connectBtn');
+        const disconnectBtn = document.getElementById('disconnectBtn');
+        const buyerStatus = document.getElementById('buyerStatus');
+        const sellerStatus = document.getElementById('sellerStatus');
+        
+        // DOM Elements - Buyer
+        const buyerMessages = document.getElementById('buyerMessages');
+        const buyerInput = document.getElementById('buyerInput');
+        const buyerSendBtn = document.getElementById('buyerSendBtn');
+        const buyerTypingBtn = document.getElementById('buyerTypingBtn');
+        const buyerTypingStopBtn = document.getElementById('buyerTypingStopBtn');
+        const buyerTypingIndicator = document.getElementById('buyerTyping');
+        
+        // DOM Elements - Seller
+        const sellerMessages = document.getElementById('sellerMessages');
+        const sellerInput = document.getElementById('sellerInput');
+        const sellerSendBtn = document.getElementById('sellerSendBtn');
+        const sellerTypingBtn = document.getElementById('sellerTypingBtn');
+        const sellerTypingStopBtn = document.getElementById('sellerTypingStopBtn');
+        const sellerTypingIndicator = document.getElementById('sellerTyping');
+        
+        // State variables
+        let buyerStompClient = null;
+        let sellerStompClient = null;
+        let currentChatRoomId = null;
+        let buyerSocket = null;
+        let sellerSocket = null;
+        
+        // Connect both WebSockets
+        connectBtn.addEventListener('click', function() {
+            const chatRoomId = chatRoomIdInput.value.trim();
+            const serverUrl = serverUrlInput.value.trim();
+            const buyerToken = buyerTokenInput.value.trim();
+            const sellerToken = sellerTokenInput.value.trim();
+            
+            if (!chatRoomId || !buyerToken || !sellerToken) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            currentChatRoomId = chatRoomId;
+            
+            // Connect buyer
+            connectWebSocket('buyer', serverUrl, buyerToken);
+            
+            // Connect seller
+            connectWebSocket('seller', serverUrl, sellerToken);
+            
+            // Update UI
+            connectBtn.disabled = true;
+            disconnectBtn.disabled = false;
+        });
+        
+        // Disconnect both WebSockets
+        disconnectBtn.addEventListener('click', function() {
+            // Disconnect buyer
+            if (buyerStompClient) {
+                if (typeof buyerStompClient.deactivate === 'function') {
+                    buyerStompClient.deactivate();
+                } else if (typeof buyerStompClient.disconnect === 'function') {
+                    buyerStompClient.disconnect();
+                }
+                buyerStompClient = null;
+                buyerSocket = null;
+                updateStatus('buyer', 'Disconnected');
+            }
+            
+            // Disconnect seller
+            if (sellerStompClient) {
+                if (typeof sellerStompClient.deactivate === 'function') {
+                    sellerStompClient.deactivate();
+                } else if (typeof sellerStompClient.disconnect === 'function') {
+                    sellerStompClient.disconnect();
+                }
+                sellerStompClient = null;
+                sellerSocket = null;
+                updateStatus('seller', 'Disconnected');
+            }
+            
+            // Update UI
+            connectBtn.disabled = false;
+            disconnectBtn.disabled = true;
+            buyerInput.disabled = true;
+            buyerSendBtn.disabled = true;
+            buyerTypingBtn.disabled = true;
+            buyerTypingStopBtn.disabled = true;
+            sellerInput.disabled = true;
+            sellerSendBtn.disabled = true;
+            sellerTypingBtn.disabled = true;
+            sellerTypingStopBtn.disabled = true;
+        });
+        
+        // Send message functions
+        buyerSendBtn.addEventListener('click', function() {
+            sendMessage('buyer');
+        });
+        
+        sellerSendBtn.addEventListener('click', function() {
+            sendMessage('seller');
+        });
+        
+        // Handle Enter key to send message
+        buyerInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage('buyer');
+            }
+        });
+        
+        sellerInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage('seller');
+            }
+        });
+        
+        // Typing indicator functions
+        buyerTypingBtn.addEventListener('click', function() {
+            sendTypingIndicator('buyer', true);
+        });
+        
+        buyerTypingStopBtn.addEventListener('click', function() {
+            sendTypingIndicator('buyer', false);
+        });
+        
+        sellerTypingBtn.addEventListener('click', function() {
+            sendTypingIndicator('seller', true);
+        });
+        
+        sellerTypingStopBtn.addEventListener('click', function() {
+            sendTypingIndicator('seller', false);
+        });
+        
+        // Helper functions
+        function updateStatus(role, status) {
+            const statusElement = role === 'buyer' ? buyerStatus : sellerStatus;
+            statusElement.textContent = `${role.charAt(0).toUpperCase() + role.slice(1)}: ${status}`;
+            
+            // Update badge class
+            statusElement.className = 'badge';
+            if (status === 'Connected') {
+                statusElement.classList.add('badge-success');
+            } else if (status === 'Error') {
+                statusElement.classList.add('badge-danger');
+            } else {
+                statusElement.classList.add('badge-warning');
+            }
+        }
+        
+        // Debug logging function
+        function debug(message) {
+            const debugLog = document.getElementById('debugLog');
+            const now = new Date();
+            const timestamp = now.toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            debugLog.appendChild(logEntry);
+            debugLog.scrollTop = debugLog.scrollHeight;
+            console.log(`[DEBUG] ${message}`);
+        }
+        
+        // Clear debug log
+        document.getElementById('clearDebugBtn').addEventListener('click', function() {
+            document.getElementById('debugLog').innerHTML = '';
+            debug('Debug log cleared');
+        });
+        
+        function connectWebSocket(role, serverUrl, token) {
+            // Construct WebSocket URL
+            const wsUrl = `${serverUrl}?token=${token}`;
+            debug(`[${role}] Connecting to: ${wsUrl}`);
+            
+            // Create WebSocket
+            const socket = new WebSocket(wsUrl);
+            
+            // Store reference
+            if (role === 'buyer') {
+                buyerSocket = socket;
+            } else {
+                sellerSocket = socket;
+            }
+            
+            // WebSocket event handlers
+            socket.onopen = function() {
+                debug(`[${role}] WebSocket connection established successfully!`);
+                setupStompClient(role, socket);
+                
+                // Enable UI even if STOMP connection fails
+                setTimeout(() => {
+                    if ((role === 'buyer' && buyerInput.disabled) ||
+                        (role === 'seller' && sellerInput.disabled)) {
+                        debug(`[${role}] Ensuring UI is enabled after WebSocket connection`);
+                        
+                        if (role === 'buyer') {
+                            buyerInput.disabled = false;
+                            buyerSendBtn.disabled = false;
+                            buyerTypingBtn.disabled = false;
+                            buyerTypingStopBtn.disabled = false;
+                            updateStatus('buyer', 'WS Connected');
+                        } else {
+                            sellerInput.disabled = false;
+                            sellerSendBtn.disabled = false;
+                            sellerTypingBtn.disabled = false;
+                            sellerTypingStopBtn.disabled = false;
+                            updateStatus('seller', 'WS Connected');
+                        }
+                    }
+                }, 1000); // 1 second backup
+            };
+            
+            socket.onmessage = function(event) {
+                debug(`[${role}] Direct WebSocket message received: ${event.data.substring(0, 50)}...`);
+                try {
+                    const data = JSON.parse(event.data);
+                    
+                    // Handle different message types
+                    if (data.message && data.message.content) {
+                        // Regular chat message
+                        const messageData = data.message;
+                        debug(`[${role}] Parsed WebSocket message: ${messageData.content}`);
+                        
+                        // Display message in both views
+                        displayMessage('buyer', messageData);
+                        displayMessage('seller', messageData);
+                    } else if (data.content !== undefined) {
+                        // It might be a direct message format
+                        debug(`[${role}] Direct message format detected: ${data.content}`);
+                        
+                        // Create standardized message object
+                        const messageData = {
+                            content: data.content,
+                            createdAt: data.createdAt || new Date().toISOString(),
+                            status: data.status || 'SENT',
+                            sender: data.sender || {
+                                name: data.senderName || (data.roles && data.roles.includes('SELLER') ? 'Property Owner' : 'Buyer'),
+                                roles: data.roles || []
+                            }
+                        };
+                        
+                        // Display message in both views
+                        displayMessage('buyer', messageData);
+                        displayMessage('seller', messageData);
+                    } else if (data.type === 'TYPING') {
+                        // Typing indicator
+                        const typingData = data;
+                        debug(`[${role}] Typing notification from: ${typingData.username || 'unknown'}`);
+                        
+                        // Update typing indicators in both views
+                        handleTypingNotification('buyer', typingData);
+                        handleTypingNotification('seller', typingData);
+                    } else {
+                        debug(`[${role}] Unknown message format: ${JSON.stringify(data).substring(0, 100)}...`);
+                    }
+                } catch (err) {
+                    debug(`[${role}] Error processing WebSocket message: ${err.message}`);
+                    console.error(`[${role}] Error processing WebSocket message:`, err);
+                }
+            };
+            
+            socket.onerror = function(error) {
+                debug(`[${role}] WebSocket error occurred. Check server logs.`);
+                console.error(`[${role}] WebSocket error:`, error);
+                updateStatus(role, 'Error');
+            };
+            
+            socket.onclose = function(event) {
+                let reason;
+                switch(event.code) {
+                    case 1000: reason = "Normal closure"; break;
+                    case 1002: reason = "Protocol error"; break;
+                    case 1003: reason = "Unsupported data"; break;
+                    case 1005: reason = "No status received"; break;
+                    case 1006: reason = "Abnormal closure"; break;
+                    case 1007: reason = "Invalid frame payload data"; break;
+                    case 1008: reason = "Policy violation"; break;
+                    case 1009: reason = "Message too big"; break;
+                    case 1010: reason = "Missing extension"; break;
+                    case 1011: reason = "Internal error"; break;
+                    case 1012: reason = "Service restart"; break;
+                    case 1013: reason = "Try again later"; break;
+                    case 1014: reason = "Bad gateway"; break;
+                    case 1015: reason = "TLS handshake"; break;
+                    default: reason = "Unknown"; break;
+                }
+                
+                debug(`[${role}] WebSocket closed: ${event.code} - ${reason}`);
+                updateStatus(role, 'Disconnected');
+                
+                // Reset UI elements
+                if (role === 'buyer') {
+                    buyerInput.disabled = true;
+                    buyerSendBtn.disabled = true;
+                    buyerTypingBtn.disabled = true;
+                    buyerTypingStopBtn.disabled = true;
+                    buyerSocket = null;
+                    buyerStompClient = null;
+                } else {
+                    sellerInput.disabled = true;
+                    sellerSendBtn.disabled = true;
+                    sellerTypingBtn.disabled = true;
+                    sellerTypingStopBtn.disabled = true;
+                    sellerSocket = null;
+                    sellerStompClient = null;
+                }
+                
+                // Try alternative connection if abnormal closure
+                if (event.code === 1006) {
+                    debug(`[${role}] Trying alternative connection after abnormal closure...`);
+                    tryAlternativeConnection(role, serverUrl, token);
+                }
+            };
+        }
+        
+        function tryAlternativeConnection(role, baseUrl, token) {
+            // Extract base URL without /api/ws part
+            const baseServer = baseUrl.split('/api/ws')[0];
+            const alternativeUrl = `${baseServer}/api/ws?token=${token}`;
+            
+            debug(`[${role}] Trying alternative URL: ${alternativeUrl}`);
+            
+            // Wait a moment before trying again
+            setTimeout(() => {
+                connectWebSocket(role, alternativeUrl, token);
+            }, 1500);
+        }
+        
+        function setupStompClient(role, socket) {
+            debug(`[${role}] Setting up STOMP client...`);
+            
+            // Create StompJS client
+            const stompClient = new StompJs.Client({
+                webSocketFactory: () => socket,
+                debug: function(str) {
+                    // Filter and log important debug messages
+                    if (str.includes('CONNECTED') || 
+                        str.includes('SUBSCRIBE') || 
+                        str.includes('MESSAGE') ||
+                        str.includes('ERROR') || 
+                        str.includes('SEND') ||
+                        str.includes('DISCONNECT')) {
+                        debug(`[STOMP:${role}] ${str}`);
+                    }
+                },
+                reconnectDelay: 5000,
+                heartbeatIncoming: 4000,
+                heartbeatOutgoing: 4000
+            });
+            
+            // Store reference
+            if (role === 'buyer') {
+                buyerStompClient = stompClient;
+            } else {
+                sellerStompClient = stompClient;
+            }
+            
+            // STOMP connect handler
+            stompClient.onConnect = function(frame) {
+                debug(`[${role}] STOMP connected successfully!`);
+                updateStatus(role, 'Connected');
+                
+                try {
+                    // Subscribe to chat room
+                    debug(`[${role}] Subscribing to /topic/chat/${currentChatRoomId}`);
+                    stompClient.subscribe(`/topic/chat/${currentChatRoomId}`, function(message) {
+                        const messageData = JSON.parse(message.body);
+                        debug(`[${role}] Received message via STOMP: ${messageData.content}`);
+                        
+                        // Display message in both views
+                        displayMessage('buyer', messageData);
+                        displayMessage('seller', messageData);
+                    });
+                    
+                    // Subscribe to typing notifications
+                    debug(`[${role}] Subscribing to /topic/chat/${currentChatRoomId}/typing`);
+                    stompClient.subscribe(`/topic/chat/${currentChatRoomId}/typing`, function(notification) {
+                        const typingData = JSON.parse(notification.body);
+                        debug(`[${role}] Typing notification from: ${typingData.username}`);
+                        
+                        // Update typing indicators in both views
+                        handleTypingNotification('buyer', typingData);
+                        handleTypingNotification('seller', typingData);
+                    });
+                    
+                    // Subscribe to read receipts
+                    debug(`[${role}] Subscribing to /user/queue/read-receipts`);
+                    stompClient.subscribe('/user/queue/read-receipts', function(receipt) {
+                        debug(`[${role}] Read receipt received: ${receipt.body}`);
+                    });
+                    
+                    // Enable UI elements
+                    if (role === 'buyer') {
+                        buyerInput.disabled = false;
+                        buyerSendBtn.disabled = false;
+                        buyerTypingBtn.disabled = false;
+                        buyerTypingStopBtn.disabled = false;
+                    } else {
+                        sellerInput.disabled = false;
+                        sellerSendBtn.disabled = false;
+                        sellerTypingBtn.disabled = false;
+                        sellerTypingStopBtn.disabled = false;
+                    }
+                    
+                    // Send a test message to ensure connection is working
+                    stompClient.publish({
+                        destination: `/app/chat/${currentChatRoomId}/test`,
+                        body: JSON.stringify({ type: "CONNECT_TEST" })
+                    });
+                    
+                    debug(`[${role}] All subscriptions completed, UI enabled`);
+                } catch (err) {
+                    debug(`[${role}] Error in STOMP connect handler: ${err.message}`);
+                    console.error(`[${role}] Error in STOMP connect handler:`, err);
+                    
+                    // Enable UI even if STOMP subscriptions fail
+                    if (role === 'buyer') {
+                        buyerInput.disabled = false;
+                        buyerSendBtn.disabled = false;
+                        buyerTypingBtn.disabled = false;
+                        buyerTypingStopBtn.disabled = false;
+                    } else {
+                        sellerInput.disabled = false;
+                        sellerSendBtn.disabled = false;
+                        sellerTypingBtn.disabled = false;
+                        sellerTypingStopBtn.disabled = false;
+                    }
+                }
+            };
+            
+            // STOMP error handler
+            stompClient.onStompError = function(frame) {
+                debug(`[${role}] STOMP error: ${frame.headers.message}`);
+                console.error(`[${role}] STOMP error:`, frame.headers.message);
+                updateStatus(role, 'Error');
+                
+                // Enable UI even if STOMP connection has an error
+                if (role === 'buyer') {
+                    buyerInput.disabled = false;
+                    buyerSendBtn.disabled = false;
+                    buyerTypingBtn.disabled = false;
+                    buyerTypingStopBtn.disabled = false;
+                } else {
+                    sellerInput.disabled = false;
+                    sellerSendBtn.disabled = false;
+                    sellerTypingBtn.disabled = false;
+                    sellerTypingStopBtn.disabled = false;
+                }
+            };
+            
+            // Activate STOMP connection
+            debug(`[${role}] Activating STOMP connection...`);
+            try {
+                stompClient.activate();
+                
+                // Add a fallback in case onConnect isn't triggered
+                setTimeout(() => {
+                    if ((role === 'buyer' && buyerInput.disabled) ||
+                        (role === 'seller' && sellerInput.disabled)) {
+                        debug(`[${role}] STOMP connection timeout - forcing UI enable`);
+                        
+                        if (role === 'buyer') {
+                            buyerInput.disabled = false;
+                            buyerSendBtn.disabled = false;
+                            buyerTypingBtn.disabled = false;
+                            buyerTypingStopBtn.disabled = false;
+                            updateStatus('buyer', 'Connected*');
+                        } else {
+                            sellerInput.disabled = false;
+                            sellerSendBtn.disabled = false;
+                            sellerTypingBtn.disabled = false;
+                            sellerTypingStopBtn.disabled = false;
+                            updateStatus('seller', 'Connected*');
+                        }
+                    }
+                }, 5000); // 5 seconds timeout
+            } catch (err) {
+                debug(`[${role}] Error activating STOMP: ${err.message}`);
+                console.error(`[${role}] Error activating STOMP:`, err);
+                
+                // Enable UI even if STOMP connection fails
+                if (role === 'buyer') {
+                    buyerInput.disabled = false;
+                    buyerSendBtn.disabled = false;
+                    buyerTypingBtn.disabled = false;
+                    buyerTypingStopBtn.disabled = false;
+                    updateStatus('buyer', 'Fallback');
+                } else {
+                    sellerInput.disabled = false;
+                    sellerSendBtn.disabled = false;
+                    sellerTypingBtn.disabled = false;
+                    sellerTypingStopBtn.disabled = false;
+                    updateStatus('seller', 'Fallback');
+                }
+            }
+        }
+        
+        function sendMessage(role) {
+            const inputElement = role === 'buyer' ? buyerInput : sellerInput;
+            const content = inputElement.value.trim();
+            
+            if (!content) return;
+            
+            const stompClient = role === 'buyer' ? buyerStompClient : sellerStompClient;
+            
+            // Create a placeholder message immediately in the UI
+            const placeholderMessage = {
+                content: content,
+                createdAt: new Date().toISOString(),
+                status: 'SENDING',
+                sender: {
+                    name: role === 'buyer' ? 'Buyer' : 'Property Owner',
+                    roles: role === 'buyer' ? ['USER'] : ['USER', 'SELLER']
+                }
+            };
+            
+            // Store message reference to update it later
+            const messageId = `temp-${Date.now()}`;
+            placeholderMessage.tempId = messageId;
+            
+            // Show in both views for immediate feedback
+            displayMessage('buyer', placeholderMessage, role === 'buyer');
+            displayMessage('seller', placeholderMessage, role === 'seller');
+            
+            inputElement.value = '';
+            
+            // Use a fallback method if STOMP client isn't available
+            if (!stompClient || !stompClient.connected) {
+                debug(`[${role}] STOMP client not connected, using HTTP API to ensure persistence`);
+                
+                // Send message via HTTP API to ensure it's stored in the database
+                sendMessageViaHttp(role, content, messageId);
+                return;
+            }
+            
+            const destination = `/app/chat/${currentChatRoomId}/send`;
+            
+            try {
+                debug(`[${role}] Sending message to ${destination}: ${content}`);
+                
+                stompClient.publish({
+                    destination: destination,
+                    body: JSON.stringify({ content: content }),
+                    headers: { 'content-type': 'application/json' }
+                });
+                
+                debug(`[${role}] Message sent successfully via STOMP`);
+            } catch (error) {
+                debug(`[${role}] Error sending message via STOMP: ${error.message}`);
+                console.error(`[${role}] Error sending message via STOMP:`, error);
+                
+                // Try alternative method
+                sendMessageViaHttp(role, content, messageId);
+            }
+        }
+        
+        function sendMessageViaHttp(role, content, tempMessageId) {
+            const token = role === 'buyer' ? buyerTokenInput.value : sellerTokenInput.value;
+            const serverUrl = serverUrlInput.value.trim().replace('ws:', 'http:').split('/api/ws')[0];
+            const apiUrl = `${serverUrl}/api/chat/rooms/${currentChatRoomId}/messages`;
+            
+            debug(`[${role}] Sending message via HTTP API: ${apiUrl}`);
+            
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ content: content })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error(`HTTP error: ${response.status} ${response.statusText}`);
+                }
+            })
+            .then(data => {
+                debug(`[${role}] Message sent successfully via HTTP API, ID: ${data.id}`);
+                
+                // Update the UI with the saved message
+                const confirmedMessage = {
+                    id: data.id,
+                    content: content,
+                    createdAt: data.createdAt || new Date().toISOString(),
+                    status: 'SENT',
+                    tempId: tempMessageId,
+                    sender: {
+                        id: data.sender?.id,
+                        name: data.sender?.name || (role === 'buyer' ? 'Buyer' : 'Property Owner'),
+                        roles: data.sender?.roles || (role === 'buyer' ? ['USER'] : ['USER', 'SELLER'])
+                    }
+                };
+                
+                // Update message status in both views
+                displayMessage('buyer', confirmedMessage);
+                displayMessage('seller', confirmedMessage);
+                
+                // Create a synthetic message event for the WebSocket
+                if (role === 'buyer' && sellerSocket && sellerSocket.readyState === WebSocket.OPEN) {
+                    setTimeout(() => {
+                        // Broadcast to the other user via their socket connection
+                        const syntheticEvent = {
+                            message: confirmedMessage
+                        };
+                        const otherSocket = role === 'buyer' ? sellerSocket : buyerSocket;
+                        if (otherSocket && otherSocket.readyState === WebSocket.OPEN) {
+                            try {
+                                otherSocket.dispatchEvent(new MessageEvent('message', {
+                                    data: JSON.stringify(syntheticEvent)
+                                }));
+                            } catch (e) {
+                                debug(`[${role}] Error dispatching synthetic event: ${e.message}`);
+                            }
+                        }
+                    }, 500);
+                }
+            })
+            .catch(error => {
+                debug(`[${role}] Error sending via HTTP API: ${error.message}`);
+                console.error(`[${role}] Error sending via HTTP API:`, error);
+                
+                // Update UI to show error status
+                const errorMessage = {
+                    content: content,
+                    createdAt: new Date().toISOString(),
+                    status: 'ERROR',
+                    tempId: tempMessageId,
+                    sender: {
+                        name: role === 'buyer' ? 'Buyer' : 'Property Owner',
+                        roles: role === 'buyer' ? ['USER'] : ['USER', 'SELLER']
+                    }
+                };
+                
+                // Only update in sender's view
+                if (role === 'buyer') {
+                    displayMessage('buyer', errorMessage);
+                } else {
+                    displayMessage('seller', errorMessage);
+                }
+            });
+        }
+        
+        function displayMessage(viewRole, message, isLocalEcho = false) {
+            try {
+                // Get the target container
+                const container = viewRole === 'buyer' ? buyerMessages : sellerMessages;
+                
+                // Check if this is a status update for an existing message
+                if (message.tempId) {
+                    const existingMsg = container.querySelector(`[data-temp-id="${message.tempId}"]`);
+                    if (existingMsg) {
+                        // Update the status of the existing message
+                        const statusElement = existingMsg.querySelector('.message-status');
+                        if (statusElement) {
+                            statusElement.textContent = message.status || 'SENT';
+                        }
+                        return;
+                    }
+                }
+                
+                // Check if this message already exists by id (to avoid duplicates)
+                if (!isLocalEcho && message.id) {
+                    const existingMsg = container.querySelector(`[data-message-id="${message.id}"]`);
+                    if (existingMsg) {
+                        debug(`[${viewRole}] Skipping duplicate message with id: ${message.id}`);
+                        return;
+                    }
+                }
+                
+                // Check if this is essentially the same message content sent recently (within 2 seconds)
+                const recentMessages = Array.from(container.querySelectorAll('.message'));
+                const lastFewMessages = recentMessages.slice(-3); // Check last 3 messages
+                
+                for (const recentMsg of lastFewMessages) {
+                    const contentEl = recentMsg.querySelector('.message-content');
+                    if (contentEl && contentEl.textContent === message.content) {
+                        const timeEl = recentMsg.querySelector('.message-time');
+                        if (timeEl) {
+                            const msgTime = new Date(timeEl.dataset.timestamp || 0);
+                            const newMsgTime = new Date(message.createdAt);
+                            const timeDiff = Math.abs(newMsgTime - msgTime);
+                            
+                            // If same content was sent within 2 seconds, likely a duplicate
+                            if (timeDiff < 2000) {
+                                debug(`[${viewRole}] Skipping likely duplicate message: ${message.content.substring(0, 15)}...`);
+                                return;
+                            }
+                        }
+                    }
+                }
+                
+                // Create message element
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                
+                // Add message ID if available
+                if (message.id) {
+                    messageDiv.setAttribute('data-message-id', message.id);
+                }
+                
+                // Add temp ID for status updates
+                if (message.tempId) {
+                    messageDiv.setAttribute('data-temp-id', message.tempId);
+                }
+                
+                // For local echo messages (messages sent by user before server confirmation)
+                if (isLocalEcho) {
+                    messageDiv.classList.add('sent');
+                    if (viewRole === 'seller' && message.sender.roles && message.sender.roles.includes('SELLER')) {
+                        messageDiv.classList.add('seller-message');
+                    }
+                } else {
+                    // Determine if message is from viewRole's perspective
+                    const isMine = viewRole === 'buyer' ? 
+                        (!message.sender.roles || !message.sender.roles.includes('SELLER')) : 
+                        (message.sender.roles && message.sender.roles.includes('SELLER'));
+                    
+                    if (isMine) {
+                        messageDiv.classList.add('sent');
+                    } else {
+                        messageDiv.classList.add('received');
+                    }
+                    
+                    // Style admin messages
+                    if (message.adminMessage) {
+                        messageDiv.classList.add('admin-message');
+                    } else if (message.sender.roles && message.sender.roles.includes('SELLER')) {
+                        messageDiv.classList.add('seller-message');
+                    }
+                }
+                
+                // Build message content
+                let content = '';
+                
+                // Show sender name for received messages
+                if (messageDiv.classList.contains('received')) {
+                    // Display sender name with role
+                    const roleBadge = message.sender.roles ? 
+                        `<small style="color: #777;">(${message.sender.roles.join(', ')})</small>` : '';
+                    content += `<div class="message-sender">${message.sender.name || 'Unknown'} ${roleBadge}</div>`;
+                }
+                
+                content += `<div class="message-content">${message.content}</div>`;
+                
+                // Add message metadata
+                content += `<div class="message-meta">
+                    <span class="message-time" data-timestamp="${message.createdAt}">${new Date(message.createdAt).toLocaleTimeString()}</span> - 
+                    <span class="message-status">${message.status || 'SENT'}</span>
+                    ${message.edited ? ' (edited)' : ''}
+                    ${message.read ? ' (read)' : ''}
+                </div>`;
+                
+                // Add message actions for received messages
+                if (messageDiv.classList.contains('received') && !isLocalEcho) {
+                    content += `<div class="message-actions">
+                        <button class="message-action-btn mark-read-btn" data-message-id="${message.id || ''}">Mark as Read</button>
+                    </div>`;
+                }
+                
+                messageDiv.innerHTML = content;
+                
+                // Add event listener for the read button
+                const readBtn = messageDiv.querySelector('.mark-read-btn');
+                if (readBtn) {
+                    readBtn.addEventListener('click', function() {
+                        const msgId = this.getAttribute('data-message-id');
+                        if (msgId) {
+                            markMessageAsRead(viewRole, msgId);
+                            
+                            // Update UI
+                            const statusElement = messageDiv.querySelector('.message-status');
+                            if (statusElement) {
+                                statusElement.textContent = 'READ';
+                            }
+                            
+                            // Disable the button after use
+                            this.disabled = true;
+                            this.textContent = 'Read';
+                        }
+                    });
+                }
+                
+                // Add to container
+                container.appendChild(messageDiv);
+                container.scrollTop = container.scrollHeight;
+                
+                debug(`[${viewRole}] Message displayed: "${message.content.substring(0, 15)}${message.content.length > 15 ? '...' : ''}"`);
+            } catch (error) {
+                debug(`Error displaying message: ${error.message}`);
+                console.error("Error displaying message:", error);
+            }
+        }
+        
+        function markMessageAsRead(role, messageId) {
+            const stompClient = role === 'buyer' ? buyerStompClient : sellerStompClient;
+            
+            // Try to send via STOMP if available
+            if (stompClient && stompClient.connected) {
+                try {
+                    debug(`[${role}] Sending read receipt via STOMP for message: ${messageId}`);
+                    
+                    stompClient.publish({
+                        destination: `/app/chat/${currentChatRoomId}/read/${messageId}`,
+                        body: JSON.stringify({ messageId: messageId })
+                    });
+                    
+                    return;
+                } catch (error) {
+                    debug(`[${role}] Error sending read receipt via STOMP: ${error.message}`);
+                }
+            }
+            
+            // Try to send via direct WebSocket
+            const socket = role === 'buyer' ? buyerSocket : sellerSocket;
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                try {
+                    const message = {
+                        destination: `/app/chat/${currentChatRoomId}/read/${messageId}`,
+                        body: JSON.stringify({ messageId: messageId })
+                    };
+                    
+                    socket.send(JSON.stringify(message));
+                    debug(`[${role}] Read receipt sent via direct WebSocket`);
+                    return;
+                } catch (error) {
+                    debug(`[${role}] Error sending read receipt via direct WebSocket: ${error.message}`);
+                }
+            }
+            
+            // Fall back to HTTP request
+            sendReadReceiptViaHttp(role, messageId);
+        }
+        
+        function sendReadReceiptViaHttp(role, messageId) {
+            const token = role === 'buyer' ? buyerTokenInput.value : sellerTokenInput.value;
+            const serverUrl = serverUrlInput.value.trim().replace('ws:', 'http:').split('/api/ws')[0];
+            const apiUrl = `${serverUrl}/api/chat/messages/${messageId}/read`;
+            
+            debug(`[${role}] Attempting to send read receipt via HTTP API: ${apiUrl}`);
+            
+            fetch(apiUrl, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    debug(`[${role}] Read receipt sent successfully via HTTP API`);
+                } else {
+                    debug(`[${role}] HTTP API error: ${response.status} ${response.statusText}`);
+                }
+            })
+            .catch(error => {
+                debug(`[${role}] Error sending read receipt via HTTP API: ${error.message}`);
+            });
+        }
+        
+        function handleTypingNotification(viewRole, notification) {
+            // Only show typing indicator for the opposite role
+            const indicator = viewRole === 'buyer' ? buyerTypingIndicator : sellerTypingIndicator;
+            
+            // Check if this is from the opposite role
+            const isOtherRole = viewRole === 'buyer' ?
+                (notification.roles && notification.roles.includes('SELLER')) :
+                (!notification.roles || !notification.roles.includes('SELLER'));
+            
+            if (isOtherRole && notification.isTyping) {
+                indicator.textContent = `${notification.username || 'The other person'} is typing...`;
+                
+                // Auto-clear after 3 seconds if no update
+                setTimeout(() => {
+                    if (indicator.textContent.includes('is typing')) {
+                        indicator.textContent = '';
+                    }
+                }, 3000);
+            } else if (!notification.isTyping) {
+                indicator.textContent = '';
+            }
+        }
+        
+        function sendTypingIndicator(role, isTyping) {
+            const stompClient = role === 'buyer' ? buyerStompClient : sellerStompClient;
+            
+            // Update local UI immediately
+            const typingIndicator = role === 'buyer' ? buyerTypingIndicator : sellerTypingIndicator;
+            if (isTyping) {
+                typingIndicator.textContent = "You are typing...";
+                setTimeout(() => {
+                    if (typingIndicator.textContent === "You are typing...") {
+                        typingIndicator.textContent = "";
+                    }
+                }, 3000); // Auto-clear after 3 seconds
+            } else {
+                typingIndicator.textContent = "";
+            }
+            
+            // Try to send typing indicator
+            if (!stompClient || !stompClient.connected) {
+                debug(`[${role}] Cannot send typing via STOMP: not connected, trying direct WebSocket`);
+                
+                // Try to send via direct WebSocket
+                const socket = role === 'buyer' ? buyerSocket : sellerSocket;
+                if (socket && socket.readyState === WebSocket.OPEN) {
+                    try {
+                        const destination = `/app/chat/${currentChatRoomId}/typing`;
+                        const message = {
+                            destination: destination,
+                            body: JSON.stringify(isTyping)
+                        };
+                        
+                        socket.send(JSON.stringify(message));
+                        debug(`[${role}] Typing indicator sent via direct WebSocket`);
+                        
+                        // Update the other side's typing indicator
+                        const otherRole = role === 'buyer' ? 'seller' : 'buyer';
+                        const otherIndicator = otherRole === 'buyer' ? buyerTypingIndicator : sellerTypingIndicator;
+                        
+                        if (isTyping) {
+                            otherIndicator.textContent = `${role === 'buyer' ? 'Buyer' : 'Property Owner'} is typing...`;
+                            setTimeout(() => {
+                                if (otherIndicator.textContent === `${role === 'buyer' ? 'Buyer' : 'Property Owner'} is typing...`) {
+                                    otherIndicator.textContent = "";
+                                }
+                            }, 3000);
+                        }
+                        
+                        return;
+                    } catch (error) {
+                        debug(`[${role}] Error sending typing via direct WebSocket: ${error.message}`);
+                    }
+                }
+                
+                return;
+            }
+            
+            const destination = `/app/chat/${currentChatRoomId}/typing`;
+            
+            try {
+                debug(`[${role}] Sending typing indicator (${isTyping ? 'start' : 'stop'}) to ${destination}`);
+                
+                stompClient.publish({
+                    destination: destination,
+                    body: JSON.stringify(isTyping)
+                });
+            } catch (error) {
+                debug(`[${role}] Error sending typing indicator: ${error.message}`);
+                console.error(`[${role}] Error sending typing indicator:`, error);
+            }
+        }
+    </script>
+</body>
+</html> 

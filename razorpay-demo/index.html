@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NearProp Razorpay Demo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>NearProp Razorpay Integration Demo</h1>
+        
+        <div class="payment-form">
+            <h2>Make a Payment</h2>
+            
+            <div class="form-group">
+                <label for="amount">Amount (INR)</label>
+                <input type="number" id="amount" value="99.00" min="1" step="0.01">
+            </div>
+            
+            <div class="form-group">
+                <label for="payment-type">Payment Type</label>
+                <select id="payment-type">
+                    <option value="SUBSCRIPTION">Subscription</option>
+                    <option value="PROPERTY_LISTING">Property Listing</option>
+                    <option value="REEL_PURCHASE">Reel Purchase</option>
+                    <option value="SERVICE_FEE">Service Fee</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" value="Test User">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" value="test@example.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" value="9876543210">
+            </div>
+            
+            <button id="pay-button" class="btn">Pay Now</button>
+        </div>
+        
+        <div class="payment-status">
+            <h2>Payment Status</h2>
+            <div id="payment-info">
+                <p>No payment initiated yet.</p>
+            </div>
+        </div>
+        
+        <div class="test-info">
+            <h2>Test Information</h2>
+            <p>Use the following test card for payments:</p>
+            <ul>
+                <li><strong>Card Number:</strong> 4111 1111 1111 1111</li>
+                <li><strong>Expiry:</strong> Any future date</li>
+                <li><strong>CVV:</strong> Any 3 digits</li>
+                <li><strong>Name:</strong> Any name</li>
+            </ul>
+            <p>For UPI, use <strong>success@razorpay</strong> as the UPI ID.</p>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

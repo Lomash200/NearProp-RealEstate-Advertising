@@ -1,0 +1,325 @@
+package com.nearprop.service;
+
+import com.nearprop.dto.auth.LoginRequest;
+import com.nearprop.dto.auth.RegisterRequest;
+import com.nearprop.dto.auth.TokenResponse;
+import com.nearprop.dto.auth.VerifyOtpRequest;
+import com.nearprop.dto.auth.RegisterResponse;
+import com.nearprop.entity.Role;
+import com.nearprop.entity.User;
+import com.nearprop.entity.UserSession;
+import com.nearprop.entity.OtpType;
+import com.nearprop.entity.Otp;
+import com.nearprop.exception.AuthException;
+import com.nearprop.repository.UserRepository;
+import com.nearprop.repository.UserSessionRepository;
+import com.nearprop.repository.OtpRepository;
+import com.nearprop.security.JwtUtil;
+import com.nearprop.config.JwtConfig;
+import com.nearprop.util.IdGenerator;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class AuthService {
+    private final UserRepository userRepository;
+    private final UserSessionRepository userSessionRepository;
+    private final OtpService otpService;
+    private final NotificationService notificationService;
+    private final EmailService emailService;
+    private final JwtUtil jwtUtil;
+    private final JwtConfig jwtConfig;
+    private final OtpRepository otpRepository;
+
+    @Transactional
+    public RegisterResponse register(RegisterRequest request) {
+        log.debug("Processing registration request for mobile: {}", request.getMobileNumber());
+
+        User existingUser = userRepository.findByMobileNumber(request.getMobileNumber()).orElse(null);
+        User existingEmailUser = (request.getEmail() != null) ? userRepository.findByEmail(request.getEmail()).orElse(null) : null;
+
+        boolean mobileExists = existingUser != null;
+        boolean emailExists = existingEmailUser != null;
+        boolean mobileVerified = mobileExists && existingUser.isMobileVerified();
+        boolean emailVerified = emailExists && existingEmailUser != null && existingEmailUser.isEmailVerified();
+
+        String mobileOtp = null;
+        String emailOtp = null;
+        String message = "";
+
+        if (mobileExists && !mobileVerified) {
+            // Resend OTP for mobile
+            mobileOtp = otpService.generateOtp(request.getMobileNumber(), OtpType.MOBILE);
+            message = "Mobile number is registered but not verified. OTP resent.";
+        }
+        if (emailExists && !emailVerified) {
+            // Resend OTP for email
+            emailOtp = otpService.generateOtp(request.getEmail(), OtpType.EMAIL);
+            if (!message.isEmpty()) {
+                message += " Email is registered but not verified. OTP resent.";
+            } else {
+                message = "Email is registered but not verified. OTP resent.";
+            }
+        }
+        if ((mobileExists && mobileVerified) && (request.getEmail() == null || (emailExists && emailVerified))) {
+            throw new AuthException("Mobile number and email already registered and verified");
+        }
+        if (mobileExists || emailExists) {
+            return RegisterResponse.builder()
+                .success(false)
+                .message(message)
+                .mobileVerified(mobileVerified)
+                .emailVerified(emailVerified)
+                .mobileOtp(mobileOtp)
+                .emailOtp(emailOtp)
+                .build();
+        }
+
+        // Generate appropriate permanent ID based on role
+        String permanentId;
+        if (request.getRoles() != null && request.getRoles().contains(Role.SELLER)) {
+            permanentId = IdGenerator.generateSellerId();
+        } else if (request.getRoles() != null && request.getRoles().contains(Role.ADVISOR)) {
+            permanentId = IdGenerator.generatePropertyAdvisorId();
+        } else if (request.getRoles() != null && request.getRoles().contains(Role.DEVELOPER)) {
+            permanentId = IdGenerator.generateDeveloperId();
+        } else {
+            permanentId = IdGenerator.generateUserId();
+        }
+
+        User user = User.builder()
+                .name(request.getName())
+                .mobileNumber(request.getMobileNumber())
+                .email(request.getEmail())
+                .address(request.getAddress())
+                .district(request.getDistrict())
+                .roles(request.getRoles() != null ? request.getRoles() : Set.of(Role.USER))
+                .mobileVerified(false)
+                .emailVerified(false)
+                .permanentId(permanentId)
+                .build();
+
+        userRepository.save(user);
+        log.debug("User created successfully with ID: {} and permanent ID: {}", user.getId(), user.getPermanentId());
+
+        // Send OTP to mobile
+        mobileOtp = otpService.generateOtp(request.getMobileNumber(), OtpType.MOBILE);
+        // Send OTP to email if provided
+        if (request.getEmail() != null) {
+            emailOtp = otpService.generateOtp(request.getEmail(), OtpType.EMAIL);
+        }
+        return RegisterResponse.builder()
+            .success(true)
+            .message("Registration successful. Please verify your mobile number and email.")
+            .mobileVerified(false)
+            .emailVerified(false)
+            .mobileOtp(mobileOtp)
+            .emailOtp(emailOtp)
+            .build();
+    }
+
+    @Transactional
+    public TokenResponse login(LoginRequest request) {
+        log.debug("Processing login request for identifier: {}", request.getMobileNumber());
+
+        User user = userRepository.findByMobileNumber(request.getMobileNumber())
+                .orElseThrow(() -> new AuthException("User not found"));
+
+        // Generate OTP and get the generated code
+        String generatedOtp = otpService.generateOtp(request.getMobileNumber(), OtpType.MOBILE);
+
+        // Include the OTP in the response for testing purposes
+        return TokenResponse.builder()
+                .message("OTP sent successfully")
+                .otp(generatedOtp) // Include OTP for testing
+                .build();
+    }
+
+    @Transactional
+    public TokenResponse verifyOtp(VerifyOtpRequest request) {
+        try {
+            OtpType otpType = request.getType();
+            String identifier = request.getIdentifier();
+            String otpCode = request.getCode();
+    
+            if (otpType == OtpType.MOBILE) {
+                verifyMobileOtp(identifier, otpCode);
+            } else if (otpType == OtpType.EMAIL) {
+                verifyEmailOtp(identifier, otpCode);
+                // For email verification, we just mark the email as verified
+                // and don't generate a token
+                return TokenResponse.builder()
+                        .message("Email verified successfully")
+                        .build();
+            } else {
+                throw new AuthException("Invalid OTP type: " + otpType);
+            }
+    
+            User user = userRepository.findByMobileNumber(identifier)
+                    .orElseThrow(() -> new AuthException("User not found with mobile: " + identifier));
+    
+            // Create a session and generate JWT token
+            String token = generateToken(user, request.getDeviceInfo(), "");
+            
+            return TokenResponse.builder()
+                    .token(token)
+                    .message("Login successful")
+                    .userId(user.getId())
+                    .roles(user.getRoles())
+                    .name(user.getName())
+                    .email(user.getEmail())
+                    .mobileNumber(user.getMobileNumber())
+                    .permanentId(user.getPermanentId())
+                    .build();
+        } catch (Exception e) {
+            log.error("Error in verifyOtp: {}", e.getMessage(), e);
+            throw new AuthException("OTP Verification Error: " + e.getMessage());
+        }
+    }
+
+    private void verifyMobileOtp(String mobileNumber, String otpCode) {
+        log.info("Verifying mobile OTP for mobile: {}, code: {}", mobileNumber, otpCode);
+        
+        boolean isValid = otpService.verifyOtp(mobileNumber, otpCode, OtpType.MOBILE);
+        log.info("OTP verification result: {}", isValid);
+        
+        if (!isValid) {
+            log.error("OTP verification failed for mobile: {}", mobileNumber);
+            throw new AuthException("Invalid OTP code for mobile: " + mobileNumber);
+        }
+        
+        User user = userRepository.findByMobileNumber(mobileNumber)
+                .orElseThrow(() -> new AuthException("User not found with mobile: " + mobileNumber));
+        
+        user.setMobileVerified(true);
+        userRepository.save(user);
+        log.info("User mobile verified successfully: {}", user.getId());
+    }
+    
+    private void verifyEmailOtp(String email, String otpCode) {
+        boolean isValid = otpService.verifyOtp(email, otpCode, OtpType.EMAIL);
+        if (!isValid) {
+            throw new AuthException("Invalid OTP");
+        }
+        
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new AuthException("User not found"));
+        
+        user.setEmailVerified(true);
+        userRepository.save(user);
+        
+        // Send welcome email if this is first verification
+        if (user.isEmailVerified() && !user.isMobileVerified()) {
+            emailService.sendWelcomeEmail(email, user.getName());
+        }
+    }
+
+    private String generateToken(User user, String deviceInfo, String ipAddress) {
+        // For non-franchisee roles, deactivate all existing sessions
+        if (!user.getRoles().contains(Role.FRANCHISEE)) {
+            userSessionRepository.deactivateAllUserSessions(user.getId());
+        }
+
+        // Determine expiration time based on roles
+        // ROLE_USER gets non-expiring token (100 years)
+        // Other roles get 7-day token
+        long expirationTime = user.getRoles().stream()
+                .anyMatch(role -> role == Role.USER && !user.getRoles().contains(Role.SELLER) 
+                        && !user.getRoles().contains(Role.ADVISOR) 
+                        && !user.getRoles().contains(Role.DEVELOPER)
+                        && !user.getRoles().contains(Role.FRANCHISEE))
+                ? 100L * 365 * 24 * 60 * 60 * 1000 // 100 years in milliseconds
+                : 7L * 24 * 60 * 60 * 1000;        // 7 days in milliseconds
+
+        LocalDateTime expiresAt = LocalDateTime.now().plusSeconds(expirationTime / 1000);
+
+        // Provide default values for deviceInfo and ipAddress if they are null
+        String finalDeviceInfo = (deviceInfo != null && !deviceInfo.isEmpty()) ? deviceInfo : "Unknown Device";
+        String finalIpAddress = (ipAddress != null && !ipAddress.isEmpty()) ? ipAddress : "0.0.0.0";
+
+        UserSession session = UserSession.builder()
+                .sessionId(UUID.randomUUID().toString())
+                .user(user)
+                .deviceInfo(finalDeviceInfo)
+                .ipAddress(finalIpAddress)
+                .active(true)
+                .expiresAt(expiresAt)
+                .build();
+
+        userSessionRepository.save(session);
+
+        return jwtUtil.generateToken(user, session.getSessionId());
+    }
+
+    @Transactional
+    public void logout(String sessionId) {
+        log.debug("Processing logout for session: {}", sessionId);
+        userSessionRepository.findBySessionIdAndActive(sessionId, true)
+                .ifPresent(session -> {
+                    session.setActive(false);
+                    userSessionRepository.save(session);
+                    log.debug("Session deactivated: {}", sessionId);
+                });
+    }
+    
+    @Transactional
+    public void sendEmailVerification(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new AuthException("User not found"));
+        
+        if (user.isEmailVerified()) {
+            throw new AuthException("Email already verified");
+        }
+        
+        otpService.generateOtp(email, OtpType.EMAIL);
+    }
+
+    /**
+     * Add or update email for an authenticated user
+     * 
+     * @param userId The ID of the authenticated user
+     * @param email The new email to add or update
+     * @return The generated OTP code for verification
+     */
+    @Transactional
+    public String addOrUpdateEmail(Long userId, String email) {
+        log.info("Adding/updating email for user {}: {}", userId, email);
+        
+        // Check if email is already in use by another user
+        Optional<User> existingEmailUser = userRepository.findByEmail(email);
+        if (existingEmailUser.isPresent() && !existingEmailUser.get().getId().equals(userId)) {
+            throw new AuthException("Email is already registered to another user");
+        }
+        
+        // Get the user
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new AuthException("User not found"));
+        
+        // Update the email (will be marked as unverified)
+        user.setEmail(email);
+        user.setEmailVerified(false);
+        userRepository.save(user);
+        
+        // Generate and send OTP
+        String otp = otpService.generateOtp(email, OtpType.EMAIL);
+        log.info("Email updated and verification OTP sent for user {}", userId);
+        
+        return otp;
+    }
+
+    public String resendMobileOtp(String mobileNumber) {
+        User user = userRepository.findByMobileNumber(mobileNumber)
+                .orElseThrow(() -> new AuthException("User with this mobile number does not exist"));
+        return otpService.generateOtp(mobileNumber, OtpType.MOBILE);
+    }
+} 

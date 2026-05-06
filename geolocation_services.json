@@ -1,0 +1,195 @@
+{
+    "name": "Geolocation Services",
+    "description": "Endpoints for geolocation services including geocoding and distance calculation",
+    "item": [
+        {
+            "name": "Geocode Address",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"address\": \"Rajwada, Indore, Madhya Pradesh, India\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/v1/geolocation/geocode",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "geolocation",
+                        "geocode"
+                    ]
+                },
+                "description": "Geocodes an address to get latitude and longitude coordinates.\n\n**Request Body:**\n- `address`: The address to geocode\n\n**No auth required**"
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Parse the response",
+                            "var jsonData = JSON.parse(responseBody);",
+                            "",
+                            "// Check if the request was successful",
+                            "pm.test(\"Status code is 200\", function () {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"Geocoding successful\", function () {",
+                            "    pm.expect(jsonData).to.have.property(\"latitude\");",
+                            "    pm.expect(jsonData).to.have.property(\"longitude\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Calculate Distance",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"lat1\": 22.7196,\n    \"lon1\": 75.8577,\n    \"lat2\": 22.7477,\n    \"lon2\": 75.8982\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/v1/geolocation/distance",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "geolocation",
+                        "distance"
+                    ]
+                },
+                "description": "Calculates the distance between two points using the Haversine formula.\n\n**Request Body:**\n- `lat1`: Latitude of first point\n- `lon1`: Longitude of first point\n- `lat2`: Latitude of second point\n- `lon2`: Longitude of second point\n\n**No auth required**"
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Parse the response",
+                            "var jsonData = JSON.parse(responseBody);",
+                            "",
+                            "// Check if the request was successful",
+                            "pm.test(\"Status code is 200\", function () {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"Distance calculation successful\", function () {",
+                            "    pm.expect(jsonData).to.have.property(\"distanceKm\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Check If Within Radius",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"lat1\": 22.7196,\n    \"lon1\": 75.8577,\n    \"lat2\": 22.7477,\n    \"lon2\": 75.8982,\n    \"radiusKm\": 10.0\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/v1/geolocation/within-radius",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "geolocation",
+                        "within-radius"
+                    ]
+                },
+                "description": "Checks if a location is within a specified radius of another location.\n\n**Request Body:**\n- `lat1`: Latitude of first point\n- `lon1`: Longitude of first point\n- `lat2`: Latitude of second point\n- `lon2`: Longitude of second point\n- `radiusKm`: Radius in kilometers\n\n**No auth required**"
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Parse the response",
+                            "var jsonData = JSON.parse(responseBody);",
+                            "",
+                            "// Check if the request was successful",
+                            "pm.test(\"Status code is 200\", function () {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"Within radius check successful\", function () {",
+                            "    pm.expect(jsonData).to.have.property(\"withinRadius\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        }
+    ]
+} 

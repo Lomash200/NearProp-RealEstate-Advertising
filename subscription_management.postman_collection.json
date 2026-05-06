@@ -1,0 +1,831 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-5678-90ab-cdef-123456789012",
+    "name": "NearProp - Subscription Management",
+    "description": "# NearProp Subscription Management APIs\n\nThis collection contains endpoints for managing subscription plans, user subscriptions, and content visibility in the NearProp platform.\n\n## Admin Subscription Plan Management\nAllows administrators to create, update, and manage subscription plans with different features and pricing.\n\n## User Subscription Management\nEnables users to subscribe to plans, renew subscriptions, and manage their active subscriptions.\n\n## Payment Integration\nHandles payment processing through the Razorpay payment gateway, including payment initiation, verification, and refunds.\n\n## Content Visibility Control\nHandles automatic content hiding and deletion based on subscription status and plan settings.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Admin - Subscription Plan Management",
+      "description": "Endpoints for administrators to manage subscription plans",
+      "item": [
+        {
+          "name": "Create Subscription Plan",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Premium Plan\",\n    \"description\": \"Advanced features for property owners\",\n    \"type\": \"PREMIUM\",\n    \"price\": 999.00,\n    \"marketingFee\": null,\n    \"durationDays\": 30,\n    \"maxProperties\": 10,\n    \"maxReelsPerProperty\": 5,\n    \"maxTotalReels\": 50,\n    \"contentHideAfterDays\": 30,\n    \"contentDeleteAfterDays\": 60,\n    \"active\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/subscription-plans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "subscription-plans"
+              ]
+            },
+            "description": "Create a new subscription plan with specified features and pricing"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Franchise Plan",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Franchise Plan - Delhi\",\n    \"description\": \"Franchise license for Delhi region\",\n    \"type\": \"FRANCHISEE\",\n    \"price\": 50000.00,\n    \"marketingFee\": 25000.00,\n    \"durationDays\": 365,\n    \"active\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/subscription-plans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "subscription-plans"
+              ]
+            },
+            "description": "Create a franchise subscription plan with marketing fee"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Subscription Plans",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/subscription-plans?page=0&size=10&sortBy=createdAt&direction=DESC",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "subscription-plans"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "createdAt"
+                },
+                {
+                  "key": "direction",
+                  "value": "DESC"
+                }
+              ]
+            },
+            "description": "Get all subscription plans with pagination"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Subscription Plan by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/subscription-plans/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "subscription-plans",
+                "1"
+              ]
+            },
+            "description": "Get a specific subscription plan by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Plans by Type",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/subscription-plans/type/BASIC",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "subscription-plans",
+                "type",
+                "BASIC"
+              ]
+            },
+            "description": "Get subscription plans by type (BASIC, PREMIUM, PRO, FRANCHISEE)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Subscription Plan",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Premium Plan - Updated\",\n    \"description\": \"Updated features for property owners\",\n    \"type\": \"PREMIUM\",\n    \"price\": 1299.00,\n    \"durationDays\": 30,\n    \"maxProperties\": 15,\n    \"maxReelsPerProperty\": 8,\n    \"maxTotalReels\": 100,\n    \"contentHideAfterDays\": 30,\n    \"contentDeleteAfterDays\": 60,\n    \"active\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/subscription-plans/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "subscription-plans",
+                "1"
+              ]
+            },
+            "description": "Update an existing subscription plan"
+          },
+          "response": []
+        },
+        {
+          "name": "Activate Subscription Plan",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/subscription-plans/1/activate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "subscription-plans",
+                "1",
+                "activate"
+              ]
+            },
+            "description": "Activate a subscription plan"
+          },
+          "response": []
+        },
+        {
+          "name": "Deactivate Subscription Plan",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/subscription-plans/1/deactivate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "subscription-plans",
+                "1",
+                "deactivate"
+              ]
+            },
+            "description": "Deactivate a subscription plan"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Subscription Plan",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/subscription-plans/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "subscription-plans",
+                "1"
+              ]
+            },
+            "description": "Delete a subscription plan (soft delete)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User - Subscription Management",
+      "description": "Endpoints for users to manage their subscriptions",
+      "item": [
+        {
+          "name": "Get Available Plans",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/subscriptions/plans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "subscriptions",
+                "plans"
+              ]
+            },
+            "description": "Get all available subscription plans"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Plans by Type",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/subscriptions/plans/BASIC",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "subscriptions",
+                "plans",
+                "BASIC"
+              ]
+            },
+            "description": "Get subscription plans by type"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"planId\": 1,\n    \"propertyId\": 123,\n    \"autoRenew\": true,\n    \"paymentMethod\": \"CREDIT_CARD\",\n    \"paymentReferenceId\": \"PAY-123456789\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/subscriptions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "subscriptions"
+              ]
+            },
+            "description": "Create a new subscription"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Franchise Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"planId\": 3,\n    \"autoRenew\": false,\n    \"paymentMethod\": \"BANK_TRANSFER\",\n    \"paymentReferenceId\": \"BANK-987654321\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/subscriptions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "subscriptions"
+              ]
+            },
+            "description": "Create a franchise subscription"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Subscription by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/subscriptions/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "subscriptions",
+                "1"
+              ]
+            },
+            "description": "Get a specific subscription by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User's Subscriptions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/subscriptions/my-subscriptions?page=0&size=10&sortBy=startDate&direction=DESC",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "subscriptions",
+                "my-subscriptions"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "startDate"
+                },
+                {
+                  "key": "direction",
+                  "value": "DESC"
+                }
+              ]
+            },
+            "description": "Get all subscriptions for the current user"
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/subscriptions/1/cancel",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "subscriptions",
+                "1",
+                "cancel"
+              ]
+            },
+            "description": "Cancel a subscription"
+          },
+          "response": []
+        },
+        {
+          "name": "Renew Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/subscriptions/1/renew",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "subscriptions",
+                "1",
+                "renew"
+              ]
+            },
+            "description": "Renew an existing subscription"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Payment Integration",
+      "description": "Endpoints for payment processing with Razorpay gateway",
+      "item": [
+        {
+          "name": "Initiate Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount\": 999.00,\n    \"currency\": \"INR\",\n    \"paymentType\": \"SUBSCRIPTION\",\n    \"subscriptionPlanId\": 1,\n    \"propertyId\": 123,\n    \"autoRenew\": true,\n    \"customerName\": \"Test User\",\n    \"customerEmail\": \"user@example.com\",\n    \"customerPhone\": \"9876543210\",\n    \"successUrl\": \"https://nearprop.com/payment/success\",\n    \"failureUrl\": \"https://nearprop.com/payment/failure\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/payments/initiate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "initiate"
+              ]
+            },
+            "description": "Initiate a payment transaction with Razorpay"
+          },
+          "response": []
+        },
+        {
+          "name": "Verify Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"referenceId\": \"NP-PAY-ABCD1234\",\n    \"gatewayTransactionId\": \"pay_XXXXXXXXXX\",\n    \"gatewayOrderId\": \"order_XXXXXXXXXX\",\n    \"paymentSignature\": \"XXXXXXXXXXXXXXXXXXXXXXX\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/payments/verify",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "verify"
+              ]
+            },
+            "description": "Verify a completed payment with signature validation"
+          },
+          "response": []
+        },
+        {
+          "name": "Check Payment Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/payments/NP-PAY-ABCD1234/status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "NP-PAY-ABCD1234",
+                "status"
+              ]
+            },
+            "description": "Check the status of a payment transaction"
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/payments/NP-PAY-ABCD1234/cancel",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "NP-PAY-ABCD1234",
+                "cancel"
+              ]
+            },
+            "description": "Cancel an initiated payment transaction"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Receipt",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/payments/NP-PAY-ABCD1234/receipt",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "NP-PAY-ABCD1234",
+                "receipt"
+              ]
+            },
+            "description": "Generate receipt for a successful payment"
+          },
+          "response": []
+        },
+        {
+          "name": "Process Refund - Full",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/payments/NP-PAY-ABCD1234/refund?reason=Customer requested cancellation",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "NP-PAY-ABCD1234",
+                "refund"
+              ],
+              "query": [
+                {
+                  "key": "reason",
+                  "value": "Customer requested cancellation"
+                }
+              ]
+            },
+            "description": "Process a full refund for a payment"
+          },
+          "response": []
+        },
+        {
+          "name": "Process Refund - Partial",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/payments/NP-PAY-ABCD1234/refund?amount=500.00&reason=Partial refund for service issue",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "NP-PAY-ABCD1234",
+                "refund"
+              ],
+              "query": [
+                {
+                  "key": "amount",
+                  "value": "500.00"
+                },
+                {
+                  "key": "reason",
+                  "value": "Partial refund for service issue"
+                }
+              ]
+            },
+            "description": "Process a partial refund for a payment"
+          },
+          "response": []
+        },
+        {
+          "name": "Admin: Get Payment Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/payments/admin/NP-PAY-ABCD1234",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "admin",
+                "NP-PAY-ABCD1234"
+              ]
+            },
+            "description": "Admin endpoint to get complete payment transaction details"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8081",
+      "type": "string"
+    },
+    {
+      "key": "admin_token",
+      "value": "your_admin_token_here",
+      "type": "string"
+    },
+    {
+      "key": "user_token",
+      "value": "your_user_token_here",
+      "type": "string"
+    }
+  ]
+} 

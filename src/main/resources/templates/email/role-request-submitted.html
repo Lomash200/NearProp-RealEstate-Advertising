@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Request Submitted - NearProp</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 30px 25px;
+            line-height: 1.6;
+        }
+        .footer {
+            background-color: #f5f5f5;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+        .highlight {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        .info-box {
+            background-color: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .info-label {
+            font-weight: bold;
+            display: inline-block;
+            width: 120px;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .social-links {
+            margin-top: 20px;
+        }
+        .social-links a {
+            margin: 0 10px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Role Request Submitted</h1>
+        </div>
+        <div class="content">
+            <p>Hello <span th:text="${userName}">User</span>,</p>
+            
+            <p>Thank you for submitting your request to become a <strong th:text="${roleName}">SELLER</strong> on NearProp. We have received your application and it is currently under review by our team.</p>
+            
+            <div class="highlight">
+                <p>Your request details:</p>
+                <div><span class="info-label">Role:</span> <span th:text="${roleName}">SELLER</span></div>
+                <div><span class="info-label">Request ID:</span> <span th:text="${requestId}">123</span></div>
+                <div><span class="info-label">Submitted On:</span> <span th:text="${submittedDate}">June 13, 2025</span></div>
+                <div><span class="info-label">Status:</span> <span style="color: #FFA000; font-weight: bold;">PENDING</span></div>
+            </div>
+            
+            <p>The reason you provided for this request:</p>
+            <div class="info-box">
+                <p th:text="${reason}">I want to list my properties for sale</p>
+            </div>
+            
+            <p>What happens next?</p>
+            <ul>
+                <li>Our team will review your request within 1-2 business days</li>
+                <li>You'll receive an email notification once your request is processed</li>
+                <li>If approved, you'll immediately gain access to <span th:text="${roleName}">SELLER</span> features</li>
+            </ul>
+            
+            <p>You can check the status of your request in your account settings or by clicking the button below.</p>
+            
+            <div style="text-align: center;">
+                <a class="cta-button" href="http://nearprop.com/my-role-requests" style="color: white;">View Request Status</a>
+            </div>
+            
+            <p>If you have any questions, please contact our support team.</p>
+            
+            <p>Best regards,<br>The NearProp Team</p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2025 NearProp. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://facebook.com/nearprop">Facebook</a> |
+                <a href="https://twitter.com/nearprop">Twitter</a> |
+                <a href="https://instagram.com/nearprop">Instagram</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Property Rejected - NearProp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .header {
+            background-color: #F44336;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .property-details {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .rejection-reason {
+            background-color: #ffebee;
+            border-left: 4px solid #F44336;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .button {
+            display: inline-block;
+            background-color: #2196F3;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .footer {
+            background-color: #f2f2f2;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Property Rejected - NearProp</h1>
+        </div>
+        
+        <div class="content">
+            <p>Dear <span th:text="${user.name}">User</span>,</p>
+            <p>We regret to inform you that your property listing has been rejected by our team.</p>
+            
+            <div class="property-details">
+                <h3 style="margin-top: 0;">Property Details</h3>
+                <p><strong>Title:</strong> <span th:text="${property.title}">Property Title</span></p>
+                <p><strong>Location:</strong> <span th:text="${property.address}">Property Address</span></p>
+                <p><strong>Price:</strong> <span th:text="${property.price}">Property Price</span></p>
+            </div>
+            
+            <div class="rejection-reason">
+                <h3 style="margin-top: 0;">Reason for Rejection</h3>
+                <p th:text="${reason}">The property does not meet our guidelines.</p>
+            </div>
+            
+            <p>You can update your property listing to address the issues and resubmit it for approval. Click the button below to edit your property:</p>
+            <p style="text-align: center;">
+                <a th:href="${appUrl + '/properties/' + property.id + '/edit'}" href="#" class="button">Edit Property</a>
+            </p>
+            
+            <p>If you have any questions or need assistance, please contact our support team.</p>
+            <p>Best regards,<br>The NearProp Team</p>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 NearProp. All rights reserved.</p>
+            <p>If you have any questions, contact us at <a href="mailto:support@nearprop.com">support@nearprop.com</a></p>
+        </div>
+    </div>
+</body>
+</html> 

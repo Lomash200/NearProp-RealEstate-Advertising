@@ -1,0 +1,121 @@
+{
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "NearProp API Environment",
+    "values": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:8080",
+            "type": "default",
+            "enabled": true,
+            "description": "Base URL of the NearProp API"
+        },
+        {
+            "key": "apiPrefix",
+            "value": "/api",
+            "type": "default",
+            "enabled": true,
+            "description": "API prefix for all endpoints except auth"
+        },
+        {
+            "key": "authPrefix",
+            "value": "/api/v1/auth",
+            "type": "default",
+            "enabled": true,
+            "description": "Prefix for authentication endpoints"
+        },
+        {
+            "key": "userToken",
+            "value": "",
+            "type": "default",
+            "enabled": true,
+            "description": "JWT token for a regular user (USER role)"
+        },
+        {
+            "key": "sellerToken",
+            "value": "",
+            "type": "default",
+            "enabled": true,
+            "description": "JWT token for a seller user (SELLER role)"
+        },
+        {
+            "key": "adminToken",
+            "value": "",
+            "type": "default",
+            "enabled": true,
+            "description": "JWT token for an admin user (ADMIN role)"
+        },
+        {
+            "key": "mobileNumber",
+            "value": "9876543212",
+            "type": "default",
+            "enabled": true,
+            "description": "Mobile number for testing authentication"
+        },
+        {
+            "key": "deviceInfo",
+            "value": "Postman Testing Device",
+            "type": "default",
+            "enabled": true,
+            "description": "Device information for authentication"
+        },
+        {
+            "key": "otp",
+            "value": "",
+            "type": "default",
+            "enabled": true,
+            "description": "OTP received for authentication"
+        },
+        {
+            "key": "propertyId",
+            "value": "",
+            "type": "default",
+            "enabled": true,
+            "description": "ID of a property for testing"
+        },
+        {
+            "key": "visitId",
+            "value": "",
+            "type": "default",
+            "enabled": true,
+            "description": "ID of a visit for testing"
+        },
+        {
+            "key": "reelId",
+            "value": "",
+            "type": "default",
+            "enabled": true,
+            "description": "ID of a reel for testing"
+        },
+        {
+            "key": "publicReelId",
+            "value": "",
+            "type": "default",
+            "enabled": true,
+            "description": "Public ID of a reel for testing"
+        },
+        {
+            "key": "userId",
+            "value": "",
+            "type": "default",
+            "enabled": true,
+            "description": "ID of a user for testing"
+        },
+        {
+            "key": "startTime",
+            "value": "{{$isoTimestamp}}",
+            "type": "default",
+            "enabled": true,
+            "description": "Start time for availability check (ISO format)"
+        },
+        {
+            "key": "endTime",
+            "value": "{{$isoTimestampXDaysFromNow(1)}}",
+            "type": "default",
+            "enabled": true,
+            "description": "End time for availability check (ISO format, 1 day from now)"
+        }
+    ],
+    "_postman_variable_scope": "environment",
+    "_postman_exported_at": "2025-05-24T10:30:00.000Z",
+    "_postman_exported_using": "Postman/10.15.0"
+}

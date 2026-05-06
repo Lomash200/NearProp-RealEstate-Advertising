@@ -1,0 +1,1793 @@
+{
+  "info": {
+    "name": "NearProp Developer Collection",
+    "description": "A comprehensive collection of APIs for Developer role in NearProp application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"developer@example.com\",\n    \"password\": \"your_password\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Login to the NearProp platform as a Developer"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);",
+                  "if (jsonData && jsonData.token) {",
+                  "    pm.environment.set(\"authToken\", jsonData.token);",
+                  "    console.log(\"Auth token saved to environment\");",
+                  "}",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Request Developer Role",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"role\": \"DEVELOPER\",\n    \"supportingDocuments\": [\n        {\n            \"documentType\": \"IDENTITY_PROOF\",\n            \"documentUrl\": \"https://example.com/identity.pdf\"\n        },\n        {\n            \"documentType\": \"BUSINESS_PROOF\",\n            \"documentUrl\": \"https://example.com/business.pdf\"\n        }\n    ],\n    \"notes\": \"Applying for Developer role\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/auth/request-role",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "auth", "request-role"]
+            },
+            "description": "Request Developer role in the NearProp platform"
+          },
+          "response": []
+        },
+        {
+          "name": "Verify Email",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"developer@example.com\",\n    \"otp\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/auth/verify-email",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "auth", "verify-email"]
+            },
+            "description": "Verify email with OTP"
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Role Requests",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/roles/my-requests",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "roles", "my-requests"]
+            },
+            "description": "Get all role requests made by the current user"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Property Management",
+      "item": [
+        {
+          "name": "Create Property",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Modern Apartment Complex\",\n    \"description\": \"Luxury apartments with modern amenities\",\n    \"propertyType\": \"APARTMENT\",\n    \"price\": 25000000,\n    \"area\": 10000,\n    \"bedrooms\": 3,\n    \"bathrooms\": 2,\n    \"address\": {\n        \"addressLine1\": \"123 Main Street\",\n        \"addressLine2\": \"Building A\",\n        \"city\": \"Mumbai\",\n        \"state\": \"Maharashtra\",\n        \"district\": \"Mumbai Suburban\",\n        \"postalCode\": \"400001\",\n        \"latitude\": 19.0760,\n        \"longitude\": 72.8777\n    },\n    \"amenities\": [\"SWIMMING_POOL\", \"GYM\", \"SECURITY\", \"PARKING\"],\n    \"images\": [\"https://example.com/image1.jpg\", \"https://example.com/image2.jpg\"],\n    \"status\": \"AVAILABLE\",\n    \"isNew\": true,\n    \"constructionStatus\": \"UNDER_CONSTRUCTION\",\n    \"completionDate\": \"2025-12-31\",\n    \"possessionDate\": \"2026-03-31\",\n    \"totalUnits\": 100,\n    \"availableUnits\": 75,\n    \"pricePerSqFt\": 2500,\n    \"maintenanceCharges\": 5000,\n    \"maintenancePeriod\": \"MONTHLY\",\n    \"propertyTaxes\": 50000,\n    \"projectName\": \"Green Valley Heights\",\n    \"developerName\": \"My Development Company\",\n    \"reraRegistrationNumber\": \"ABC123XYZ\",\n    \"legalClearance\": true,\n    \"legalDocuments\": [\"https://example.com/legal1.pdf\", \"https://example.com/legal2.pdf\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/properties",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties"]
+            },
+            "description": "Create a new property as a Developer"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);",
+                  "if (jsonData && jsonData.id) {",
+                  "    pm.environment.set(\"propertyId\", jsonData.id);",
+                  "    console.log(\"Property ID saved to environment\");",
+                  "}",
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Property with Form",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Modern Apartment Complex",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Luxury apartments with modern amenities",
+                  "type": "text"
+                },
+                {
+                  "key": "propertyType",
+                  "value": "APARTMENT",
+                  "type": "text"
+                },
+                {
+                  "key": "price",
+                  "value": "25000000",
+                  "type": "text"
+                },
+                {
+                  "key": "area",
+                  "value": "10000",
+                  "type": "text"
+                },
+                {
+                  "key": "bedrooms",
+                  "value": "3",
+                  "type": "text"
+                },
+                {
+                  "key": "bathrooms",
+                  "value": "2",
+                  "type": "text"
+                },
+                {
+                  "key": "addressLine1",
+                  "value": "123 Main Street",
+                  "type": "text"
+                },
+                {
+                  "key": "city",
+                  "value": "Mumbai",
+                  "type": "text"
+                },
+                {
+                  "key": "state",
+                  "value": "Maharashtra",
+                  "type": "text"
+                },
+                {
+                  "key": "district",
+                  "value": "Mumbai Suburban",
+                  "type": "text"
+                },
+                {
+                  "key": "postalCode",
+                  "value": "400001",
+                  "type": "text"
+                },
+                {
+                  "key": "latitude",
+                  "value": "19.0760",
+                  "type": "text"
+                },
+                {
+                  "key": "longitude",
+                  "value": "72.8777",
+                  "type": "text"
+                },
+                {
+                  "key": "amenities",
+                  "value": "SWIMMING_POOL,GYM,SECURITY,PARKING",
+                  "type": "text"
+                },
+                {
+                  "key": "constructionStatus",
+                  "value": "UNDER_CONSTRUCTION",
+                  "type": "text"
+                },
+                {
+                  "key": "completionDate",
+                  "value": "2025-12-31",
+                  "type": "text"
+                },
+                {
+                  "key": "totalUnits",
+                  "value": "100",
+                  "type": "text"
+                },
+                {
+                  "key": "availableUnits",
+                  "value": "75",
+                  "type": "text"
+                },
+                {
+                  "key": "projectName",
+                  "value": "Green Valley Heights",
+                  "type": "text"
+                },
+                {
+                  "key": "developerName",
+                  "value": "My Development Company",
+                  "type": "text"
+                },
+                {
+                  "key": "reraRegistrationNumber",
+                  "value": "ABC123XYZ",
+                  "type": "text"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "src": "/path/to/image.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/properties/form",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties", "form"]
+            },
+            "description": "Create a new property with form data including file uploads"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);",
+                  "if (jsonData && jsonData.id) {",
+                  "    pm.environment.set('propertyId', jsonData.id);",
+                  "    console.log('Property ID saved to environment');",
+                  "}",
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Property",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/properties/{{propertyId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties", "{{propertyId}}"]
+            },
+            "description": "Get details of a specific property"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Property",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Updated Modern Apartment Complex\",\n    \"description\": \"Luxury apartments with modern amenities and premium finishing\",\n    \"propertyType\": \"APARTMENT\",\n    \"price\": 27000000,\n    \"area\": 10000,\n    \"bedrooms\": 3,\n    \"bathrooms\": 2,\n    \"address\": {\n        \"addressLine1\": \"123 Main Street\",\n        \"addressLine2\": \"Building A\",\n        \"city\": \"Mumbai\",\n        \"state\": \"Maharashtra\",\n        \"district\": \"Mumbai Suburban\",\n        \"postalCode\": \"400001\",\n        \"latitude\": 19.0760,\n        \"longitude\": 72.8777\n    },\n    \"amenities\": [\"SWIMMING_POOL\", \"GYM\", \"SECURITY\", \"PARKING\", \"CLUBHOUSE\"],\n    \"images\": [\"https://example.com/image1.jpg\", \"https://example.com/image2.jpg\"],\n    \"status\": \"AVAILABLE\",\n    \"isNew\": true,\n    \"constructionStatus\": \"UNDER_CONSTRUCTION\",\n    \"completionDate\": \"2025-06-30\",\n    \"possessionDate\": \"2025-09-30\",\n    \"totalUnits\": 100,\n    \"availableUnits\": 70,\n    \"pricePerSqFt\": 2700,\n    \"maintenanceCharges\": 5500,\n    \"maintenancePeriod\": \"MONTHLY\",\n    \"propertyTaxes\": 55000,\n    \"projectName\": \"Green Valley Heights\",\n    \"developerName\": \"My Development Company\",\n    \"reraRegistrationNumber\": \"ABC123XYZ\",\n    \"legalClearance\": true,\n    \"legalDocuments\": [\"https://example.com/legal1.pdf\", \"https://example.com/legal2.pdf\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/properties/{{propertyId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties", "{{propertyId}}"]
+            },
+            "description": "Update an existing property"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Property with Form",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Updated Modern Apartment Complex",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Luxury apartments with modern amenities and premium finishing",
+                  "type": "text"
+                },
+                {
+                  "key": "propertyType",
+                  "value": "APARTMENT",
+                  "type": "text"
+                },
+                {
+                  "key": "price",
+                  "value": "27000000",
+                  "type": "text"
+                },
+                {
+                  "key": "area",
+                  "value": "10000",
+                  "type": "text"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "src": "/path/to/new_image.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/properties/{{propertyId}}/form",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties", "{{propertyId}}", "form"]
+            },
+            "description": "Update an existing property with form data"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Property",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/properties/{{propertyId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties", "{{propertyId}}"]
+            },
+            "description": "Delete a property"
+          },
+          "response": []
+        },
+        {
+          "name": "Search Properties",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/properties/search?type=APARTMENT&district=Mumbai Suburban&minPrice=20000000&maxPrice=30000000&minBedrooms=3&page=0&size=10&sortBy=price&direction=ASC",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties", "search"],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "APARTMENT"
+                },
+                {
+                  "key": "district",
+                  "value": "Mumbai Suburban"
+                },
+                {
+                  "key": "minPrice",
+                  "value": "20000000"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "30000000"
+                },
+                {
+                  "key": "minBedrooms",
+                  "value": "3"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "price"
+                },
+                {
+                  "key": "direction",
+                  "value": "ASC"
+                }
+              ]
+            },
+            "description": "Search for properties with various filters"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Property Districts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/properties/districts",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties", "districts"]
+            },
+            "description": "Get all districts where properties are available"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Property States",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/properties/states",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties", "states"]
+            },
+            "description": "Get all states where properties are available"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Districts by State",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/properties/districts-by-state/Maharashtra",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties", "districts-by-state", "Maharashtra"]
+            },
+            "description": "Get districts within a specific state"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Property Count by Type",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/properties/stats/by-type",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties", "stats", "by-type"]
+            },
+            "description": "Get property count statistics by property type"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Property Count by District",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/properties/stats/by-district",
+              "host": ["{{baseUrl}}"],
+              "path": ["properties", "stats", "by-district"]
+            },
+            "description": "Get property count statistics by district"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reel Management",
+      "item": [
+        {
+          "name": "Upload Reel",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "video",
+                  "type": "file",
+                  "src": "/path/to/video.mp4"
+                },
+                {
+                  "key": "title",
+                  "value": "Property Showcase",
+                  "type": "text"
+                },
+                {
+                  "key": "propertyId",
+                  "value": "{{propertyId}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/reels",
+              "host": ["{{baseUrl}}"],
+              "path": ["reels"]
+            },
+            "description": "Upload a new reel for a property"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);",
+                  "if (jsonData && jsonData.id) {",
+                  "    pm.environment.set(\"reelId\", jsonData.id);",
+                  "    console.log(\"Reel ID saved to environment\");",
+                  "}",
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Reel Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reels/{{reelId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["reels", "{{reelId}}"]
+            },
+            "description": "Get details of a specific reel"
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Reels",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reels/my-reels?page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["reels", "my-reels"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Get all reels uploaded by the current user"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Property Reels",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reels/property/{{propertyId}}?page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["reels", "property", "{{propertyId}}"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Get all reels for a specific property"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Reel",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reels/{{reelId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["reels", "{{reelId}}"]
+            },
+            "description": "Delete a reel"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Comment to Reel",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"content\": \"This is a great property!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/reels/{{reelId}}/comments",
+              "host": ["{{baseUrl}}"],
+              "path": ["reels", "{{reelId}}", "comments"]
+            },
+            "description": "Add a comment to a reel"
+          },
+          "response": []
+        },
+        {
+          "name": "Like Reel",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reels/{{reelId}}/like",
+              "host": ["{{baseUrl}}"],
+              "path": ["reels", "{{reelId}}", "like"]
+            },
+            "description": "Like a reel"
+          },
+          "response": []
+        },
+        {
+          "name": "Unlike Reel",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reels/{{reelId}}/like",
+              "host": ["{{baseUrl}}"],
+              "path": ["reels", "{{reelId}}", "like"]
+            },
+            "description": "Remove a like from a reel"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Visit Management",
+      "item": [
+        {
+          "name": "Schedule Visit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"propertyId\": \"{{propertyId}}\",\n    \"scheduledTime\": \"2023-12-01T15:00:00\",\n    \"notes\": \"Interested in seeing the model apartment\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/visits",
+              "host": ["{{baseUrl}}"],
+              "path": ["visits"]
+            },
+            "description": "Schedule a visit to a property"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);",
+                  "if (jsonData && jsonData.id) {",
+                  "    pm.environment.set(\"visitId\", jsonData.id);",
+                  "    console.log(\"Visit ID saved to environment\");",
+                  "}",
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Visit Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/visits/{{visitId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["visits", "{{visitId}}"]
+            },
+            "description": "Get details of a specific visit"
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Property Visits",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/visits/my-properties?page=0&size=10&sortBy=scheduledTime&direction=DESC",
+              "host": ["{{baseUrl}}"],
+              "path": ["visits", "my-properties"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "scheduledTime"
+                },
+                {
+                  "key": "direction",
+                  "value": "DESC"
+                }
+              ]
+            },
+            "description": "Get all visits to properties owned by the current user"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Visit Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"status\": \"CONFIRMED\",\n    \"notes\": \"Visit confirmed by property owner\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/visits/{{visitId}}/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["visits", "{{visitId}}", "status"]
+            },
+            "description": "Update the status of a visit"
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Visit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/visits/{{visitId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["visits", "{{visitId}}", "cancel"]
+            },
+            "description": "Cancel a scheduled visit"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Chat Management",
+      "item": [
+        {
+          "name": "Create Chat Room",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Property Discussion\",\n    \"propertyId\": \"{{propertyId}}\",\n    \"participantIds\": [1, 2]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/chat/rooms",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "rooms"]
+            },
+            "description": "Create a new chat room for property discussion"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);",
+                  "if (jsonData && jsonData.id) {",
+                  "    pm.environment.set(\"chatRoomId\", jsonData.id);",
+                  "    console.log(\"Chat Room ID saved to environment\");",
+                  "}",
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Chat Room",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/chat/rooms/{{chatRoomId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "rooms", "{{chatRoomId}}"]
+            },
+            "description": "Get details of a specific chat room"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Chat Rooms",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/chat/rooms?page=0&size=20&sortBy=lastMessageAt&direction=DESC",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "rooms"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "lastMessageAt"
+                },
+                {
+                  "key": "direction",
+                  "value": "DESC"
+                }
+              ]
+            },
+            "description": "Get all chat rooms for the current user"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Property Chat Rooms",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/chat/property/{{propertyId}}/rooms",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "property", "{{propertyId}}", "rooms"]
+            },
+            "description": "Get all chat rooms for a specific property"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Participant to Chat Room",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"userId\": 3\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/chat/rooms/{{chatRoomId}}/participants",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "rooms", "{{chatRoomId}}", "participants"]
+            },
+            "description": "Add a participant to a chat room"
+          },
+          "response": []
+        },
+        {
+          "name": "Close Chat Room",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/chat/rooms/{{chatRoomId}}/close",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "rooms", "{{chatRoomId}}", "close"]
+            },
+            "description": "Close a chat room"
+          },
+          "response": []
+        },
+        {
+          "name": "Reopen Chat Room",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/chat/rooms/{{chatRoomId}}/reopen",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "rooms", "{{chatRoomId}}", "reopen"]
+            },
+            "description": "Reopen a closed chat room"
+          },
+          "response": []
+        },
+        {
+          "name": "Send Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"content\": \"Hello, I'm interested in the property. Can we schedule a visit?\",\n    \"replyToMessageId\": null\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/chat/rooms/{{chatRoomId}}/messages",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "rooms", "{{chatRoomId}}", "messages"]
+            },
+            "description": "Send a message in a chat room"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);",
+                  "if (jsonData && jsonData.id) {",
+                  "    pm.environment.set(\"messageId\", jsonData.id);",
+                  "    console.log(\"Message ID saved to environment\");",
+                  "}",
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Chat Messages",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/chat/rooms/{{chatRoomId}}/messages?page=0&size=50&includeReplies=false",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "rooms", "{{chatRoomId}}", "messages"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "50"
+                },
+                {
+                  "key": "includeReplies",
+                  "value": "false"
+                }
+              ]
+            },
+            "description": "Get messages in a chat room"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Recent Messages",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/chat/rooms/{{chatRoomId}}/messages/recent?limit=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "rooms", "{{chatRoomId}}", "messages", "recent"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            },
+            "description": "Get recent messages in a chat room"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Unread Messages",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/chat/rooms/{{chatRoomId}}/messages/unread",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "rooms", "{{chatRoomId}}", "messages", "unread"]
+            },
+            "description": "Get unread messages in a chat room"
+          },
+          "response": []
+        },
+        {
+          "name": "Mark Messages as Read",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/chat/rooms/{{chatRoomId}}/messages/read",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "rooms", "{{chatRoomId}}", "messages", "read"]
+            },
+            "description": "Mark all messages in a chat room as read"
+          },
+          "response": []
+        },
+        {
+          "name": "Edit Message",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"content\": \"Hello, I'm interested in the property. Can we schedule a visit tomorrow?\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/chat/messages/{{messageId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "messages", "{{messageId}}"]
+            },
+            "description": "Edit a message"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Message",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/chat/messages/{{messageId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "messages", "{{messageId}}"]
+            },
+            "description": "Delete a message"
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Attachment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/path/to/file.pdf"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/chat/rooms/{{chatRoomId}}/attachments",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "rooms", "{{chatRoomId}}", "attachments"]
+            },
+            "description": "Upload an attachment to a chat room"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "item": [
+        {
+          "name": "Get Property Analytics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/properties?propertyId={{propertyId}}&startDate=2023-01-01&endDate=2023-12-31",
+              "host": ["{{baseUrl}}"],
+              "path": ["analytics", "properties"],
+              "query": [
+                {
+                  "key": "propertyId",
+                  "value": "{{propertyId}}"
+                },
+                {
+                  "key": "startDate",
+                  "value": "2023-01-01"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2023-12-31"
+                }
+              ]
+            },
+            "description": "Get analytics for a specific property"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Reel Analytics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/reels?reelId={{reelId}}&startDate=2023-01-01&endDate=2023-12-31",
+              "host": ["{{baseUrl}}"],
+              "path": ["analytics", "reels"],
+              "query": [
+                {
+                  "key": "reelId",
+                  "value": "{{reelId}}"
+                },
+                {
+                  "key": "startDate",
+                  "value": "2023-01-01"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2023-12-31"
+                }
+              ]
+            },
+            "description": "Get analytics for a specific reel"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Subscription Management",
+      "item": [
+        {
+          "name": "Get All Subscription Plans",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions/plans",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "subscriptions", "plans"]
+            },
+            "description": "Get all available subscription plans"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Developer Subscription Plans",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions/plans/DEVELOPER",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "subscriptions", "plans", "DEVELOPER"]
+            },
+            "description": "Get subscription plans specific to Developers"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"planId\": 1,\n    \"paymentMethod\": \"CREDIT_CARD\",\n    \"paymentReferenceId\": \"payment_123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "subscriptions"]
+            },
+            "description": "Create a new subscription"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);",
+                  "if (jsonData && jsonData.id) {",
+                  "    pm.environment.set(\"subscriptionId\", jsonData.id);",
+                  "    console.log(\"Subscription ID saved to environment\");",
+                  "}",
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Subscription",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "subscriptions", "{{subscriptionId}}"]
+            },
+            "description": "Get details of a specific subscription"
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Subscriptions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions/my-subscriptions?page=0&size=10&sortBy=startDate&direction=DESC",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "subscriptions", "my-subscriptions"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "startDate"
+                },
+                {
+                  "key": "direction",
+                  "value": "DESC"
+                }
+              ]
+            },
+            "description": "Get all subscriptions for the current user"
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "subscriptions", "{{subscriptionId}}", "cancel"]
+            },
+            "description": "Cancel a subscription"
+          },
+          "response": []
+        },
+        {
+          "name": "Renew Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}/renew",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "subscriptions", "{{subscriptionId}}", "renew"]
+            },
+            "description": "Renew a subscription"
+          },
+          "response": []
+        },
+        {
+          "name": "Check Property Limits",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/subscriptions/property-limits",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "subscriptions", "property-limits"]
+            },
+            "description": "Check if the current user can add more properties based on subscription limits"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Payment",
+      "item": [
+        {
+          "name": "Initiate Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount\": 10000,\n    \"currency\": \"INR\",\n    \"paymentMethod\": \"CREDIT_CARD\",\n    \"description\": \"Payment for Developer Subscription Plan\",\n    \"returnUrl\": \"https://nearprop.com/payment/success\",\n    \"cancelUrl\": \"https://nearprop.com/payment/cancel\",\n    \"metadata\": {\n        \"planId\": 1,\n        \"userType\": \"DEVELOPER\"\n    }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/payments/initiate",
+              "host": ["{{baseUrl}}"],
+              "path": ["payments", "initiate"]
+            },
+            "description": "Initiate a payment for a subscription"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);",
+                  "if (jsonData && jsonData.data && jsonData.data.referenceId) {",
+                  "    pm.environment.set(\"paymentReferenceId\", jsonData.data.referenceId);",
+                  "    console.log(\"Payment Reference ID saved to environment\");",
+                  "}",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Verify Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"referenceId\": \"{{paymentReferenceId}}\",\n    \"paymentGatewayResponse\": {\n        \"transactionId\": \"tx_123456\",\n        \"status\": \"SUCCESS\"\n    }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/payments/verify",
+              "host": ["{{baseUrl}}"],
+              "path": ["payments", "verify"]
+            },
+            "description": "Verify a payment after processing"
+          },
+          "response": []
+        },
+        {
+          "name": "Check Payment Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/payments/{{paymentReferenceId}}/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["payments", "{{paymentReferenceId}}", "status"]
+            },
+            "description": "Check the status of a payment"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Payment Receipt",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/payments/{{paymentReferenceId}}/receipt",
+              "host": ["{{baseUrl}}"],
+              "path": ["payments", "{{paymentReferenceId}}", "receipt"]
+            },
+            "description": "Get receipt for a payment"
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/payments/{{paymentReferenceId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["payments", "{{paymentReferenceId}}", "cancel"]
+            },
+            "description": "Cancel a payment"
+          },
+          "response": []
+        },
+        {
+          "name": "Request Refund",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/payments/{{paymentReferenceId}}/refund?amount=10000&reason=Subscription not needed",
+              "host": ["{{baseUrl}}"],
+              "path": ["payments", "{{paymentReferenceId}}", "refund"],
+              "query": [
+                {
+                  "key": "amount",
+                  "value": "10000"
+                },
+                {
+                  "key": "reason",
+                  "value": "Subscription not needed"
+                }
+              ]
+            },
+            "description": "Request a refund for a payment"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+} 

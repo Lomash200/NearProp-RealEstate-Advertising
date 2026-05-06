@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Property Approval Request - NearProp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .header {
+            background-color: #3F51B5;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .property-details {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .user-details {
+            background-color: #e3f2fd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .button-reject {
+            background-color: #F44336;
+        }
+        .button-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .footer {
+            background-color: #f2f2f2;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Property Approval Request - NearProp</h1>
+        </div>
+        
+        <div class="content">
+            <p>Dear Admin,</p>
+            <p>A new property listing requires your approval.</p>
+            
+            <div class="property-details">
+                <h3 style="margin-top: 0;">Property Details</h3>
+                <p><strong>Title:</strong> <span th:text="${property.title}">Property Title</span></p>
+                <p><strong>Type:</strong> <span th:text="${property.type}">Property Type</span></p>
+                <p><strong>Status:</strong> <span th:text="${property.status}">Property Status</span></p>
+                <p><strong>Price:</strong> <span th:text="${property.price}">Property Price</span></p>
+                <p><strong>Location:</strong> <span th:text="${property.address}">Property Address</span></p>
+                <p><strong>City:</strong> <span th:text="${property.city}">Property City</span></p>
+                <p><strong>State:</strong> <span th:text="${property.state}">Property State</span></p>
+                <p><strong>District:</strong> <span th:text="${property.district}">Property District</span></p>
+                <p><strong>Bedrooms:</strong> <span th:text="${property.bedrooms}">Bedrooms</span></p>
+                <p><strong>Bathrooms:</strong> <span th:text="${property.bathrooms}">Bathrooms</span></p>
+                <p><strong>Area:</strong> <span th:text="${property.area + ' ' + property.sizePostfix}">Area</span></p>
+                <p><strong>Submitted:</strong> <span th:text="${#temporals.format(property.createdAt, 'dd-MM-yyyy HH:mm')}">01-01-2025 12:00</span></p>
+            </div>
+            
+            <div class="user-details">
+                <h3 style="margin-top: 0;">Submitted By</h3>
+                <p><strong>Name:</strong> <span th:text="${user.name}">User Name</span></p>
+                <p><strong>Email:</strong> <span th:text="${user.email}">user@example.com</span></p>
+                <p><strong>Phone:</strong> <span th:text="${user.mobileNumber}">1234567890</span></p>
+            </div>
+            
+            <p>Please review this property listing and take appropriate action:</p>
+            
+            <div class="button-container">
+                <a th:href="${appUrl + '/admin/properties/' + property.id + '/approve'}" href="#" class="button">Approve</a>
+                &nbsp;&nbsp;
+                <a th:href="${appUrl + '/admin/properties/' + property.id + '/reject'}" href="#" class="button button-reject">Reject</a>
+            </div>
+            
+            <p>You can also view the full property details by clicking the button below:</p>
+            <p style="text-align: center;">
+                <a th:href="${appUrl + '/admin/properties/' + property.id}" href="#" class="button">View Property</a>
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 NearProp. All rights reserved.</p>
+            <p>This is an automated message. Please do not reply to this email.</p>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,878 @@
+{
+	"info": {
+		"_postman_id": "b5c7d8e9-a6b7-c8d9-e0f1-23456789abcd",
+		"name": "NearProp Coupon Management",
+		"description": "Collection for managing coupons in the NearProp platform",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Admin Coupon APIs",
+			"description": "APIs for admin to manage coupons",
+			"item": [
+				{
+					"name": "Create Coupon",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"WELCOME25\",\n    \"description\": \"25% off on all subscription plans\",\n    \"discountType\": \"PERCENTAGE\",\n    \"discountPercentage\": 25,\n    \"maxDiscount\": 1000,\n    \"validFrom\": \"2025-06-01T00:00:00\",\n    \"validUntil\": \"2025-12-31T23:59:59\",\n    \"maxUses\": 100,\n    \"active\": true,\n    \"subscriptionType\": \"PROPERTY\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{apiPrefix}}/admin/coupons",
+							"host": [
+								"{{baseUrl}}{{apiPrefix}}"
+							],
+							"path": [
+								"admin",
+								"coupons"
+							]
+						},
+						"description": "Create a new coupon with percentage discount"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Response has success flag\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Response contains coupon data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.have.property('code');",
+									"    pm.expect(jsonData.data).to.have.property('description');",
+									"    pm.expect(jsonData.data).to.have.property('discountType');",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Create Fixed Amount Coupon",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"FLAT500\",\n    \"description\": \"Flat ₹500 off on all subscription plans\",\n    \"discountType\": \"FIXED_AMOUNT\",\n    \"discountAmount\": 500,\n    \"validFrom\": \"2025-06-01T00:00:00\",\n    \"validUntil\": \"2025-12-31T23:59:59\",\n    \"maxUses\": 50,\n    \"active\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{apiPrefix}}/admin/coupons",
+							"host": [
+								"{{baseUrl}}{{apiPrefix}}"
+							],
+							"path": [
+								"admin",
+								"coupons"
+							]
+						},
+						"description": "Create a new coupon with fixed amount discount"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Response has success flag\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Response contains fixed amount coupon data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.have.property('code');",
+									"    pm.expect(jsonData.data).to.have.property('discountType');",
+									"    pm.expect(jsonData.data.discountType).to.eql('FIXED_AMOUNT');",
+									"    pm.expect(jsonData.data).to.have.property('discountAmount');",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get All Coupons",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}{{apiPrefix}}/admin/coupons?page=0&size=10",
+							"host": [
+								"{{baseUrl}}{{apiPrefix}}"
+							],
+							"path": [
+								"admin",
+								"coupons"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get all coupons with pagination"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has success flag\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Response contains paginated data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.have.property('content');",
+									"    pm.expect(jsonData.data).to.have.property('totalElements');",
+									"    pm.expect(jsonData.data).to.have.property('totalPages');",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get Active Coupons",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}{{apiPrefix}}/admin/coupons/active?page=0&size=10",
+							"host": [
+								"{{baseUrl}}{{apiPrefix}}"
+							],
+							"path": [
+								"admin",
+								"coupons",
+								"active"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get active coupons with pagination"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has success flag\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Response contains active coupons\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.have.property('content');",
+									"    ",
+									"    // If there are coupons, verify they are active",
+									"    if (jsonData.data.content.length > 0) {",
+									"        pm.expect(jsonData.data.content[0].active).to.eql(true);",
+									"    }",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get Coupon By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}{{apiPrefix}}/admin/coupons/1",
+							"host": [
+								"{{baseUrl}}{{apiPrefix}}"
+							],
+							"path": [
+								"admin",
+								"coupons",
+								"1"
+							]
+						},
+						"description": "Get coupon details by ID"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has success flag\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Response contains coupon data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.have.property('id');",
+									"    pm.expect(jsonData.data).to.have.property('code');",
+									"    pm.expect(jsonData.data).to.have.property('description');",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Update Coupon",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"WELCOME25\",\n    \"description\": \"25% off on all subscription plans - Updated\",\n    \"discountType\": \"PERCENTAGE\",\n    \"discountPercentage\": 25,\n    \"maxDiscount\": 1000,\n    \"validFrom\": \"2025-06-01T00:00:00\",\n    \"validUntil\": \"2025-12-31T23:59:59\",\n    \"maxUses\": 200,\n    \"active\": true,\n    \"subscriptionType\": \"PROPERTY\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{apiPrefix}}/admin/coupons/1",
+							"host": [
+								"{{baseUrl}}{{apiPrefix}}"
+							],
+							"path": [
+								"admin",
+								"coupons",
+								"1"
+							]
+						},
+						"description": "Update an existing coupon"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has success flag\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Response contains updated coupon data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.have.property('description');",
+									"    pm.expect(jsonData.data.description).to.include('Updated');",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Activate Coupon",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}{{apiPrefix}}/admin/coupons/1/activate",
+							"host": [
+								"{{baseUrl}}{{apiPrefix}}"
+							],
+							"path": [
+								"admin",
+								"coupons",
+								"1",
+								"activate"
+							]
+						},
+						"description": "Activate a coupon"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has success flag\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Coupon is activated\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data.active).to.eql(true);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Deactivate Coupon",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}{{apiPrefix}}/admin/coupons/1/deactivate",
+							"host": [
+								"{{baseUrl}}{{apiPrefix}}"
+							],
+							"path": [
+								"admin",
+								"coupons",
+								"1",
+								"deactivate"
+							]
+						},
+						"description": "Deactivate a coupon"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has success flag\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Coupon is deactivated\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data.active).to.eql(false);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Delete Coupon",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}{{apiPrefix}}/admin/coupons/1",
+							"host": [
+								"{{baseUrl}}{{apiPrefix}}"
+							],
+							"path": [
+								"admin",
+								"coupons",
+								"1"
+							]
+						},
+						"description": "Delete a coupon"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has success flag\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get Coupons By Plan Type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}{{apiPrefix}}/admin/coupons/plan-type/PROPERTY",
+							"host": [
+								"{{baseUrl}}{{apiPrefix}}"
+							],
+							"path": [
+								"admin",
+								"coupons",
+								"plan-type",
+								"PROPERTY"
+							]
+						},
+						"description": "Get coupons by subscription plan type"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has success flag\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Response contains coupons for plan type\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.be.an('array');",
+									"    ",
+									"    // If there are coupons, verify they are for the right plan type",
+									"    if (jsonData.data.length > 0) {",
+									"        pm.expect(jsonData.data[0].subscriptionType).to.eql('PROPERTY');",
+									"    }",
+									"});"
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Public Coupon APIs",
+			"description": "APIs for public access to coupons",
+			"item": [
+				{
+					"name": "Validate Coupon",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"WELCOME25\",\n    \"planId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{apiPrefix}}/coupons/validate",
+							"host": [
+								"{{baseUrl}}{{apiPrefix}}"
+							],
+							"path": [
+								"coupons",
+								"validate"
+							]
+						},
+						"description": "Validate a coupon code for a specific plan"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has success flag\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.exist;",
+									"});",
+									"",
+									"pm.test(\"Response contains validation result\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.have.property('code');",
+									"    pm.expect(jsonData.data).to.have.property('valid');",
+									"    pm.expect(jsonData.data).to.have.property('message');",
+									"    pm.expect(jsonData.data).to.have.property('originalPrice');",
+									"    pm.expect(jsonData.data).to.have.property('finalPrice');",
+									"    pm.expect(jsonData.data).to.have.property('discountAmount');",
+									"    pm.expect(jsonData.data).to.have.property('plan');",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Apply Coupon",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}{{apiPrefix}}/coupons/apply?code=WELCOME25&planId=1",
+							"host": [
+								"{{baseUrl}}{{apiPrefix}}"
+							],
+							"path": [
+								"coupons",
+								"apply"
+							],
+							"query": [
+								{
+									"key": "code",
+									"value": "WELCOME25"
+								},
+								{
+									"key": "planId",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Apply a coupon to get discount for a specific plan"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has success flag\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.exist;",
+									"});",
+									"",
+									"pm.test(\"Response contains discount information\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.have.property('couponCode');",
+									"    pm.expect(jsonData.data).to.have.property('originalPrice');",
+									"    pm.expect(jsonData.data).to.have.property('discountAmount');",
+									"    pm.expect(jsonData.data).to.have.property('finalPrice');",
+									"    pm.expect(jsonData.data).to.have.property('plan');",
+									"});"
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Subscription with Coupon",
+			"description": "APIs for subscription with coupon",
+			"item": [
+				{
+					"name": "Validate Coupon for Subscription",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}{{apiPrefix}}/subscriptions/validate-coupon?planId=1&couponCode=WELCOME25",
+							"host": [
+								"{{baseUrl}}{{apiPrefix}}"
+							],
+							"path": [
+								"subscriptions",
+								"validate-coupon"
+							],
+							"query": [
+								{
+									"key": "planId",
+									"value": "1"
+								},
+								{
+									"key": "couponCode",
+									"value": "WELCOME25"
+								}
+							]
+						},
+						"description": "Validate a coupon for a subscription plan"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has success flag\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.exist;",
+									"});",
+									"",
+									"pm.test(\"Response contains subscription discount info\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.have.property('couponCode');",
+									"    pm.expect(jsonData.data).to.have.property('planId');",
+									"    pm.expect(jsonData.data).to.have.property('originalPrice');",
+									"    pm.expect(jsonData.data).to.have.property('discountAmount');",
+									"    pm.expect(jsonData.data).to.have.property('finalPrice');",
+									"    pm.expect(jsonData.data).to.have.property('plan');",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Initiate Payment with Coupon",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"planId\": 1,\n    \"couponCode\": \"WELCOME25\",\n    \"paymentMethod\": \"RAZORPAY\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{apiPrefix}}/payments/subscription/initiate",
+							"host": [
+								"{{baseUrl}}{{apiPrefix}}"
+							],
+							"path": [
+								"payments",
+								"subscription",
+								"initiate"
+							]
+						},
+						"description": "Initiate a subscription payment with coupon code"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has success flag\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Response contains payment details\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.have.property('orderId');",
+									"    pm.expect(jsonData.data).to.have.property('amount');",
+									"    ",
+									"    // Store payment reference for later use",
+									"    if (jsonData.data.orderId) {",
+									"        pm.environment.set(\"paymentReferenceId\", jsonData.data.orderId);",
+									"    }",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Create Subscription with Coupon",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"planId\": 1,\n    \"autoRenew\": false,\n    \"paymentMethod\": \"RAZORPAY\",\n    \"paymentReferenceId\": \"{{paymentReferenceId}}\",\n    \"couponCode\": \"WELCOME25\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{apiPrefix}}/subscriptions",
+							"host": [
+								"{{baseUrl}}{{apiPrefix}}"
+							],
+							"path": [
+								"subscriptions"
+							]
+						},
+						"description": "Create a new subscription with payment reference and coupon code"
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Response has success flag\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test(\"Response contains subscription with coupon data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.have.property('id');",
+									"    pm.expect(jsonData.data).to.have.property('plan');",
+									"    pm.expect(jsonData.data).to.have.property('price');",
+									"    pm.expect(jsonData.data).to.have.property('status');",
+									"});"
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "apiPrefix",
+			"value": "/api",
+			"type": "string"
+		},
+		{
+			"key": "adminToken",
+			"value": "{{adminToken}}",
+			"type": "string"
+		},
+		{
+			"key": "userToken",
+			"value": "{{userToken}}",
+			"type": "string"
+		}
+	]
+} 

@@ -1,0 +1,189 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: nearprop-backend
+
+  # Flyway Configuration
+  flyway:
+    enabled: false  # Disable Flyway completely
+
+  # SQL Initialization Configuration
+  sql:
+    init:
+      mode: never  # Disable SQL initialization
+
+  # Database Configuration
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://145.223.19.160:5432/nearprop_user}
+    username: ${DB_USERNAME:nearprop_user}
+    password: ${DB_PASSWORD:" Nearprop#2025"}
+    driver-class-name: org.postgresql.Driver
+
+  # JPA / Hibernate Configuration
+  jpa:
+  hibernate:
+    ddl-auto: none   # ✅ do not validate or modify schema
+
+  properties:
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+
+      jdbc:
+        time_zone: Asia/Kolkata   # ✅ ADD THIS
+        lob:
+          non_contextual_creation: true
+
+      format_sql: false
+      enable_lazy_load_no_trans: true
+      order_inserts: true
+      order_updates: true
+      jdbc.batch_size: 20
+      jdbc.batch_versioned_data: true
+
+  open-in-view: false
+  show-sql: false
+  generate-ddl: false
+  database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+
+  # Redis Configuration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+
+  # Mail (SMTP) Configuration
+  mail:
+    host: ${SMTP_HOST:smtp.gmail.com}
+    port: ${SMTP_PORT:587}
+    username: ${SMTP_USERNAME:}
+    password: ${SMTP_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+
+# Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,env
+  endpoint:
+    health:
+      show-details: always
+
+# JWT Configuration
+jwt:
+  secret: ${JWT_SECRET:sandeep_kushwaha_application_developer_2025_of_nearprop}
+  expiration:
+    user: 3153600000000
+    other: 604800000
+
+# Twilio Configuration
+twilio:
+  account-sid: ${TWILIO_ACCOUNT_SID:}
+  auth-token: ${TWILIO_AUTH_TOKEN:}
+  phone-number: ${TWILIO_PHONE_NUMBER:}
+
+# AWS Configuration
+aws:
+  accessKey: ${AWS_ACCESS_KEY}
+  secretKey: ${AWS_SECRET_KEY}
+  region: ${AWS_REGION:ap-south-1}
+  s3:
+    bucket: ${AWS_S3_BUCKET:nearprop-documents}
+    reelsBucket: ${AWS_S3_REELS_BUCKET:nearprop-reels}
+    reelsFolder: media/reels
+    thumbnailsFolder: media/thumbnails
+    profileFolder: media/profiles
+    propertyFolder: media/properties
+    owners-folder: owners
+    user-documents-folder: user-documents
+    advertisement-folder: advertisements
+    max-file-size: 104857600 # 100MB in bytes
+
+# Elasticsearch Configuration
+elasticsearch:
+  host: ${ELASTICSEARCH_HOST:localhost}
+  port: ${ELASTICSEARCH_PORT:9200}
+  username: ${ELASTICSEARCH_USERNAME:}
+  password: ${ELASTICSEARCH_PASSWORD:}
+
+# Google Maps
+google:
+  maps:
+    api:
+      key: ${GOOGLE_MAPS_API_KEY}
+
+# Razorpay Configuration
+payment:
+  gateway:
+    razorpay:
+      key: ${RAZORPAY_KEY}
+      secret: ${RAZORPAY_SECRET}
+      api:
+        url: ${RAZORPAY_API_URL:https://api.razorpay.com/v1}
+
+# Digital SMS API Configuration
+digital-sms:
+  api-key: ${DIGITAL_SMS_API_KEY:Bearer 258|uEXsqSmGr4BfCR1NyUTmYx0hAhmkBTw6MeRbdqcr1f13f0a9}
+  sender-id: ${DIGITAL_SMS_SENDER_ID:RWTLTD}
+  entity-id: ${DIGITAL_SMS_ENTITY_ID:1701175100042384521}
+  template-id: ${DIGITAL_SMS_TEMPLATE_ID:1707175170423044409}
+  api-url: ${DIGITAL_SMS_API_URL:https://sms.digitalsms.net/api/v3/sendsms}
+  balance-url: ${DIGITAL_SMS_BALANCE_URL:https://sms.digitalsms.net/api/v3/me}
+  low-balance-threshold: ${DIGITAL_SMS_LOW_BALANCE_THRESHOLD:500}
+  notification-emails: ${DIGITAL_SMS_NOTIFICATION_EMAILS:rudraashwitechnology@gmail.com,mail.rudraashwitechnology@gmail.com}
+
+# Reel Pricing
+reels:
+  price: ${REELS_PRICE:99.00}
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    com.nearprop: DEBUG
+    org.springframework.security: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# Application Specific Configuration
+app:
+  email:
+    enabled: ${EMAIL_ENABLED:true}
+  subscription:
+    seller:
+      price-per-property: 300
+      duration-days: 30
+      grace-period-days: 3
+    franchisee:
+      token-amount: 50000
+      marketing-fee: 25000
+      revenue-share-percentage: 60
+  featured:
+    max-properties: 6
+  reel:
+    min-duration-seconds: 15
+    max-duration-seconds: 60
+    default-max-file-size-mb: 40
+    allowed-formats: mp4,mov,avi,webm
+    default-radius-km: 10
+    default-feed-radius-km: 50
+    max-reels-per-property: 2
+    max-total-reels: 10
+    shareable-base-url: https://nearprop.com/reels/
+  geolocation:
+    default-search-radius-km: 10
+    max-search-radius-km: 100

@@ -1,0 +1,382 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "Property Update - Owner",
+    "description": "APIs for property owners to submit and manage property update requests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Submit Property Update Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "propertyId",
+              "value": "123",
+              "description": "ID of the property to update",
+              "type": "text"
+            },
+            {
+              "key": "requestNotes",
+              "value": "Updating property details",
+              "description": "Notes about the update request",
+              "type": "text"
+            },
+            {
+              "key": "title",
+              "value": "Updated 3BHK Apartment in Indore",
+              "description": "Updated property title",
+              "type": "text"
+            },
+            {
+              "key": "description",
+              "value": "Newly renovated 3BHK apartment with modern amenities",
+              "description": "Updated property description",
+              "type": "text"
+            },
+            {
+              "key": "price",
+              "value": "7500000",
+              "description": "Updated property price",
+              "type": "text"
+            },
+            {
+              "key": "area",
+              "value": "1500",
+              "description": "Updated property area in sq ft",
+              "type": "text"
+            },
+            {
+              "key": "sizePostfix",
+              "value": "sq.ft.",
+              "description": "Unit of area measurement",
+              "type": "text"
+            },
+            {
+              "key": "bedrooms",
+              "value": "3",
+              "description": "Number of bedrooms",
+              "type": "text"
+            },
+            {
+              "key": "bathrooms",
+              "value": "2",
+              "description": "Number of bathrooms",
+              "type": "text"
+            },
+            {
+              "key": "garages",
+              "value": "1",
+              "description": "Number of garages",
+              "type": "text"
+            },
+            {
+              "key": "address",
+              "value": "123 Main Street, Indore",
+              "description": "Property address",
+              "type": "text"
+            },
+            {
+              "key": "amenities",
+              "value": "[\"Swimming Pool\", \"Gym\", \"Security\", \"Power Backup\"]",
+              "description": "Property amenities as JSON array",
+              "type": "text"
+            },
+            {
+              "key": "securityFeatures",
+              "value": "[\"CCTV\", \"Gated Community\", \"24x7 Security\"]",
+              "description": "Security features as JSON array",
+              "type": "text"
+            },
+            {
+              "key": "features",
+              "value": "[\"Modular Kitchen\", \"Air Conditioning\", \"Furnished\"]",
+              "description": "Property features as JSON array",
+              "type": "text"
+            },
+            {
+              "key": "images",
+              "type": "file",
+              "description": "Property images (multiple can be selected)",
+              "src": []
+            },
+            {
+              "key": "video",
+              "type": "file",
+              "description": "Property video",
+              "src": []
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/property-updates",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "property-updates"]
+        },
+        "description": "Submit a property update request with changes to one or more fields"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has required fields\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('id');",
+              "    pm.expect(jsonData).to.have.property('requestId');",
+              "    pm.expect(jsonData).to.have.property('propertyId');",
+              "    pm.expect(jsonData).to.have.property('status');",
+              "    pm.expect(jsonData.status).to.eql('PENDING');",
+              "});",
+              "",
+              "// Store the request ID for later use",
+              "var jsonData = pm.response.json();",
+              "if (jsonData && jsonData.id) {",
+              "    pm.environment.set(\"updateRequestId\", jsonData.id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get My Update Requests",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/property-updates/my-requests?page=0&size=10&sort=submittedAt,desc",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "property-updates", "my-requests"],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            },
+            {
+              "key": "sort",
+              "value": "submittedAt,desc"
+            }
+          ]
+        },
+        "description": "Get all update requests created by the current user"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has content array\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('content');",
+              "    pm.expect(jsonData.content).to.be.an('array');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Update Request by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/property-updates/{{updateRequestId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "property-updates", "{{updateRequestId}}"]
+        },
+        "description": "Get a specific update request by its ID"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has correct ID\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('id');",
+              "    pm.expect(jsonData.id.toString()).to.eql(pm.environment.get(\"updateRequestId\"));",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Update Request by Permanent ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/property-updates/by-permanent-id/{{updateRequestPermanentId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "property-updates", "by-permanent-id", "{{updateRequestPermanentId}}"]
+        },
+        "description": "Get a specific update request by its permanent ID (e.g., RANPUR20250611001)"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has correct permanent ID\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('requestId');",
+              "    pm.expect(jsonData.requestId).to.eql(pm.environment.get(\"updateRequestPermanentId\"));",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Update Requests by Property",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/property-updates/property/{{propertyId}}?page=0&size=10&sort=submittedAt,desc",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "property-updates", "property", "{{propertyId}}"],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            },
+            {
+              "key": "sort",
+              "value": "submittedAt,desc"
+            }
+          ]
+        },
+        "description": "Get all update requests for a specific property"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has content array\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('content');",
+              "    pm.expect(jsonData.content).to.be.an('array');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cancel Update Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/property-updates/{{updateRequestId}}/cancel",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "property-updates", "{{updateRequestId}}", "cancel"]
+        },
+        "description": "Cancel a pending property update request"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Request is cancelled\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('status');",
+              "    pm.expect(jsonData.status).to.eql('CANCELLED');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ]
+} 

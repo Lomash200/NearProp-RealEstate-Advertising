@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Subscription Renewed - NearProp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .subscription-details {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .footer {
+            background-color: #f2f2f2;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Subscription Renewed - NearProp</h1>
+        </div>
+        
+        <div class="content">
+            <p>Dear <span th:text="${user.name}">User</span>,</p>
+            <p>Your NearProp subscription has been successfully renewed.</p>
+            
+            <div class="subscription-details">
+                <h3 style="margin-top: 0;">Subscription Details</h3>
+                <p><strong>Plan:</strong> <span th:text="${subscription.plan.name}">Basic Plan</span></p>
+                <p><strong>Start Date:</strong> <span th:text="${#temporals.format(subscription.startDate, 'dd-MM-yyyy')}">01-01-2025</span></p>
+                <p><strong>End Date:</strong> <span th:text="${#temporals.format(subscription.endDate, 'dd-MM-yyyy')}">01-02-2025</span></p>
+                <p><strong>Auto-Renew:</strong> <span th:text="${subscription.autoRenew ? 'Enabled' : 'Disabled'}">Disabled</span></p>
+            </div>
+            
+            <div th:if="${propertyCount > 0}">
+                <h3>Reactivated Properties</h3>
+                <p>The following properties have been reactivated with your subscription:</p>
+                <ul>
+                    <li th:each="property : ${properties}">
+                        <span th:text="${property.title}">Property Title</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <p>You can manage your subscription from your <a href="#" th:href="@{${@environment.getProperty('app.url', 'https://nearprop.com')}} + '/account/subscriptions'}">account dashboard</a>.</p>
+            <p>If you have any questions, please contact our support team.</p>
+            <p>Best regards,<br>The NearProp Team</p>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 NearProp. All rights reserved.</p>
+            <p>If you have any questions, contact us at <a href="mailto:support@nearprop.com">support@nearprop.com</a></p>
+        </div>
+    </div>
+</body>
+</html> 

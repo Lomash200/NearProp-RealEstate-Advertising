@@ -1,0 +1,28 @@
+services:
+  app:
+    build:
+      context: .
+    container_name: nearprop-app
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    networks:
+      - nearprop-net
+
+  nginx:
+    image: nginx:latest
+    container_name: nearprop-nginx
+    restart: unless-stopped
+    ports:
+      - "81:80"
+    depends_on:
+      app:
+        condition: service_started
+    networks:
+      - nearprop-net
+
+networks:
+  nearprop-net:
+    driver: bridge

@@ -1,0 +1,281 @@
+{
+  "info": {
+    "_postman_id": "f8a5b3e0-0a1f-4e3c-8d9c-0b1c2d3e4f5a",
+    "name": "NearProp User Subscription Collection",
+    "description": "API collection for testing user subscriptions in NearProp",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Subscription Plans",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{userToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}{{apiPrefix}}/subscriptions/plans",
+          "host": [
+            "{{baseUrl}}{{apiPrefix}}"
+          ],
+          "path": [
+            "subscriptions",
+            "plans"
+          ]
+        },
+        "description": "Get all available subscription plans"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Plans by Type",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{userToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}{{apiPrefix}}/subscriptions/plans/SELLER",
+          "host": [
+            "{{baseUrl}}{{apiPrefix}}"
+          ],
+          "path": [
+            "subscriptions",
+            "plans",
+            "SELLER"
+          ]
+        },
+        "description": "Get subscription plans by type (SELLER, ADVISOR, DEVELOPER, FRANCHISEE)"
+      },
+      "response": []
+    },
+    {
+      "name": "Create Subscription",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{userToken}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"planId\": {{subscriptionPlanId}},\n    \"autoRenew\": false,\n    \"isRenewal\": false,\n    \"paymentMethod\": \"ONLINE\",\n    \"paymentReferenceId\": \"pay_123456789\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}{{apiPrefix}}/subscriptions",
+          "host": [
+            "{{baseUrl}}{{apiPrefix}}"
+          ],
+          "path": [
+            "subscriptions"
+          ]
+        },
+        "description": "Create a new subscription for the current user"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Subscription by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{userToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}{{apiPrefix}}/subscriptions/{{subscriptionId}}",
+          "host": [
+            "{{baseUrl}}{{apiPrefix}}"
+          ],
+          "path": [
+            "subscriptions",
+            "{{subscriptionId}}"
+          ]
+        },
+        "description": "Get details of a specific subscription"
+      },
+      "response": []
+    },
+    {
+      "name": "Get My Subscriptions",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{userToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}{{apiPrefix}}/subscriptions/my-subscriptions?page=0&size=10&sortBy=startDate&direction=DESC",
+          "host": [
+            "{{baseUrl}}{{apiPrefix}}"
+          ],
+          "path": [
+            "subscriptions",
+            "my-subscriptions"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            },
+            {
+              "key": "sortBy",
+              "value": "startDate"
+            },
+            {
+              "key": "direction",
+              "value": "DESC"
+            }
+          ]
+        },
+        "description": "Get all subscriptions for the current user"
+      },
+      "response": []
+    },
+    {
+      "name": "Cancel Subscription",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{userToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}{{apiPrefix}}/subscriptions/{{subscriptionId}}/cancel",
+          "host": [
+            "{{baseUrl}}{{apiPrefix}}"
+          ],
+          "path": [
+            "subscriptions",
+            "{{subscriptionId}}",
+            "cancel"
+          ]
+        },
+        "description": "Cancel a subscription"
+      },
+      "response": []
+    },
+    {
+      "name": "Renew Subscription",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{userToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}{{apiPrefix}}/subscriptions/{{subscriptionId}}/renew",
+          "host": [
+            "{{baseUrl}}{{apiPrefix}}"
+          ],
+          "path": [
+            "subscriptions",
+            "{{subscriptionId}}",
+            "renew"
+          ]
+        },
+        "description": "Renew an existing subscription"
+      },
+      "response": []
+    },
+    {
+      "name": "Check Can Add Property",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{userToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}{{apiPrefix}}/subscriptions/can-add-property",
+          "host": [
+            "{{baseUrl}}{{apiPrefix}}"
+          ],
+          "path": [
+            "subscriptions",
+            "can-add-property"
+          ]
+        },
+        "description": "Check if the current user can add more properties based on their subscription limits"
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "apiPrefix",
+      "value": "/api"
+    },
+    {
+      "key": "userToken",
+      "value": "your-auth-token-here"
+    },
+    {
+      "key": "subscriptionPlanId",
+      "value": "1"
+    },
+    {
+      "key": "subscriptionId",
+      "value": "1"
+    }
+  ]
+} 

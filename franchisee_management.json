@@ -1,0 +1,805 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "NearProp - Franchisee Management",
+    "description": "APIs for managing franchisees in the NearProp real estate platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Districts",
+      "item": [
+        {
+          "name": "Get All Districts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/districts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "districts"
+              ]
+            },
+            "description": "Get a list of all districts with pagination"
+          },
+          "response": []
+        },
+        {
+          "name": "Get District by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/districts/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "districts",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Get details of a specific district by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Districts by State",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/districts/state/:state",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "districts",
+                "state",
+                ":state"
+              ],
+              "variable": [
+                {
+                  "key": "state",
+                  "value": "Maharashtra"
+                }
+              ]
+            },
+            "description": "Get all districts in a specific state"
+          },
+          "response": []
+        }
+      ],
+      "description": "APIs for managing districts"
+    },
+    {
+      "name": "Franchise Requests",
+      "item": [
+        {
+          "name": "Submit Franchise Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "districtId",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "businessName",
+                  "value": "ABC Real Estate",
+                  "type": "text"
+                },
+                {
+                  "key": "businessAddress",
+                  "value": "123 Main Street, Mumbai",
+                  "type": "text"
+                },
+                {
+                  "key": "businessRegistrationNumber",
+                  "value": "REG123456",
+                  "type": "text"
+                },
+                {
+                  "key": "gstNumber",
+                  "value": "GST123456789",
+                  "type": "text"
+                },
+                {
+                  "key": "panNumber",
+                  "value": "ABCDE1234F",
+                  "type": "text"
+                },
+                {
+                  "key": "aadharNumber",
+                  "value": "1234 5678 9012",
+                  "type": "text"
+                },
+                {
+                  "key": "contactEmail",
+                  "value": "franchise@example.com",
+                  "type": "text"
+                },
+                {
+                  "key": "contactPhone",
+                  "value": "9876543210",
+                  "type": "text"
+                },
+                {
+                  "key": "yearsOfExperience",
+                  "value": "5",
+                  "type": "text"
+                },
+                {
+                  "key": "documents",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/franchisee/requests",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "franchisee",
+                "requests"
+              ]
+            },
+            "description": "Submit a new franchise request for a district"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Franchise Request by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/franchisee/requests/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "franchisee",
+                "requests",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Get details of a specific franchise request by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Requests by Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/franchisee/requests/status/:status?page=0&size=10&sortBy=createdAt&direction=DESC",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "franchisee",
+                "requests",
+                "status",
+                ":status"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "createdAt"
+                },
+                {
+                  "key": "direction",
+                  "value": "DESC"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "status",
+                  "value": "PENDING",
+                  "description": "Request status (PENDING, APPROVED, REJECTED)"
+                }
+              ]
+            },
+            "description": "Get franchise requests by status with pagination"
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Franchise Requests",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/franchisee/requests/my-requests?page=0&size=10&sortBy=createdAt&direction=DESC",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "franchisee",
+                "requests",
+                "my-requests"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "createdAt"
+                },
+                {
+                  "key": "direction",
+                  "value": "DESC"
+                }
+              ]
+            },
+            "description": "Get all franchise requests submitted by the current user"
+          },
+          "response": []
+        },
+        {
+          "name": "Approve Franchise Request",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/franchisee/requests/:id/approve?comments=Approved after verification of documents",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "franchisee",
+                "requests",
+                ":id",
+                "approve"
+              ],
+              "query": [
+                {
+                  "key": "comments",
+                  "value": "Approved after verification of documents"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Approve a franchise request (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Reject Franchise Request",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/franchisee/requests/:id/reject?comments=Documents not verified",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "franchisee",
+                "requests",
+                ":id",
+                "reject"
+              ],
+              "query": [
+                {
+                  "key": "comments",
+                  "value": "Documents not verified"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Reject a franchise request (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Requests by District",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/franchisee/requests/district/:districtId",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "franchisee",
+                "requests",
+                "district",
+                ":districtId"
+              ],
+              "variable": [
+                {
+                  "key": "districtId",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Get all franchise requests for a specific district (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Check if District is Assigned",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/franchisee/requests/is-district-assigned/:districtId",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "franchisee",
+                "requests",
+                "is-district-assigned",
+                ":districtId"
+              ],
+              "variable": [
+                {
+                  "key": "districtId",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Check if a district already has an assigned franchisee"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Request Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/franchisee/requests/statistics",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "franchisee",
+                "requests",
+                "statistics"
+              ]
+            },
+            "description": "Get statistics of franchise requests by status (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Franchise Request",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/franchisee/requests/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "franchisee",
+                "requests",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Cancel a pending franchise request (can only cancel your own requests)"
+          },
+          "response": []
+        }
+      ],
+      "description": "APIs for managing franchise requests"
+    },
+    {
+      "name": "Franchisee Districts",
+      "item": [
+        {
+          "name": "Get My Franchisee Districts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/franchisee/district-assignments/my-districts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "franchisee",
+                "district-assignments",
+                "my-districts"
+              ]
+            },
+            "description": "Get all districts assigned to the current franchisee"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Franchisee District by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/franchisee/district-assignments/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "franchisee",
+                "districts",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Get details of a specific franchisee district assignment"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Franchisee Districts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/franchisee/districts?page=0&size=10&sortBy=createdAt&direction=DESC",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "franchisee",
+                "districts"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "createdAt"
+                },
+                {
+                  "key": "direction",
+                  "value": "DESC"
+                }
+              ]
+            },
+            "description": "Get all franchisee district assignments with pagination (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Franchisee District",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"officeAddress\": \"New Office Address, Mumbai\",\n    \"contactPhone\": \"9876543210\",\n    \"contactEmail\": \"new.email@example.com\",\n    \"revenueSharePercentage\": 65.00\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/franchisee/district-assignments/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "franchisee",
+                "districts",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Update a franchisee district assignment (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Deactivate Franchisee District",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/franchisee/district-assignments/:id/deactivate?reason=Contract terminated",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "franchisee",
+                "districts",
+                ":id",
+                "deactivate"
+              ],
+              "query": [
+                {
+                  "key": "reason",
+                  "value": "Contract terminated"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Deactivate a franchisee district assignment (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Franchisee District Revenue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/franchisee/district-assignments/:id/revenue?startDate=2023-01-01&endDate=2023-12-31",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "franchisee",
+                "districts",
+                ":id",
+                "revenue"
+              ],
+              "query": [
+                {
+                  "key": "startDate",
+                  "value": "2023-01-01"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2023-12-31"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Get revenue details for a franchisee district"
+          },
+          "response": []
+        }
+      ],
+      "description": "APIs for managing franchisee district assignments"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8081",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "your_jwt_token_here",
+      "type": "string"
+    }
+  ]
+} 

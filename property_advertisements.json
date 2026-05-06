@@ -1,0 +1,182 @@
+{
+    "name": "Property Advertisements",
+    "description": "Endpoints for retrieving advertisements related to properties",
+    "item": [
+        {
+            "name": "Get Advertisements for Property",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/v1/properties/{{propertyId}}/advertisements?limit=3",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "properties",
+                        "{{propertyId}}",
+                        "advertisements"
+                    ],
+                    "query": [
+                        {
+                            "key": "limit",
+                            "value": "3"
+                        }
+                    ]
+                },
+                "description": "Retrieves advertisements relevant to a specific property, based on its district.\n\n**Path Parameters:**\n- `propertyId`: ID of the property\n\n**Query Parameters:**\n- `limit`: Maximum number of advertisements to return (default: 3)\n\n**No auth required**"
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Parse the response",
+                            "var jsonData = JSON.parse(responseBody);",
+                            "",
+                            "// Check if the request was successful",
+                            "pm.test(\"Status code is 200\", function () {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"Property advertisements retrieved successfully\", function () {",
+                            "    pm.expect(jsonData).to.be.an(\"array\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get Advertisements Near Location",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/v1/properties/advertisements/nearby?latitude=22.7196&longitude=75.8577&limit=3",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "properties",
+                        "advertisements",
+                        "nearby"
+                    ],
+                    "query": [
+                        {
+                            "key": "latitude",
+                            "value": "22.7196"
+                        },
+                        {
+                            "key": "longitude",
+                            "value": "75.8577"
+                        },
+                        {
+                            "key": "limit",
+                            "value": "3"
+                        }
+                    ]
+                },
+                "description": "Retrieves advertisements near a specific location.\n\n**Query Parameters:**\n- `latitude`: Latitude of the location\n- `longitude`: Longitude of the location\n- `limit`: Maximum number of advertisements to return (default: 3)\n\n**No auth required**"
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Parse the response",
+                            "var jsonData = JSON.parse(responseBody);",
+                            "",
+                            "// Check if the request was successful",
+                            "pm.test(\"Status code is 200\", function () {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"Nearby advertisements retrieved successfully\", function () {",
+                            "    pm.expect(jsonData).to.be.an(\"array\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get Advertisements by District",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/v1/properties/advertisements/district/Indore?limit=3",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "properties",
+                        "advertisements",
+                        "district",
+                        "Indore"
+                    ],
+                    "query": [
+                        {
+                            "key": "limit",
+                            "value": "3"
+                        }
+                    ]
+                },
+                "description": "Retrieves advertisements for a specific district.\n\n**Path Parameters:**\n- `districtName`: Name of the district\n\n**Query Parameters:**\n- `limit`: Maximum number of advertisements to return (default: 3)\n\n**No auth required**"
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "// Parse the response",
+                            "var jsonData = JSON.parse(responseBody);",
+                            "",
+                            "// Check if the request was successful",
+                            "pm.test(\"Status code is 200\", function () {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "",
+                            "pm.test(\"District advertisements retrieved successfully\", function () {",
+                            "    pm.expect(jsonData).to.be.an(\"array\");",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        }
+    ]
+} 

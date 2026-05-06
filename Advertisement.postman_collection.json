@@ -1,0 +1,959 @@
+{
+	"info": {
+		"_postman_id": "e5d45f7c-3a8e-4a9b-9c8d-6f9b5a7e4d3c",
+		"name": "Advertisement API",
+		"description": "API endpoints for the NearProp Advertisement module",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Advertisement Management",
+			"item": [
+				{
+					"name": "Create Advertisement",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Premium Apartment Complex in Indore",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Luxurious apartment complex with modern amenities in the heart of Indore",
+									"type": "text"
+								},
+								{
+									"key": "bannerImageUrl",
+									"value": "https://nearprop-documents.s3.ap-south-1.amazonaws.com/advertisements/banner1.jpg",
+									"type": "text"
+								},
+								{
+									"key": "bannerImage",
+									"type": "file",
+									"src": "/path/to/banner-image.jpg",
+									"disabled": true
+								},
+								{
+									"key": "videoUrl",
+									"value": "https://nearprop-documents.s3.ap-south-1.amazonaws.com/advertisements/video1.mp4",
+									"type": "text"
+								},
+								{
+									"key": "videoFile",
+									"type": "file",
+									"src": "/path/to/video.mp4",
+									"disabled": true
+								},
+								{
+									"key": "websiteUrl",
+									"value": "https://www.example.com",
+									"type": "text"
+								},
+								{
+									"key": "whatsappNumber",
+									"value": "+919876543210",
+									"type": "text"
+								},
+								{
+									"key": "phoneNumber",
+									"value": "+919876543210",
+									"type": "text"
+								},
+								{
+									"key": "emailAddress",
+									"value": "contact@example.com",
+									"type": "text"
+								},
+								{
+									"key": "instagramUrl",
+									"value": "https://www.instagram.com/example",
+									"type": "text"
+								},
+								{
+									"key": "facebookUrl",
+									"value": "https://www.facebook.com/example",
+									"type": "text"
+								},
+								{
+									"key": "youtubeUrl",
+									"value": "https://www.youtube.com/example",
+									"type": "text"
+								},
+								{
+									"key": "additionalInfo",
+									"value": "Contact us for special offers and discounts",
+									"type": "text"
+								},
+								{
+									"key": "targetLocation",
+									"value": "Indore",
+									"type": "text"
+								},
+								{
+									"key": "latitude",
+									"value": "22.7196",
+									"type": "text"
+								},
+								{
+									"key": "longitude",
+									"value": "75.8577",
+									"type": "text"
+								},
+								{
+									"key": "radiusKm",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "districtName",
+									"value": "Indore",
+									"type": "text"
+								},
+								{
+									"key": "districtId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "targetDistrictIds",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "targetDistrictIds",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "targetDistrictIds",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "validFrom",
+									"value": "{{$isoTimestamp}}",
+									"type": "text"
+								},
+								{
+									"key": "validUntil",
+									"value": "{{$isoTimestamp(+30, 'days')}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements"
+							]
+						},
+						"description": "Create a new advertisement (Admin only) using form-data"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Advertisement",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Updated Premium Apartment Complex in Indore",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Luxurious apartment complex with modern amenities in the heart of Indore",
+									"type": "text"
+								},
+								{
+									"key": "bannerImageUrl",
+									"value": "https://nearprop-documents.s3.ap-south-1.amazonaws.com/advertisements/banner1.jpg",
+									"type": "text"
+								},
+								{
+									"key": "bannerImage",
+									"type": "file",
+									"src": "/path/to/banner-image.jpg",
+									"disabled": true
+								},
+								{
+									"key": "videoUrl",
+									"value": "https://nearprop-documents.s3.ap-south-1.amazonaws.com/advertisements/video1.mp4",
+									"type": "text"
+								},
+								{
+									"key": "videoFile",
+									"type": "file",
+									"src": "/path/to/video.mp4",
+									"disabled": true
+								},
+								{
+									"key": "websiteUrl",
+									"value": "https://www.example.com",
+									"type": "text"
+								},
+								{
+									"key": "whatsappNumber",
+									"value": "+919876543210",
+									"type": "text"
+								},
+								{
+									"key": "phoneNumber",
+									"value": "+919876543210",
+									"type": "text"
+								},
+								{
+									"key": "emailAddress",
+									"value": "contact@example.com",
+									"type": "text"
+								},
+								{
+									"key": "instagramUrl",
+									"value": "https://www.instagram.com/example",
+									"type": "text"
+								},
+								{
+									"key": "facebookUrl",
+									"value": "https://www.facebook.com/example",
+									"type": "text"
+								},
+								{
+									"key": "youtubeUrl",
+									"value": "https://www.youtube.com/example",
+									"type": "text"
+								},
+								{
+									"key": "additionalInfo",
+									"value": "Contact us for special offers and discounts",
+									"type": "text"
+								},
+								{
+									"key": "targetLocation",
+									"value": "Indore",
+									"type": "text"
+								},
+								{
+									"key": "latitude",
+									"value": "22.7196",
+									"type": "text"
+								},
+								{
+									"key": "longitude",
+									"value": "75.8577",
+									"type": "text"
+								},
+								{
+									"key": "radiusKm",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "districtName",
+									"value": "Indore",
+									"type": "text"
+								},
+								{
+									"key": "districtId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "targetDistrictIds",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "targetDistrictIds",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "targetDistrictIds",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "validFrom",
+									"value": "{{$isoTimestamp}}",
+									"type": "text"
+								},
+								{
+									"key": "validUntil",
+									"value": "{{$isoTimestamp(+30, 'days')}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"1"
+							]
+						},
+						"description": "Update an existing advertisement (Admin only) using form-data"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Advertisement",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/1?district=Indore",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"1"
+							],
+							"query": [
+								{
+									"key": "district",
+									"value": "Indore",
+									"description": "Optional district parameter to track the view source"
+								}
+							]
+						},
+						"description": "Get advertisement by ID (will also record a view)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Active Advertisements",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements?page=0&size=10&sortBy=createdAt&direction=DESC",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt"
+								},
+								{
+									"key": "direction",
+									"value": "DESC"
+								}
+							]
+						},
+						"description": "Get all active advertisements with pagination"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Advertisements",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/user/1?page=0&size=10&sortBy=createdAt&direction=DESC",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"user",
+								"1"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt"
+								},
+								{
+									"key": "direction",
+									"value": "DESC"
+								}
+							]
+						},
+						"description": "Get advertisements created by a specific user"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Advertisements by District",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/district/Indore?page=0&size=10&sortBy=createdAt&direction=DESC",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"district",
+								"Indore"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt"
+								},
+								{
+									"key": "direction",
+									"value": "DESC"
+								}
+							]
+						},
+						"description": "Get advertisements targeting a specific district"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Top 5 Advertisements by District",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/district/Indore/top5",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"district",
+								"Indore",
+								"top5"
+							]
+						},
+						"description": "Get top 5 advertisements for a specific district"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Advertisements Near Location",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/nearby?latitude=22.7196&longitude=75.8577&page=0&size=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"nearby"
+							],
+							"query": [
+								{
+									"key": "latitude",
+									"value": "22.7196"
+								},
+								{
+									"key": "longitude",
+									"value": "75.8577"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get advertisements near a specific location"
+					},
+					"response": []
+				},
+				{
+					"name": "Set Advertisement Active Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/1/active/true",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"1",
+								"active",
+								"true"
+							]
+						},
+						"description": "Activate or deactivate an advertisement (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Advertisement",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"1"
+							]
+						},
+						"description": "Delete an advertisement (Admin only)"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for managing advertisements"
+		},
+		{
+			"name": "Advertisement Analytics",
+			"item": [
+				{
+					"name": "Get Advertisement Analytics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/1/analytics",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"1",
+								"analytics"
+							]
+						},
+						"description": "Get analytics for a specific advertisement"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Advertisements Analytics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/analytics?page=0&size=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"analytics"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get analytics for all advertisements with pagination (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get District Advertisements Analytics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/analytics/district/Indore",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"analytics",
+								"district",
+								"Indore"
+							]
+						},
+						"description": "Get analytics for all advertisements in a specific district"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Social Media Clicks Analytics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/analytics/social-media",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"analytics",
+								"social-media"
+							]
+						},
+						"description": "Get social media clicks analytics (Admin only)"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for advertisement analytics"
+		},
+		{
+			"name": "Click Tracking",
+			"item": [
+				{
+					"name": "Record Website Click",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/1/click/website",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"1",
+								"click",
+								"website"
+							]
+						},
+						"description": "Record a website click for an advertisement"
+					},
+					"response": []
+				},
+				{
+					"name": "Record WhatsApp Click",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/1/click/whatsapp",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"1",
+								"click",
+								"whatsapp"
+							]
+						},
+						"description": "Record a WhatsApp click for an advertisement"
+					},
+					"response": []
+				},
+				{
+					"name": "Record Phone Click",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/1/click/phone",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"1",
+								"click",
+								"phone"
+							]
+						},
+						"description": "Record a phone click for an advertisement"
+					},
+					"response": []
+				},
+				{
+					"name": "Record Instagram Click",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/1/click/instagram",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"1",
+								"click",
+								"instagram"
+							]
+						},
+						"description": "Record an Instagram click for an advertisement"
+					},
+					"response": []
+				},
+				{
+					"name": "Record Facebook Click",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/1/click/facebook",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"1",
+								"click",
+								"facebook"
+							]
+						},
+						"description": "Record a Facebook click for an advertisement"
+					},
+					"response": []
+				},
+				{
+					"name": "Record YouTube Click",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/1/click/youtube",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"1",
+								"click",
+								"youtube"
+							]
+						},
+						"description": "Record a YouTube click for an advertisement"
+					},
+					"response": []
+				},
+				{
+					"name": "Record Twitter Click",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/1/click/twitter",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"1",
+								"click",
+								"twitter"
+							]
+						},
+						"description": "Record a Twitter click for an advertisement"
+					},
+					"response": []
+				},
+				{
+					"name": "Record LinkedIn Click",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/1/click/linkedin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"1",
+								"click",
+								"linkedin"
+							]
+						},
+						"description": "Record a LinkedIn click for an advertisement"
+					},
+					"response": []
+				},
+				{
+					"name": "Record Generic Click",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/advertisements/1/click?type=INSTAGRAM",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"advertisements",
+								"1",
+								"click"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "INSTAGRAM",
+									"description": "The type of click to record (WEBSITE, WHATSAPP, PHONE, INSTAGRAM, FACEBOOK, YOUTUBE, TWITTER, LINKEDIN, OTHER)"
+								}
+							]
+						},
+						"description": "Record a generic click with specified type for an advertisement"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for tracking advertisement clicks"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080/api",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+} 

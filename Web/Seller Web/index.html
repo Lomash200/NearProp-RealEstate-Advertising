@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NearProp Seller Chat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Seller Chat</h1>
+        <div class="login-panel">
+            <label for="tokenInput">JWT Token:</label>
+            <input type="text" id="tokenInput" placeholder="Paste your JWT token here">
+            <label for="chatRoomIdInput">Chat Room ID:</label>
+            <input type="number" id="chatRoomIdInput" placeholder="Enter Chat Room ID">
+            <button id="connectBtn">Connect</button>
+        </div>
+        <div class="chat-section" style="display:none;">
+            <div class="chat-header">
+                <span id="userLabel">Seller</span>
+                <button id="disconnectBtn">Disconnect</button>
+            </div>
+            <div class="chat-messages" id="messages"></div>
+            <div class="chat-input">
+                <textarea id="messageInput" placeholder="Type your message..."></textarea>
+                <button id="sendBtn">Send</button>
+            </div>
+        </div>
+        <div class="log-section">
+            <h3>Log</h3>
+            <pre id="logArea"></pre>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html> 

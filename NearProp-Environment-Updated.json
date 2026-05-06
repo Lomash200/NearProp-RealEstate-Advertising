@@ -1,0 +1,184 @@
+{
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "NearProp API Environment",
+    "values": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:8080",
+            "type": "default",
+            "enabled": true,
+            "description": "Base URL of the NearProp API"
+        },
+        {
+            "key": "apiPrefix",
+            "value": "/api",
+            "type": "default",
+            "enabled": true,
+            "description": "API prefix for all endpoints except auth"
+        },
+        {
+            "key": "authPrefix",
+            "value": "/api/v1/auth",
+            "type": "default",
+            "enabled": true,
+            "description": "Prefix for authentication endpoints"
+        },
+        {
+            "key": "userToken",
+            "value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0Iiwicm9sZXMiOlsiVVNFUiJdLCJzZXNzaW9uSWQiOiJhODY0YTlhNy05MzViLTQyNzItYjdkMC03MzBiODg1OGE2NDQiLCJpYXQiOjE3NDkwMTk5ODksImV4cCI6NDkwMjYxOTk4OSwiaXNzIjoiTmVhcnByb3BCYWNrZW5kIn0.kjEXGHDwOgpYmpF53qIBXGTUiGEWnwmeRUhAVX2hNs98kMwCLAmDHFF2LkhAPc69dS1M0XuxjPIi64pEWtUidQ",
+            "type": "default",
+            "enabled": true,
+            "description": "JWT token for a regular user (USER role)"
+        },
+        {
+            "key": "sellerToken",
+            "value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2Iiwicm9sZXMiOlsiU0VMTEVSIiwiVVNFUiJdLCJzZXNzaW9uSWQiOiJmMWM5M2RkOS04M2YxLTRlNTgtODcyMS0yOWM4NjNjMjc2MWIiLCJpYXQiOjE3NDkwMTY4NjksImV4cCI6MTc0OTYyMTY2OSwiaXNzIjoiTmVhcnByb3BCYWNrZW5kIn0.dPw_xbfqyKqYqja7nlhnwPtGZnLnF8_HAVD0f-V4jQkbPzO8mEFuuUe1YM55RF2N1-Fn7YGqbzbKjTvEiyAxlA",
+            "type": "default",
+            "enabled": true,
+            "description": "JWT token for a seller user (SELLER role)"
+        },
+        {
+            "key": "adminToken",
+            "value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sInNlc3Npb25JZCI6IjA3NTIxNzc3LWEyOGItNGZlZS04ZWFlLThkZDc0NWNiNTZlOCIsImlhdCI6MTc0OTAxNjMzNCwiZXhwIjoxNzQ5NjIxMTM0LCJpc3MiOiJOZWFycHJvcEJhY2tlbmQifQ.6g7q1M0A4vTpm77WVTxh2OboV0lsE2mr0xJTjvqXHthiwZK-WC33L7f-YvYukRoZnrzcXqlln_jbJdpehlI3cg",
+            "type": "default",
+            "enabled": true,
+            "description": "JWT token for an admin user (ADMIN role)"
+        },
+        {
+            "key": "developerToken",
+            "value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1Iiwicm9sZXMiOlsiVVNFUiJdLCJzZXNzaW9uSWQiOiIwYmRkY2VmYS0wNDM4LTRkMzYtYjY5Mi1jN2RmODJhYzhjNzciLCJpYXQiOjE3NDg5NTY0OTUsImV4cCI6NDkwMjU1NjQ5NSwiaXNzIjoiTmVhcnByb3BCYWNrZW5kIn0.3LiD15i0DPbaS9Xt3ie68MAEbFJNG9WfmUVLv4wXO7rPzrVkm_QSP9JSlxCkSijZpk-rxCW8CZizWhmqJQCRFg",
+            "type": "default",
+            "enabled": true,
+            "description": "JWT token for a developer user"
+        },
+        {
+            "key": "franchiseeToken",
+            "value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1Iiwicm9sZXMiOlsiRlJBTkNISVNFRSIsIlNFTExFUiIsIlVTRVIiXSwic2Vzc2lvbklkIjoiZGUzYjk3N2QtMjg1Yy00YjExLTllZDAtYTMzMzk5M2RhNTM1IiwiaWF0IjoxNzQ5MTQ4NDIxLCJleHAiOjE3NDk3NTMyMjEsImlzcyI6Ik5lYXJwcm9wQmFja2VuZCJ9.O3DOHAdgiRmhr9YyqzL-c9_JFzhjrK4E_XhNK4aiWgECl9HmsaKMpqCQ7szqmZfHSu8EmSquTIAUFHnYxYg4VA",
+            "type": "default",
+            "enabled": true,
+            "description": "JWT token for a franchisee user (FRANCHISEE role)"
+        },
+        {
+            "key": "mobileNumber",
+            "value": "9876543212",
+            "type": "default",
+            "enabled": true,
+            "description": "Mobile number for testing authentication"
+        },
+        {
+            "key": "deviceInfo",
+            "value": "Postman Testing Device",
+            "type": "default",
+            "enabled": true,
+            "description": "Device information for authentication"
+        },
+        {
+            "key": "otp",
+            "value": "",
+            "type": "default",
+            "enabled": true,
+            "description": "OTP received for authentication"
+        },
+        {
+            "key": "propertyId",
+            "value": "1",
+            "type": "default",
+            "enabled": true,
+            "description": "ID of a property for testing"
+        },
+        {
+            "key": "visitId",
+            "value": "1",
+            "type": "default",
+            "enabled": true,
+            "description": "ID of a visit for testing"
+        },
+        {
+            "key": "reelId",
+            "value": "1",
+            "type": "default",
+            "enabled": true,
+            "description": "ID of a reel for testing"
+        },
+        {
+            "key": "publicReelId",
+            "value": "ABC123",
+            "type": "default",
+            "enabled": true,
+            "description": "Public ID of a reel for testing"
+        },
+        {
+            "key": "userId",
+            "value": "4",
+            "type": "default",
+            "enabled": true,
+            "description": "ID of a user for testing"
+        },
+        {
+            "key": "startTime",
+            "value": "{{$isoTimestamp}}",
+            "type": "default",
+            "enabled": true,
+            "description": "Start time for availability check (ISO format)"
+        },
+        {
+            "key": "endTime",
+            "value": "{{$isoTimestampXDaysFromNow(1)}}",
+            "type": "default",
+            "enabled": true,
+            "description": "End time for availability check (ISO format, 1 day from now)"
+        },
+        {
+            "key": "planId",
+            "value": "1",
+            "type": "default",
+            "enabled": true,
+            "description": "ID of a subscription plan for testing"
+        },
+        {
+            "key": "subscriptionId",
+            "value": "1",
+            "type": "default",
+            "enabled": true,
+            "description": "ID of a subscription for testing"
+        },
+        {
+            "key": "paymentReferenceId",
+            "value": "NP-PAY-ABCD1234",
+            "type": "default",
+            "enabled": true,
+            "description": "Reference ID for a payment transaction"
+        },
+        {
+            "key": "revenueId",
+            "value": "1",
+            "type": "default",
+            "enabled": true,
+            "description": "ID of a revenue transaction"
+        },
+        {
+            "key": "districtId",
+            "value": "1",
+            "type": "default",
+            "enabled": true,
+            "description": "ID of a district"
+        },
+        {
+            "key": "franchiseeDistrictId",
+            "value": "1",
+            "type": "default",
+            "enabled": true,
+            "description": "ID of a franchisee district assignment"
+        },
+        {
+            "key": "franchiseeUserId",
+            "value": "5",
+            "type": "default",
+            "enabled": true,
+            "description": "ID of a franchisee user"
+        }
+    ],
+    "_postman_variable_scope": "environment",
+    "_postman_exported_at": "2025-06-05T10:30:00.000Z",
+    "_postman_exported_using": "Postman/10.15.0"
+} 

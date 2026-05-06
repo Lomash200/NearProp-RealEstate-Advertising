@@ -1,0 +1,1111 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "Property Update - Owner",
+    "description": "APIs for property owners to submit and manage property update requests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Submit Property Update Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "propertyId",
+              "value": "123",
+              "description": "ID of the property to update",
+              "type": "text"
+            },
+            {
+              "key": "requestNotes",
+              "value": "Updating property details",
+              "description": "Notes about the update request",
+              "type": "text"
+            },
+            {
+              "key": "title",
+              "value": "Updated 3BHK Apartment in Indore",
+              "description": "Updated property title",
+              "type": "text"
+            },
+            {
+              "key": "description",
+              "value": "Newly renovated 3BHK apartment with modern amenities",
+              "description": "Updated property description",
+              "type": "text"
+            },
+            {
+              "key": "price",
+              "value": "7500000",
+              "description": "Updated property price",
+              "type": "text"
+            },
+            {
+              "key": "area",
+              "value": "1500",
+              "description": "Updated property area in sq ft",
+              "type": "text"
+            },
+            {
+              "key": "sizePostfix",
+              "value": "sq.ft.",
+              "description": "Unit of area measurement",
+              "type": "text"
+            },
+            {
+              "key": "bedrooms",
+              "value": "3",
+              "description": "Number of bedrooms",
+              "type": "text"
+            },
+            {
+              "key": "bathrooms",
+              "value": "2",
+              "description": "Number of bathrooms",
+              "type": "text"
+            },
+            {
+              "key": "garages",
+              "value": "1",
+              "description": "Number of garages",
+              "type": "text"
+            },
+            {
+              "key": "address",
+              "value": "123 Main Street, Indore",
+              "description": "Property address",
+              "type": "text"
+            },
+            {
+              "key": "amenities",
+              "value": "[\"Swimming Pool\", \"Gym\", \"Security\", \"Power Backup\"]",
+              "description": "Property amenities as JSON array",
+              "type": "text"
+            },
+            {
+              "key": "securityFeatures",
+              "value": "[\"CCTV\", \"Gated Community\", \"24x7 Security\"]",
+              "description": "Security features as JSON array",
+              "type": "text"
+            },
+            {
+              "key": "features",
+              "value": "[\"Modular Kitchen\", \"Air Conditioning\", \"Furnished\"]",
+              "description": "Property features as JSON array",
+              "type": "text"
+            },
+            {
+              "key": "images",
+              "type": "file",
+              "description": "Property images (multiple can be selected)",
+              "src": []
+            },
+            {
+              "key": "video",
+              "type": "file",
+              "description": "Property video",
+              "src": []
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/property-updates",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "property-updates"]
+        },
+        "description": "Submit a property update request with changes to one or more fields"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has required fields\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('id');",
+              "    pm.expect(jsonData).to.have.property('requestId');",
+              "    pm.expect(jsonData).to.have.property('propertyId');",
+              "    pm.expect(jsonData).to.have.property('status');",
+              "    pm.expect(jsonData.status).to.eql('PENDING');",
+              "});",
+              "",
+              "// Store the request ID for later use",
+              "var jsonData = pm.response.json();",
+              "if (jsonData && jsonData.id) {",
+              "    pm.environment.set(\"updateRequestId\", jsonData.id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get My Update Requests",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/property-updates/my-requests?page=0&size=10&sort=submittedAt,desc",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "property-updates", "my-requests"],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            },
+            {
+              "key": "sort",
+              "value": "submittedAt,desc"
+            }
+          ]
+        },
+        "description": "Get all update requests created by the current user"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has content array\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('content');",
+              "    pm.expect(jsonData.content).to.be.an('array');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Update Request by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/property-updates/{{updateRequestId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "property-updates", "{{updateRequestId}}"]
+        },
+        "description": "Get a specific update request by its ID"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has correct ID\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('id');",
+              "    pm.expect(jsonData.id.toString()).to.eql(pm.environment.get(\"updateRequestId\"));",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Update Request by Permanent ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/property-updates/by-permanent-id/{{updateRequestPermanentId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "property-updates", "by-permanent-id", "{{updateRequestPermanentId}}"]
+        },
+        "description": "Get a specific update request by its permanent ID (e.g., RANPUR20250611001)"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has correct permanent ID\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('requestId');",
+              "    pm.expect(jsonData.requestId).to.eql(pm.environment.get(\"updateRequestPermanentId\"));",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Update Requests by Property",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/property-updates/property/{{propertyId}}?page=0&size=10&sort=submittedAt,desc",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "property-updates", "property", "{{propertyId}}"],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            },
+            {
+              "key": "sort",
+              "value": "submittedAt,desc"
+            }
+          ]
+        },
+        "description": "Get all update requests for a specific property"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has content array\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('content');",
+              "    pm.expect(jsonData.content).to.be.an('array');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cancel Update Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/property-updates/{{updateRequestId}}/cancel",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "property-updates", "{{updateRequestId}}", "cancel"]
+        },
+        "description": "Cancel a pending property update request"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Request is cancelled\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('status');",
+              "    pm.expect(jsonData.status).to.eql('CANCELLED');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ]
+} {
+  "info": {
+    "_postman_id": "b2c3d4e5-f6g7-8901-hijk-lm2345678901",
+    "name": "Property Update - Franchisee",
+    "description": "APIs for franchisees to submit and manage property update requests on behalf of owners",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Submit Property Update Request (On Behalf)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{franchiseeToken}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "ownerPermanentId",
+              "value": "USER20250101001",
+              "description": "Permanent ID of the property owner",
+              "type": "text"
+            },
+            {
+              "key": "propertyId",
+              "value": "123",
+              "description": "ID of the property to update",
+              "type": "text"
+            },
+            {
+              "key": "requestNotes",
+              "value": "Updating property details on behalf of owner",
+              "description": "Notes about the update request",
+              "type": "text"
+            },
+            {
+              "key": "title",
+              "value": "Updated 3BHK Apartment in Indore",
+              "description": "Updated property title",
+              "type": "text"
+            },
+            {
+              "key": "description",
+              "value": "Newly renovated 3BHK apartment with modern amenities",
+              "description": "Updated property description",
+              "type": "text"
+            },
+            {
+              "key": "price",
+              "value": "7500000",
+              "description": "Updated property price",
+              "type": "text"
+            },
+            {
+              "key": "area",
+              "value": "1500",
+              "description": "Updated property area in sq ft",
+              "type": "text"
+            },
+            {
+              "key": "sizePostfix",
+              "value": "sq.ft.",
+              "description": "Unit of area measurement",
+              "type": "text"
+            },
+            {
+              "key": "bedrooms",
+              "value": "3",
+              "description": "Number of bedrooms",
+              "type": "text"
+            },
+            {
+              "key": "bathrooms",
+              "value": "2",
+              "description": "Number of bathrooms",
+              "type": "text"
+            },
+            {
+              "key": "garages",
+              "value": "1",
+              "description": "Number of garages",
+              "type": "text"
+            },
+            {
+              "key": "address",
+              "value": "123 Main Street, Indore",
+              "description": "Property address",
+              "type": "text"
+            },
+            {
+              "key": "amenities",
+              "value": "[\"Swimming Pool\", \"Gym\", \"Security\", \"Power Backup\"]",
+              "description": "Property amenities as JSON array",
+              "type": "text"
+            },
+            {
+              "key": "securityFeatures",
+              "value": "[\"CCTV\", \"Gated Community\", \"24x7 Security\"]",
+              "description": "Security features as JSON array",
+              "type": "text"
+            },
+            {
+              "key": "features",
+              "value": "[\"Modular Kitchen\", \"Air Conditioning\", \"Furnished\"]",
+              "description": "Property features as JSON array",
+              "type": "text"
+            },
+            {
+              "key": "images",
+              "type": "file",
+              "description": "Property images (multiple can be selected)",
+              "src": []
+            },
+            {
+              "key": "video",
+              "type": "file",
+              "description": "Property video",
+              "src": []
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/franchisee/property-updates",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "franchisee", "property-updates"]
+        },
+        "description": "Submit a property update request on behalf of a property owner"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has required fields\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('id');",
+              "    pm.expect(jsonData).to.have.property('requestId');",
+              "    pm.expect(jsonData).to.have.property('propertyId');",
+              "    pm.expect(jsonData).to.have.property('status');",
+              "    pm.expect(jsonData.status).to.eql('PENDING');",
+              "    pm.expect(jsonData).to.have.property('franchiseeRequest');",
+              "    pm.expect(jsonData.franchiseeRequest).to.be.true;",
+              "});",
+              "",
+              "// Store the request ID for later use",
+              "var jsonData = pm.response.json();",
+              "if (jsonData && jsonData.id) {",
+              "    pm.environment.set(\"franchiseeUpdateRequestId\", jsonData.id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get My Update Requests (Franchisee)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{franchiseeToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/franchisee/property-updates/my-requests?page=0&size=10&sort=submittedAt,desc",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "franchisee", "property-updates", "my-requests"],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            },
+            {
+              "key": "sort",
+              "value": "submittedAt,desc"
+            }
+          ]
+        },
+        "description": "Get all update requests created by the current franchisee"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has content array\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('content');",
+              "    pm.expect(jsonData.content).to.be.an('array');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get District Pending Requests",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{franchiseeToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/franchisee/property-updates/district/pending?page=0&size=10&sort=submittedAt,desc",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "franchisee", "property-updates", "district", "pending"],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            },
+            {
+              "key": "sort",
+              "value": "submittedAt,desc"
+            }
+          ]
+        },
+        "description": "Get all pending update requests in the franchisee's district"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has content array\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('content');",
+              "    pm.expect(jsonData.content).to.be.an('array');",
+              "});",
+              "",
+              "pm.test(\"All requests are pending\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    if (jsonData.content && jsonData.content.length > 0) {",
+              "        jsonData.content.forEach(function(request) {",
+              "            pm.expect(request.status).to.eql('PENDING');",
+              "        });",
+              "    }",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Pending Franchisee Review Requests",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{franchiseeToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/franchisee/property-updates/district/pending-review?page=0&size=10&sort=submittedAt,desc",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "franchisee", "property-updates", "district", "pending-review"],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            },
+            {
+              "key": "sort",
+              "value": "submittedAt,desc"
+            }
+          ]
+        },
+        "description": "Get all pending update requests that need franchisee review in their district"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has content array\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('content');",
+              "    pm.expect(jsonData.content).to.be.an('array');",
+              "});",
+              "",
+              "pm.test(\"All requests need franchisee review\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    if (jsonData.content && jsonData.content.length > 0) {",
+              "        jsonData.content.forEach(function(request) {",
+              "            pm.expect(request.franchiseeReviewed).to.be.false;",
+              "            pm.expect(request.status).to.eql('PENDING');",
+              "        });",
+              "    }",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Review Update Request (Franchisee Approve)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{franchiseeToken}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"requestId\": {{updateRequestId}},\n  \"approved\": true,\n  \"reviewerType\": \"FRANCHISEE\",\n  \"notes\": \"Looks good, approved from franchisee side\",\n  \"rejectionReason\": null\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/franchisee/property-updates/review",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "franchisee", "property-updates", "review"]
+        },
+        "description": "Approve a property update request as a franchisee"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Request is approved\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('status');",
+              "    pm.expect(jsonData.status).to.eql('APPROVED');",
+              "    pm.expect(jsonData).to.have.property('franchiseeReviewed');",
+              "    pm.expect(jsonData.franchiseeReviewed).to.be.true;",
+              "    pm.expect(jsonData).to.have.property('franchiseeApproved');",
+              "    pm.expect(jsonData.franchiseeApproved).to.be.true;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Review Update Request (Franchisee Reject)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{franchiseeToken}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"requestId\": {{updateRequestId}},\n  \"approved\": false,\n  \"reviewerType\": \"FRANCHISEE\",\n  \"notes\": \"Cannot approve this update\",\n  \"rejectionReason\": \"The property details are inaccurate. Please verify and resubmit.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/franchisee/property-updates/review",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "franchisee", "property-updates", "review"]
+        },
+        "description": "Reject a property update request as a franchisee"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Request is rejected\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('status');",
+              "    pm.expect(jsonData.status).to.eql('REJECTED');",
+              "    pm.expect(jsonData).to.have.property('franchiseeReviewed');",
+              "    pm.expect(jsonData.franchiseeReviewed).to.be.true;",
+              "    pm.expect(jsonData).to.have.property('franchiseeApproved');",
+              "    pm.expect(jsonData.franchiseeApproved).to.be.false;",
+              "    pm.expect(jsonData).to.have.property('rejectionReason');",
+              "    pm.expect(jsonData.rejectionReason).to.not.be.empty;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cancel Update Request (Franchisee)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{franchiseeToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/franchisee/property-updates/{{franchiseeUpdateRequestId}}/cancel",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "franchisee", "property-updates", "{{franchiseeUpdateRequestId}}", "cancel"]
+        },
+        "description": "Cancel a pending property update request created by the franchisee"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Request is cancelled\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('status');",
+              "    pm.expect(jsonData.status).to.eql('CANCELLED');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ]
+} {
+  "info": {
+    "_postman_id": "c3d4e5f6-g7h8-9012-ijkl-mn3456789012",
+    "name": "Property Update - Admin",
+    "description": "APIs for admins to manage and review property update requests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Pending Update Requests",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{adminToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/property-updates/admin/pending?page=0&size=10&sort=submittedAt,desc",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "property-updates", "admin", "pending"],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            },
+            {
+              "key": "sort",
+              "value": "submittedAt,desc"
+            }
+          ]
+        },
+        "description": "Get all pending property update requests (admin only)"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has content array\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('content');",
+              "    pm.expect(jsonData.content).to.be.an('array');",
+              "});",
+              "",
+              "pm.test(\"All requests are pending\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    if (jsonData.content && jsonData.content.length > 0) {",
+              "        jsonData.content.forEach(function(request) {",
+              "            pm.expect(request.status).to.eql('PENDING');",
+              "        });",
+              "    }",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Pending Admin Review Requests",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{adminToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/property-updates/admin/pending-review?page=0&size=10&sort=submittedAt,desc",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "property-updates", "admin", "pending-review"],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            },
+            {
+              "key": "sort",
+              "value": "submittedAt,desc"
+            }
+          ]
+        },
+        "description": "Get all pending property update requests that need admin review"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has content array\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('content');",
+              "    pm.expect(jsonData.content).to.be.an('array');",
+              "});",
+              "",
+              "pm.test(\"All requests need admin review\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    if (jsonData.content && jsonData.content.length > 0) {",
+              "        jsonData.content.forEach(function(request) {",
+              "            pm.expect(request.adminReviewed).to.be.false;",
+              "            pm.expect(request.status).to.eql('PENDING');",
+              "        });",
+              "    }",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Review Update Request (Admin Approve)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{adminToken}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"requestId\": {{updateRequestId}},\n  \"approved\": true,\n  \"reviewerType\": \"ADMIN\",\n  \"notes\": \"Approved from admin side\",\n  \"rejectionReason\": null\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/property-updates/admin/review",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "property-updates", "admin", "review"]
+        },
+        "description": "Approve a property update request as an admin"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Request is approved\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('status');",
+              "    pm.expect(jsonData.status).to.eql('APPROVED');",
+              "    pm.expect(jsonData).to.have.property('adminReviewed');",
+              "    pm.expect(jsonData.adminReviewed).to.be.true;",
+              "    pm.expect(jsonData).to.have.property('adminApproved');",
+              "    pm.expect(jsonData.adminApproved).to.be.true;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Review Update Request (Admin Reject)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{adminToken}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"requestId\": {{updateRequestId}},\n  \"approved\": false,\n  \"reviewerType\": \"ADMIN\",\n  \"notes\": \"Cannot approve this update\",\n  \"rejectionReason\": \"The property details violate platform guidelines. Please revise and resubmit.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/property-updates/admin/review",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "property-updates", "admin", "review"]
+        },
+        "description": "Reject a property update request as an admin"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Request is rejected\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('status');",
+              "    pm.expect(jsonData.status).to.eql('REJECTED');",
+              "    pm.expect(jsonData).to.have.property('adminReviewed');",
+              "    pm.expect(jsonData.adminReviewed).to.be.true;",
+              "    pm.expect(jsonData).to.have.property('adminApproved');",
+              "    pm.expect(jsonData.adminApproved).to.be.false;",
+              "    pm.expect(jsonData).to.have.property('rejectionReason');",
+              "    pm.expect(jsonData.rejectionReason).to.not.be.empty;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ]
+} 

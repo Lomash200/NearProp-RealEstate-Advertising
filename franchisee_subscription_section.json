@@ -1,0 +1,836 @@
+{
+  "info": {
+    "_postman_id": "f8e9d2c0-5678-abcd-ef01-234567890123",
+    "name": "NearProp - Franchisee & Subscription APIs",
+    "description": "# NearProp Franchisee & Subscription APIs\n\nThis collection contains endpoints related to franchisee district management, franchise requests, district revenue tracking, and subscription management in the NearProp platform.\n\n## Franchisee Management\nEnables users to request franchisee privileges for specific districts and for admins to manage these requests and assignments.\n\n## District Management\nAllows management of districts including creation, updates, and assignment to franchisees.\n\n## Revenue Management\nFacilitates tracking and management of revenue generated from districts managed by franchisees.\n\n## Subscription Management\nEnables users to subscribe to various plans offered by the platform.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Franchise Request Management",
+      "description": "Endpoints for users to submit franchise requests and for admins to manage them",
+      "item": [
+        {
+          "name": "Submit Franchise Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "districtId",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "businessName",
+                  "value": "My Real Estate Business",
+                  "type": "text"
+                },
+                {
+                  "key": "businessAddress",
+                  "value": "123 Main St, Business District",
+                  "type": "text"
+                },
+                {
+                  "key": "experienceYears",
+                  "value": "5",
+                  "type": "text"
+                },
+                {
+                  "key": "documents",
+                  "type": "file",
+                  "src": "/path/to/document.pdf"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/requests",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "requests"]
+            },
+            "description": "Submit a request to become a franchisee for a specific district. The user must be authenticated and have the USER role.\n\n**Request Body:**\n- `districtId`: ID of the district for which the franchise is requested\n- `businessName`: Name of the user's real estate business\n- `businessAddress`: Address of the business\n- `experienceYears`: Years of experience in real estate\n- `documents`: Supporting documents (optional)\n\n**Required Auth:**\n- Bearer token with USER role"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Franchise Request by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/requests/{{requestId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "requests", "{{requestId}}"]
+            },
+            "description": "Retrieve details of a specific franchise request by its ID.\n\n**Path Parameters:**\n- `requestId`: ID of the franchise request\n\n**Required Auth:**\n- Bearer token with ADMIN, USER, or FRANCHISEE role"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Requests by Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/requests/status/PENDING?page=0&size=10&sortBy=createdAt&direction=DESC",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "requests", "status", "PENDING"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "createdAt"
+                },
+                {
+                  "key": "direction",
+                  "value": "DESC"
+                }
+              ]
+            },
+            "description": "Retrieve franchise requests filtered by status.\n\n**Path Parameters:**\n- `status`: Status of the requests (PENDING, APPROVED, REJECTED)\n\n**Query Parameters:**\n- `page`: Page number (zero-based, default: 0)\n- `size`: Number of items per page (default: 10)\n- `sortBy`: Field to sort by (default: createdAt)\n- `direction`: Sort direction (ASC or DESC, default: DESC)\n\n**Required Auth:**\n- Bearer token with ADMIN role"
+          },
+          "response": []
+        },
+        {
+          "name": "Process Franchise Request",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"status\": \"APPROVED\",\n    \"comments\": \"Application approved after review of qualifications and documentation.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/requests/{{requestId}}/process",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "requests", "{{requestId}}", "process"]
+            },
+            "description": "Process (approve or reject) a franchise request.\n\n**Path Parameters:**\n- `requestId`: ID of the franchise request\n\n**Request Body:**\n- `status`: New status for the request (APPROVED or REJECTED)\n- `comments`: Admin comments about the decision\n\n**Required Auth:**\n- Bearer token with ADMIN role"
+          },
+          "response": []
+        },
+        {
+          "name": "Check if District is Assigned",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/requests/is-district-assigned/{{districtId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "requests", "is-district-assigned", "{{districtId}}"]
+            },
+            "description": "Check if a specific district is already assigned to a franchisee.\n\n**Path Parameters:**\n- `districtId`: ID of the district\n\n**Required Auth:**\n- Bearer token (any authenticated user)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Request Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/requests/statistics",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "requests", "statistics"]
+            },
+            "description": "Get statistics of franchise requests by status.\n\n**Required Auth:**\n- Bearer token with ADMIN role"
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Franchise Request",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/requests/{{requestId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "requests", "{{requestId}}"]
+            },
+            "description": "Cancel a franchise request. Only the user who submitted the request or a franchisee can cancel it.\n\n**Path Parameters:**\n- `requestId`: ID of the franchise request\n\n**Required Auth:**\n- Bearer token with USER or FRANCHISEE role (must be the owner of the request)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Franchisee District Management",
+      "description": "Endpoints for managing district assignments to franchisees",
+      "item": [
+        {
+          "name": "Assign Franchisee to District",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"userId\": {{franchiseeUserId}},\n    \"districtId\": {{districtId}},\n    \"commissionRate\": 10.5,\n    \"startDate\": \"2023-01-01\",\n    \"endDate\": \"2024-01-01\",\n    \"status\": \"ACTIVE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/assignments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "assignments"]
+            },
+            "description": "Assign a franchisee to a district.\n\n**Request Body:**\n- `userId`: ID of the franchisee user\n- `districtId`: ID of the district to assign\n- `commissionRate`: Commission rate for the franchisee\n- `startDate`: Start date of the assignment\n- `endDate`: End date of the assignment\n- `status`: Status of the assignment (ACTIVE, PENDING, TERMINATED)\n\n**Required Auth:**\n- Bearer token with ADMIN role"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Franchisee District",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/assignments/{{assignmentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "assignments", "{{assignmentId}}"]
+            },
+            "description": "Get details of a specific franchisee district assignment.\n\n**Path Parameters:**\n- `assignmentId`: ID of the franchisee district assignment\n\n**Required Auth:**\n- Bearer token with ADMIN or FRANCHISEE role"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Franchisee District",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"userId\": {{franchiseeUserId}},\n    \"districtId\": {{districtId}},\n    \"commissionRate\": 12.0,\n    \"startDate\": \"2023-01-01\",\n    \"endDate\": \"2024-06-30\",\n    \"status\": \"ACTIVE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/assignments/{{assignmentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "assignments", "{{assignmentId}}"]
+            },
+            "description": "Update a franchisee district assignment.\n\n**Path Parameters:**\n- `assignmentId`: ID of the franchisee district assignment\n\n**Request Body:**\n- `userId`: ID of the franchisee user\n- `districtId`: ID of the district\n- `commissionRate`: Commission rate for the franchisee\n- `startDate`: Start date of the assignment\n- `endDate`: End date of the assignment\n- `status`: Status of the assignment\n\n**Required Auth:**\n- Bearer token with ADMIN role"
+          },
+          "response": []
+        },
+        {
+          "name": "Terminate Franchisee District",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/assignments/{{assignmentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "assignments", "{{assignmentId}}"]
+            },
+            "description": "Terminate a franchisee district assignment.\n\n**Path Parameters:**\n- `assignmentId`: ID of the franchisee district assignment\n\n**Required Auth:**\n- Bearer token with ADMIN role"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Franchisee Districts by Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/assignments/by-status/ACTIVE?page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "assignments", "by-status", "ACTIVE"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Get franchisee district assignments filtered by status.\n\n**Path Parameters:**\n- `status`: Status of the assignments (ACTIVE, PENDING, TERMINATED)\n\n**Query Parameters:**\n- `page`: Page number (zero-based, default: 0)\n- `size`: Number of items per page (default: 10)\n\n**Required Auth:**\n- Bearer token with ADMIN role"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Active Franchisee for District",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/assignments/active-for-district/{{districtId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "assignments", "active-for-district", "{{districtId}}"]
+            },
+            "description": "Get the active franchisee for a specific district.\n\n**Path Parameters:**\n- `districtId`: ID of the district\n\n**Required Auth:**\n- Bearer token with ADMIN or FRANCHISEE role"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Top Performing Franchisees",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/assignments/top-performers?limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "assignments", "top-performers"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Get a list of top-performing franchisees.\n\n**Query Parameters:**\n- `limit`: Maximum number of records to return (default: 10)\n\n**Required Auth:**\n- Bearer token with ADMIN role"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "District Management",
+      "description": "Endpoints for managing districts and their data",
+      "item": [
+        {
+          "name": "Get All Districts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/districts",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "districts"]
+            },
+            "description": "Retrieve a list of all districts.\n\n**Required Auth:**\n- Bearer token (any authenticated user)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All States",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/districts/states",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "districts", "states"]
+            },
+            "description": "Retrieve a list of all states.\n\n**Required Auth:**\n- Bearer token (any authenticated user)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Districts by State",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/districts/by-state/{{stateName}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "districts", "by-state", "{{stateName}}"]
+            },
+            "description": "Retrieve districts filtered by state.\n\n**Path Parameters:**\n- `stateName`: Name of the state\n\n**Required Auth:**\n- Bearer token (any authenticated user)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get District by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/districts/{{districtId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "districts", "{{districtId}}"]
+            },
+            "description": "Retrieve a specific district by its ID.\n\n**Path Parameters:**\n- `districtId`: ID of the district\n\n**Required Auth:**\n- Bearer token (any authenticated user)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Districts by Franchisee ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{franchiseeToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/districts/by-franchisee/{{franchiseeUserId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "districts", "by-franchisee", "{{franchiseeUserId}}"]
+            },
+            "description": "Retrieve districts assigned to a specific franchisee.\n\n**Path Parameters:**\n- `franchiseeUserId`: ID of the franchisee user\n\n**Required Auth:**\n- Bearer token with ADMIN or FRANCHISEE role"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "District Revenue Management",
+      "description": "Endpoints for managing revenue from franchisee districts",
+      "item": [
+        {
+          "name": "Record District Revenue",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/revenue/record?districtId={{districtId}}&franchiseeDistrictId={{franchiseeDistrictId}}&revenueType=COMMISSION&amount=5000&description=Property Sale Commission&propertyId={{propertyId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "revenue", "record"],
+              "query": [
+                {
+                  "key": "districtId",
+                  "value": "{{districtId}}"
+                },
+                {
+                  "key": "franchiseeDistrictId",
+                  "value": "{{franchiseeDistrictId}}"
+                },
+                {
+                  "key": "revenueType",
+                  "value": "COMMISSION"
+                },
+                {
+                  "key": "amount",
+                  "value": "5000"
+                },
+                {
+                  "key": "description",
+                  "value": "Property Sale Commission"
+                },
+                {
+                  "key": "propertyId",
+                  "value": "{{propertyId}}"
+                }
+              ]
+            },
+            "description": "Record revenue for a district managed by a franchisee.\n\n**Query Parameters:**\n- `districtId`: ID of the district\n- `franchiseeDistrictId`: ID of the franchisee district assignment\n- `revenueType`: Type of revenue (COMMISSION, SUBSCRIPTION, OTHER)\n- `amount`: Amount of revenue\n- `description`: Description of the revenue\n- `propertyId`: ID of the related property (optional)\n- `subscriptionId`: ID of the related subscription (optional)\n\n**Required Auth:**\n- Bearer token with ADMIN role"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Revenue by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/revenue/{{revenueId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "revenue", "{{revenueId}}"]
+            },
+            "description": "Get details of a specific revenue entry.\n\n**Path Parameters:**\n- `revenueId`: ID of the revenue entry\n\n**Required Auth:**\n- Bearer token with ADMIN or FRANCHISEE role"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Payment Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/revenue/{{revenueId}}/payment-status?status=PAID&paymentReference=TXN123456",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "revenue", "{{revenueId}}", "payment-status"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PAID"
+                },
+                {
+                  "key": "paymentReference",
+                  "value": "TXN123456"
+                }
+              ]
+            },
+            "description": "Update payment status for a revenue entry.\n\n**Path Parameters:**\n- `revenueId`: ID of the revenue entry\n\n**Query Parameters:**\n- `status`: New payment status (PENDING, PAID, FAILED)\n- `paymentReference`: Payment reference number (optional)\n\n**Required Auth:**\n- Bearer token with ADMIN role"
+          },
+          "response": []
+        },
+        {
+          "name": "Get District Revenue Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{franchiseeToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/revenue/stats/district/{{districtId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "revenue", "stats", "district", "{{districtId}}"]
+            },
+            "description": "Get revenue statistics for a specific district.\n\n**Path Parameters:**\n- `districtId`: ID of the district\n\n**Required Auth:**\n- Bearer token with ADMIN or FRANCHISEE role"
+          },
+          "response": []
+        },
+        {
+          "name": "Process Pending Payments",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/franchisee/revenue/process-payments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "franchisee", "revenue", "process-payments"]
+            },
+            "description": "Process all pending payments in the system.\n\n**Required Auth:**\n- Bearer token with ADMIN role"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Subscription Management",
+      "description": "Endpoints for managing user subscriptions",
+      "item": [
+        {
+          "name": "Get All Subscription Plans",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/plans",
+              "host": ["{{baseUrl}}"],
+              "path": ["subscriptions", "plans"]
+            },
+            "description": "Retrieve all available subscription plans.\n\n**Required Auth:**\n- Bearer token (any authenticated user)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Plans by Type",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/plans/{{planType}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["subscriptions", "plans", "{{planType}}"]
+            },
+            "description": "Retrieve subscription plans filtered by type.\n\n**Path Parameters:**\n- `planType`: Type of subscription plan (BASIC, PREMIUM, PRO)\n\n**Required Auth:**\n- Bearer token (any authenticated user)"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"planId\": {{planId}},\n    \"paymentMethod\": \"CREDIT_CARD\",\n    \"paymentReferenceId\": \"PAY123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions",
+              "host": ["{{baseUrl}}"],
+              "path": ["subscriptions"]
+            },
+            "description": "Create a new subscription for the current user.\n\n**Request Body:**\n- `planId`: ID of the subscription plan\n- `paymentMethod`: Method of payment (CREDIT_CARD, BANK_TRANSFER, etc.)\n- `paymentReferenceId`: Payment reference ID\n\n**Required Auth:**\n- Bearer token (any authenticated user)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Subscription by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/{{subscriptionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["subscriptions", "{{subscriptionId}}"]
+            },
+            "description": "Get details of a specific subscription.\n\n**Path Parameters:**\n- `subscriptionId`: ID of the subscription\n\n**Required Auth:**\n- Bearer token (authenticated user who owns the subscription)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Subscriptions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/my-subscriptions?page=0&size=10&sortBy=startDate&direction=DESC",
+              "host": ["{{baseUrl}}"],
+              "path": ["subscriptions", "my-subscriptions"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "startDate"
+                },
+                {
+                  "key": "direction",
+                  "value": "DESC"
+                }
+              ]
+            },
+            "description": "Get all subscriptions for the current user.\n\n**Query Parameters:**\n- `page`: Page number (zero-based, default: 0)\n- `size`: Number of items per page (default: 10)\n- `sortBy`: Field to sort by (default: startDate)\n- `direction`: Sort direction (ASC or DESC, default: DESC)\n\n**Required Auth:**\n- Bearer token (any authenticated user)"
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/{{subscriptionId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["subscriptions", "{{subscriptionId}}", "cancel"]
+            },
+            "description": "Cancel a user's subscription.\n\n**Path Parameters:**\n- `subscriptionId`: ID of the subscription\n\n**Required Auth:**\n- Bearer token (authenticated user who owns the subscription)"
+          },
+          "response": []
+        },
+        {
+          "name": "Renew Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions/{{subscriptionId}}/renew",
+              "host": ["{{baseUrl}}"],
+              "path": ["subscriptions", "{{subscriptionId}}", "renew"]
+            },
+            "description": "Renew a user's subscription.\n\n**Path Parameters:**\n- `subscriptionId`: ID of the subscription\n\n**Required Auth:**\n- Bearer token (authenticated user who owns the subscription)"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{userToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "exec": [
+          ""
+        ],
+        "type": "text/javascript"
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "exec": [
+          ""
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ]
+} 

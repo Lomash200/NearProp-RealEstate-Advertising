@@ -1,0 +1,41 @@
+dependencies {
+    // ... existing dependencies ...
+    
+    // AWS S3 
+    implementation 'software.amazon.awssdk:s3:2.20.26'
+    implementation 'software.amazon.awssdk:sts:2.20.26'
+    
+    // Video processing with JavaCV (wrapper for FFmpeg)
+    implementation 'org.bytedeco:javacv-platform:1.5.9'
+    implementation 'org.bytedeco:ffmpeg-platform:6.0-1.5.9'
+    
+    // UUID generation
+    implementation 'com.fasterxml.uuid:java-uuid-generator:4.2.0'
+    
+    // ===== PERFORMANCE OPTIMIZATION DEPENDENCIES =====
+    
+    // Caching with Caffeine (high-performance in-memory cache)
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
+    implementation 'com.github.ben-manes.caffeine:jcache:3.1.8'
+    
+    // Redis for distributed caching
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'redis.clients:jedis:4.4.3'
+    
+    // Async processing and monitoring
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+    
+    // Database connection pool monitoring
+    implementation 'com.zaxxer:HikariCP'
+    
+    // JSON optimization
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
+    // FCM
+    implementation 'com.google.firebase:firebase-admin:9.2.0'
+
+
+    // ... existing dependencies ...
+} 

@@ -1,0 +1,3 @@
+-- This is a placeholder for a deleted migration
+-- Original file: V7__create_reel_tables.sql
+-- This file exists to satisfy Flyway validation checks 

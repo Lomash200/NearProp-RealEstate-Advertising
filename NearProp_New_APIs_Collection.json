@@ -1,0 +1,683 @@
+{
+  "info": {
+    "_postman_id": "c76e1fab-51ec-4a85-9cb7-05e8f764a9d5",
+    "name": "NearProp New APIs",
+    "description": "Collection of newly implemented APIs for NearProp",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. User Profile APIs",
+      "description": "User profile and profile image upload APIs",
+      "item": [
+        {
+          "name": "Get User Profile (with Permanent ID)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/users/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "users",
+                "profile"
+              ]
+            },
+            "description": "Gets the current user profile with permanent ID included in the response."
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Profile Image",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/path/to/profile_image.jpg",
+                  "description": "Profile image file to upload"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/users/profile/image",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "users",
+                "profile",
+                "image"
+              ]
+            },
+            "description": "Uploads a user profile image to AWS S3 and updates the user profile with the new image URL. The image name will be formatted as username_profile_pic.extension."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Developer Property APIs",
+      "description": "APIs for developer property management",
+      "item": [
+        {
+          "name": "Create Developer Property",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Modern Luxury Apartment Complex",
+                  "type": "text",
+                  "description": "Property title (required)"
+                },
+                {
+                  "key": "description",
+                  "value": "Brand new luxury apartment complex with premium amenities including gym, pool, and 24-hour security. Located in the heart of the city with easy access to public transportation, shopping centers, and restaurants.",
+                  "type": "text",
+                  "description": "Detailed property description (required)"
+                },
+                {
+                  "key": "type",
+                  "value": "APARTMENT",
+                  "type": "text",
+                  "description": "Property type (required): APARTMENT, HOUSE, VILLA, COMMERCIAL, etc."
+                },
+                {
+                  "key": "status",
+                  "value": "AVAILABLE",
+                  "type": "text",
+                  "description": "Property status (required): AVAILABLE, SOLD, UNDER_CONSTRUCTION, etc."
+                },
+                {
+                  "key": "label",
+                  "value": "DEVELOPER",
+                  "type": "text",
+                  "description": "Property label (required): DEVELOPER, GOLDEN_OFFER, HOT_OFFER, OPEN_HOUSE, SOLD"
+                },
+                {
+                  "key": "price",
+                  "value": "5000000",
+                  "type": "text",
+                  "description": "Property price (required)"
+                },
+                {
+                  "key": "area",
+                  "value": "1200",
+                  "type": "text",
+                  "description": "Property area (required)"
+                },
+                {
+                  "key": "sizePostfix",
+                  "value": "sq.ft.",
+                  "type": "text",
+                  "description": "Size unit (required): sq.ft., sq.m., etc."
+                },
+                {
+                  "key": "address",
+                  "value": "123 Main Street, Andheri East",
+                  "type": "text",
+                  "description": "Property address (required)"
+                },
+                {
+                  "key": "districtId",
+                  "value": "96",
+                  "type": "text",
+                  "description": "District ID (required) - Use GET /properties/districts to get available districts"
+                },
+                {
+                  "key": "state",
+                  "value": "Bihar",
+                  "type": "text",
+                  "description": "State (required)"
+                },
+                {
+                  "key": "pincode",
+                  "value": "800001",
+                  "type": "text",
+                  "description": "Pincode/ZIP (required)"
+                },
+                {
+                  "key": "bedrooms",
+                  "value": "2",
+                  "type": "text",
+                  "description": "Number of bedrooms (required for residential properties)"
+                },
+                {
+                  "key": "bathrooms",
+                  "value": "2",
+                  "type": "text",
+                  "description": "Number of bathrooms (required for residential properties)"
+                },
+                {
+                  "key": "latitude",
+                  "value": "19.1136",
+                  "type": "text",
+                  "description": "Latitude (optional)"
+                },
+                {
+                  "key": "longitude",
+                  "value": "72.8697",
+                  "type": "text",
+                  "description": "Longitude (optional)"
+                },
+                {
+                  "key": "amenities",
+                  "value": "[\"Swimming Pool\", \"Gym\", \"24/7 Security\", \"Parking\", \"Power Backup\"]",
+                  "type": "text",
+                  "description": "Property amenities as JSON array (optional)"
+                },
+                {
+                  "key": "features",
+                  "value": "[\"Balcony\", \"Modular Kitchen\", \"Hardwood Floors\", \"Air Conditioning\"]",
+                  "type": "text",
+                  "description": "Property features as JSON array (optional)"
+                },
+                {
+                  "key": "securityFeatures",
+                  "value": "[\"CCTV\", \"Gated Community\", \"Intercom\"]",
+                  "type": "text",
+                  "description": "Security features as JSON array (optional)"
+                },
+                {
+                  "key": "luxuriousFeatures",
+                  "value": "[\"Jacuzzi\", \"Smart Home\", \"Private Terrace\"]",
+                  "type": "text",
+                  "description": "Luxurious features as JSON array (optional)"
+                },
+                {
+                  "key": "unitType",
+                  "value": "2BHK",
+                  "type": "text",
+                  "description": "Unit type (required for developer properties): 1BHK, 2BHK, 3BHK, etc."
+                },
+                {
+                  "key": "unitCount",
+                  "value": "100",
+                  "type": "text",
+                  "description": "Total number of units (required for developer properties)"
+                },
+                {
+                  "key": "stock",
+                  "value": "80",
+                  "type": "text",
+                  "description": "Number of units available for sale (required for developer properties)"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "src": "/path/to/property_image1.jpg",
+                  "description": "Property image 1 (at least one image is required)"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "src": "/path/to/property_image2.jpg",
+                  "description": "Property image 2 (optional)"
+                },
+                {
+                  "key": "video",
+                  "type": "file",
+                  "src": "/path/to/property_video.mp4",
+                  "description": "Property video (optional)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/properties/developer-form",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "properties",
+                "developer-form"
+              ]
+            },
+            "description": "Creates a new property listing with developer-specific fields like unitType, unitCount, and stock. This API is only accessible to users with the DEVELOPER role. The property is automatically labeled as DEVELOPER."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Property Stock",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/properties/{{property_id}}/update-stock?stock=75",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "properties",
+                "{{property_id}}",
+                "update-stock"
+              ],
+              "query": [
+                {
+                  "key": "stock",
+                  "value": "75",
+                  "description": "New stock value (required) - Number of units available for sale"
+                }
+              ]
+            },
+            "description": "Updates the stock (available units) of a developer property. This API is only accessible to users with the DEVELOPER role who own the property or users with ADMIN role."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Developer Property Details",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/properties/{{property_id}}/update-developer-details?unitType=3BHK&unitCount=60&stock=20",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "properties",
+                "{{property_id}}",
+                "update-developer-details"
+              ],
+              "query": [
+                {
+                  "key": "unitType",
+                  "value": "3BHK",
+                  "description": "Unit type (optional) - 1BHK, 2BHK, 3BHK, etc."
+                },
+                {
+                  "key": "unitCount",
+                  "value": "60",
+                  "description": "Total number of units (optional)"
+                },
+                {
+                  "key": "stock",
+                  "value": "20",
+                  "description": "Number of units available for sale (optional)"
+                }
+              ]
+            },
+            "description": "Updates developer-specific details of a property including unitType, unitCount, and stock. This API is only accessible to users with the DEVELOPER role who own the property or users with ADMIN role. All parameters are optional, and only the provided parameters will be updated."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Public Property Filter APIs",
+      "description": "Public APIs for property filtering without authentication",
+      "item": [
+        {
+          "name": "Get All Properties",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/properties?page=0&size=10&sortBy=createdAt&direction=DESC",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "public",
+                "properties"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0",
+                  "description": "Page number (0-based)"
+                },
+                {
+                  "key": "size",
+                  "value": "10",
+                  "description": "Page size"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "createdAt",
+                  "description": "Field to sort by"
+                },
+                {
+                  "key": "direction",
+                  "value": "DESC",
+                  "description": "Sort direction (ASC or DESC)"
+                }
+              ]
+            },
+            "description": "Gets all approved properties with pagination and sorting. No authentication required."
+          },
+          "response": []
+        },
+        {
+          "name": "Filter Properties",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/properties/filter?category=FOR_SALE&city=Mumbai&district=Andheri&propertyType=APARTMENT&minPrice=3000000&maxPrice=6000000&bedrooms=2&bathrooms=2&keyword=luxury&page=0&size=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "public",
+                "properties",
+                "filter"
+              ],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "FOR_SALE",
+                  "description": "Property status/category"
+                },
+                {
+                  "key": "city",
+                  "value": "Mumbai",
+                  "description": "City name"
+                },
+                {
+                  "key": "district",
+                  "value": "Andheri",
+                  "description": "District name"
+                },
+                {
+                  "key": "propertyType",
+                  "value": "APARTMENT",
+                  "description": "Property type"
+                },
+                {
+                  "key": "minPrice",
+                  "value": "3000000",
+                  "description": "Minimum price"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "6000000",
+                  "description": "Maximum price"
+                },
+                {
+                  "key": "bedrooms",
+                  "value": "2",
+                  "description": "Number of bedrooms"
+                },
+                {
+                  "key": "bathrooms",
+                  "value": "2",
+                  "description": "Number of bathrooms"
+                },
+                {
+                  "key": "keyword",
+                  "value": "luxury",
+                  "description": "Keyword to search in title and description"
+                },
+                {
+                  "key": "page",
+                  "value": "0",
+                  "description": "Page number (0-based)"
+                },
+                {
+                  "key": "size",
+                  "value": "10",
+                  "description": "Page size"
+                }
+              ]
+            },
+            "description": "Filters properties based on multiple criteria. All filter parameters are optional. No authentication required."
+          },
+          "response": []
+        },
+        {
+          "name": "Filter Properties by Location",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/properties/filter?latitude=19.0760&longitude=72.8777&radius=5&page=0&size=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "public",
+                "properties",
+                "filter"
+              ],
+              "query": [
+                {
+                  "key": "latitude",
+                  "value": "19.0760",
+                  "description": "Latitude"
+                },
+                {
+                  "key": "longitude",
+                  "value": "72.8777",
+                  "description": "Longitude"
+                },
+                {
+                  "key": "radius",
+                  "value": "5",
+                  "description": "Radius in kilometers"
+                },
+                {
+                  "key": "page",
+                  "value": "0",
+                  "description": "Page number (0-based)"
+                },
+                {
+                  "key": "size",
+                  "value": "10",
+                  "description": "Page size"
+                }
+              ]
+            },
+            "description": "Filters properties based on proximity to a location. No authentication required."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Featured Properties",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/properties/featured?page=0&size=5",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "public",
+                "properties",
+                "featured"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0",
+                  "description": "Page number (0-based)"
+                },
+                {
+                  "key": "size",
+                  "value": "5",
+                  "description": "Page size"
+                }
+              ]
+            },
+            "description": "Gets featured properties with pagination. No authentication required."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Property By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/properties/{{property_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "public",
+                "properties",
+                "{{property_id}}"
+              ]
+            },
+            "description": "Gets a specific property by ID. Only returns approved and active properties. No authentication required."
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Districts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/properties/districts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "public",
+                "properties",
+                "districts"
+              ]
+            },
+            "description": "Gets all available districts. No authentication required."
+          },
+          "response": []
+        },
+        {
+          "name": "Get All States",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/properties/states",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "public",
+                "properties",
+                "states"
+              ]
+            },
+            "description": "Gets all available states. No authentication required."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Property Count By Type",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/properties/stats/by-type",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "public",
+                "properties",
+                "stats",
+                "by-type"
+              ]
+            },
+            "description": "Gets the count of properties by type. No authentication required."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. Franchisee Districts API",
+      "description": "API for getting districts by franchisee ID (fixed version)",
+      "item": [
+        {
+          "name": "Get Districts By Franchisee ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/franchisee/districts/by-franchisee/{{franchisee_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "franchisee",
+                "districts",
+                "by-franchisee",
+                "{{franchisee_id}}"
+              ]
+            },
+            "description": "Gets districts assigned to a franchisee by franchisee user ID. Returns an empty list for invalid IDs instead of an error."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080/api"
+    },
+    {
+      "key": "access_token",
+      "value": "YOUR_ACCESS_TOKEN"
+    },
+    {
+      "key": "property_id",
+      "value": "1"
+    },
+    {
+      "key": "franchisee_id",
+      "value": "1"
+    }
+  ]
+} 

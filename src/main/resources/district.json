@@ -1,0 +1,4207 @@
+[
+    {
+      "state": "Andaman and Nicobar Islands",
+      "stateCode": "AN",
+      "districts": [
+        {
+          "serialNumber": 1,
+          "name": "Nicobars",
+          "pinCode": "744301"
+        },
+        {
+          "serialNumber": 2,
+          "name": "North and Middle Andaman",
+          "pinCode": "744201"
+        },
+        {
+          "serialNumber": 3,
+          "name": "South Andaman",
+          "pinCode": "744101"
+        }
+      ]
+    },
+    {
+      "state": "Andhra Pradesh",
+      "stateCode": "AP",
+      "districts": [
+        {
+          "serialNumber": 4,
+          "name": "Anantapur",
+          "pinCode": "515001"
+        },
+        {
+          "serialNumber": 5,
+          "name": "Chittoor",
+          "pinCode": "517001"
+        },
+        {
+          "serialNumber": 6,
+          "name": "East Godavari",
+          "pinCode": "533001"
+        },
+        {
+          "serialNumber": 7,
+          "name": "Guntur",
+          "pinCode": "522001"
+        },
+        {
+          "serialNumber": 8,
+          "name": "Krishna",
+          "pinCode": "520001"
+        },
+        {
+          "serialNumber": 9,
+          "name": "Kurnool",
+          "pinCode": "518001"
+        },
+        {
+          "serialNumber": 10,
+          "name": "Nellore",
+          "pinCode": "524001"
+        },
+        {
+          "serialNumber": 11,
+          "name": "Prakasam",
+          "pinCode": "523001"
+        },
+        {
+          "serialNumber": 12,
+          "name": "Srikakulam",
+          "pinCode": "532001"
+        },
+        {
+          "serialNumber": 13,
+          "name": "Visakhapatnam",
+          "pinCode": "530001"
+        },
+        {
+          "serialNumber": 14,
+          "name": "Vizianagaram",
+          "pinCode": "535001"
+        },
+        {
+          "serialNumber": 15,
+          "name": "West Godavari",
+          "pinCode": "534001"
+        },
+        {
+          "serialNumber": 16,
+          "name": "YSR Kadapa",
+          "pinCode": "516001"
+        }
+      ]
+    },
+    {
+      "state": "Arunachal Pradesh",
+      "stateCode": "AR",
+      "districts": [
+        {
+          "serialNumber": 17,
+          "name": "Tawang",
+          "pinCode": "790104"
+        },
+        {
+          "serialNumber": 18,
+          "name": "West Kameng",
+          "pinCode": "790114"
+        },
+        {
+          "serialNumber": 19,
+          "name": "East Kameng",
+          "pinCode": "790102"
+        },
+        {
+          "serialNumber": 20,
+          "name": "Papum Pare",
+          "pinCode": "791111"
+        },
+        {
+          "serialNumber": 21,
+          "name": "Kurung Kumey",
+          "pinCode": "791118"
+        },
+        {
+          "serialNumber": 22,
+          "name": "Kra Daadi",
+          "pinCode": "791121"
+        },
+        {
+          "serialNumber": 23,
+          "name": "Lower Subansiri",
+          "pinCode": "791120"
+        },
+        {
+          "serialNumber": 24,
+          "name": "Upper Subansiri",
+          "pinCode": "791122"
+        },
+        {
+          "serialNumber": 25,
+          "name": "West Siang",
+          "pinCode": "791125"
+        },
+        {
+          "serialNumber": 26,
+          "name": "East Siang",
+          "pinCode": "791102"
+        },
+        {
+          "serialNumber": 27,
+          "name": "Siang",
+          "pinCode": "791002"
+        },
+        {
+          "serialNumber": 28,
+          "name": "Upper Siang",
+          "pinCode": "791002"
+        },
+        {
+          "serialNumber": 29,
+          "name": "Lower Siang",
+          "pinCode": "791125"
+        },
+        {
+          "serialNumber": 30,
+          "name": "Lower Dibang Valley",
+          "pinCode": "792110"
+        },
+        {
+          "serialNumber": 31,
+          "name": "Dibang Valley",
+          "pinCode": "792101"
+        },
+        {
+          "serialNumber": 32,
+          "name": "Anjaw",
+          "pinCode": "792104"
+        },
+        {
+          "serialNumber": 33,
+          "name": "Lohit",
+          "pinCode": "792001"
+        },
+        {
+          "serialNumber": 34,
+          "name": "Namsai",
+          "pinCode": "792103"
+        },
+        {
+          "serialNumber": 35,
+          "name": "Changlang",
+          "pinCode": "792120"
+        },
+        {
+          "serialNumber": 36,
+          "name": "Tirap",
+          "pinCode": "792129"
+        },
+        {
+          "serialNumber": 37,
+          "name": "Longding",
+          "pinCode": "792131"
+        }
+      ]
+    },
+    {
+      "state": "Assam",
+      "stateCode": "AS",
+      "districts": [
+        {
+          "serialNumber": 38,
+          "name": "Baksa",
+          "pinCode": "781372"
+        },
+        {
+          "serialNumber": 39,
+          "name": "Barpeta",
+          "pinCode": "781301"
+        },
+        {
+          "serialNumber": 40,
+          "name": "Biswanath",
+          "pinCode": "784176"
+        },
+        {
+          "serialNumber": 41,
+          "name": "Bongaigaon",
+          "pinCode": "783380"
+        },
+        {
+          "serialNumber": 42,
+          "name": "Cachar",
+          "pinCode": "788001"
+        },
+        {
+          "serialNumber": 43,
+          "name": "Charaideo",
+          "pinCode": "785688"
+        },
+        {
+          "serialNumber": 44,
+          "name": "Chirang",
+          "pinCode": "783390"
+        },
+        {
+          "serialNumber": 45,
+          "name": "Darrang",
+          "pinCode": "784145"
+        },
+        {
+          "serialNumber": 46,
+          "name": "Dhemaji",
+          "pinCode": "787057"
+        },
+        {
+          "serialNumber": 47,
+          "name": "Dhubri",
+          "pinCode": "783301"
+        },
+        {
+          "serialNumber": 48,
+          "name": "Dibrugarh",
+          "pinCode": "786001"
+        },
+        {
+          "serialNumber": 49,
+          "name": "Dima Hasao",
+          "pinCode": "788819"
+        },
+        {
+          "serialNumber": 50,
+          "name": "Goalpara",
+          "pinCode": "783101"
+        },
+        {
+          "serialNumber": 51,
+          "name": "Golaghat",
+          "pinCode": "785621"
+        },
+        {
+          "serialNumber": 52,
+          "name": "Hailakandi",
+          "pinCode": "788151"
+        },
+        {
+          "serialNumber": 53,
+          "name": "Hojai",
+          "pinCode": "782301"
+        },
+        {
+          "serialNumber": 54,
+          "name": "Jorhat",
+          "pinCode": "785001"
+        },
+        {
+          "serialNumber": 55,
+          "name": "Kamrup",
+          "pinCode": "781101"
+        },
+        {
+          "serialNumber": 56,
+          "name": "Kamrup Metropolitan",
+          "pinCode": "781001"
+        },
+        {
+          "serialNumber": 57,
+          "name": "Karbi Anglong",
+          "pinCode": "782460"
+        },
+        {
+          "serialNumber": 58,
+          "name": "Karimganj",
+          "pinCode": "788710"
+        },
+        {
+          "serialNumber": 59,
+          "name": "Kokrajhar",
+          "pinCode": "783370"
+        },
+        {
+          "serialNumber": 60,
+          "name": "Lakhimpur",
+          "pinCode": "787001"
+        },
+        {
+          "serialNumber": 61,
+          "name": "Majuli",
+          "pinCode": "785104"
+        },
+        {
+          "serialNumber": 62,
+          "name": "Morigaon",
+          "pinCode": "782105"
+        },
+        {
+          "serialNumber": 63,
+          "name": "Nagaon",
+          "pinCode": "782001"
+        },
+        {
+          "serialNumber": 64,
+          "name": "Nalbari",
+          "pinCode": "781335"
+        },
+        {
+          "serialNumber": 65,
+          "name": "Sivasagar",
+          "pinCode": "785640"
+        },
+        {
+          "serialNumber": 66,
+          "name": "Sonitpur",
+          "pinCode": "784001"
+        },
+        {
+          "serialNumber": 67,
+          "name": "South Salmara-Mankachar",
+          "pinCode": "783135"
+        },
+        {
+          "serialNumber": 68,
+          "name": "Tinsukia",
+          "pinCode": "786125"
+        },
+        {
+          "serialNumber": 69,
+          "name": "Udalguri",
+          "pinCode": "784509"
+        },
+        {
+          "serialNumber": 70,
+          "name": "West Karbi Anglong",
+          "pinCode": "782447"
+        }
+      ]
+    },
+    {
+      "state": "Bihar",
+      "stateCode": "BR",
+      "districts": [
+        {
+          "serialNumber": 71,
+          "name": "Araria",
+          "pinCode": "854311"
+        },
+        {
+          "serialNumber": 72,
+          "name": "Arwal",
+          "pinCode": "804401"
+        },
+        {
+          "serialNumber": 73,
+          "name": "Aurangabad",
+          "pinCode": "824101"
+        },
+        {
+          "serialNumber": 74,
+          "name": "Banka",
+          "pinCode": "813102"
+        },
+        {
+          "serialNumber": 75,
+          "name": "Begusarai",
+          "pinCode": "851101"
+        },
+        {
+          "serialNumber": 76,
+          "name": "Bhagalpur",
+          "pinCode": "812001"
+        },
+        {
+          "serialNumber": 77,
+          "name": "Bhojpur",
+          "pinCode": "802301"
+        },
+        {
+          "serialNumber": 78,
+          "name": "Buxar",
+          "pinCode": "802101"
+        },
+        {
+          "serialNumber": 79,
+          "name": "Darbhanga",
+          "pinCode": "846004"
+        },
+        {
+          "serialNumber": 80,
+          "name": "East Champaran",
+          "pinCode": "845401"
+        },
+        {
+          "serialNumber": 81,
+          "name": "Gaya",
+          "pinCode": "823001"
+        },
+        {
+          "serialNumber": 82,
+          "name": "Gopalganj",
+          "pinCode": "841428"
+        },
+        {
+          "serialNumber": 83,
+          "name": "Jamui",
+          "pinCode": "811307"
+        },
+        {
+          "serialNumber": 84,
+          "name": "Jehanabad",
+          "pinCode": "804408"
+        },
+        {
+          "serialNumber": 85,
+          "name": "Kaimur",
+          "pinCode": "821101"
+        },
+        {
+          "serialNumber": 86,
+          "name": "Katihar",
+          "pinCode": "854105"
+        },
+        {
+          "serialNumber": 87,
+          "name": "Khagaria",
+          "pinCode": "851204"
+        },
+        {
+          "serialNumber": 88,
+          "name": "Kishanganj",
+          "pinCode": "855107"
+        },
+        {
+          "serialNumber": 89,
+          "name": "Lakhisarai",
+          "pinCode": "811311"
+        },
+        {
+          "serialNumber": 90,
+          "name": "Madhepura",
+          "pinCode": "852113"
+        },
+        {
+          "serialNumber": 91,
+          "name": "Madhubani",
+          "pinCode": "847211"
+        },
+        {
+          "serialNumber": 92,
+          "name": "Munger",
+          "pinCode": "811201"
+        },
+        {
+          "serialNumber": 93,
+          "name": "Muzaffarpur",
+          "pinCode": "842001"
+        },
+        {
+          "serialNumber": 94,
+          "name": "Nalanda",
+          "pinCode": "803101"
+        },
+        {
+          "serialNumber": 95,
+          "name": "Nawada",
+          "pinCode": "805110"
+        },
+        {
+          "serialNumber": 96,
+          "name": "Patna",
+          "pinCode": "800001"
+        },
+        {
+          "serialNumber": 97,
+          "name": "Purnia",
+          "pinCode": "854301"
+        },
+        {
+          "serialNumber": 98,
+          "name": "Rohtas",
+          "pinCode": "821311"
+        },
+        {
+          "serialNumber": 99,
+          "name": "Saharsa",
+          "pinCode": "852201"
+        },
+        {
+          "serialNumber": 100,
+          "name": "Samastipur",
+          "pinCode": "848101"
+        },
+        {
+          "serialNumber": 101,
+          "name": "Saran",
+          "pinCode": "841301"
+        },
+        {
+          "serialNumber": 102,
+          "name": "Sheikhpura",
+          "pinCode": "811105"
+        },
+        {
+          "serialNumber": 103,
+          "name": "Sheohar",
+          "pinCode": "843329"
+        },
+        {
+          "serialNumber": 104,
+          "name": "Sitamarhi",
+          "pinCode": "843301"
+        },
+        {
+          "serialNumber": 105,
+          "name": "Siwan",
+          "pinCode": "841226"
+        },
+        {
+          "serialNumber": 106,
+          "name": "Supaul",
+          "pinCode": "852131"
+        },
+        {
+          "serialNumber": 107,
+          "name": "Vaishali",
+          "pinCode": "844101"
+        },
+        {
+          "serialNumber": 108,
+          "name": "West Champaran",
+          "pinCode": "845438"
+        }
+      ]
+    },
+    {
+      "state": "Chandigarh",
+      "stateCode": "CH",
+      "districts": [
+        {
+          "serialNumber": 109,
+          "name": "Chandigarh",
+          "pinCode": "160017"
+        }
+      ]
+    },
+    {
+      "state": "Chhattisgarh",
+      "stateCode": "CG",
+      "districts": [
+        {
+          "serialNumber": 110,
+          "name": "Balod",
+          "pinCode": "491226"
+        },
+        {
+          "serialNumber": 111,
+          "name": "Baloda Bazar",
+          "pinCode": "493332"
+        },
+        {
+          "serialNumber": 112,
+          "name": "Balrampur",
+          "pinCode": "497119"
+        },
+        {
+          "serialNumber": 113,
+          "name": "Bastar",
+          "pinCode": "494001"
+        },
+        {
+          "serialNumber": 114,
+          "name": "Bemetara",
+          "pinCode": "491335"
+        },
+        {
+          "serialNumber": 115,
+          "name": "Bijapur",
+          "pinCode": "494444"
+        },
+        {
+          "serialNumber": 116,
+          "name": "Bilaspur",
+          "pinCode": "495001"
+        },
+        {
+          "serialNumber": 117,
+          "name": "Dantewada",
+          "pinCode": "494449"
+        },
+        {
+          "serialNumber": 118,
+          "name": "Dhamtari",
+          "pinCode": "493773"
+        },
+        {
+          "serialNumber": 119,
+          "name": "Durg",
+          "pinCode": "491001"
+        },
+        {
+          "serialNumber": 120,
+          "name": "Gariaband",
+          "pinCode": "493889"
+        },
+        {
+          "serialNumber": 121,
+          "name": "Janjgir-Champa",
+          "pinCode": "495668"
+        },
+        {
+          "serialNumber": 122,
+          "name": "Jashpur",
+          "pinCode": "496331"
+        },
+        {
+          "serialNumber": 123,
+          "name": "Kabirdham",
+          "pinCode": "491995"
+        },
+        {
+          "serialNumber": 124,
+          "name": "Kanker",
+          "pinCode": "494334"
+        },
+        {
+          "serialNumber": 125,
+          "name": "Kondagaon",
+          "pinCode": "494226"
+        },
+        {
+          "serialNumber": 126,
+          "name": "Korba",
+          "pinCode": "495677"
+        },
+        {
+          "serialNumber": 127,
+          "name": "Koriya",
+          "pinCode": "497335"
+        },
+        {
+          "serialNumber": 128,
+          "name": "Mahasamund",
+          "pinCode": "493445"
+        },
+        {
+          "serialNumber": 129,
+          "name": "Mungeli",
+          "pinCode": "495334"
+        },
+        {
+          "serialNumber": 130,
+          "name": "Narayanpur",
+          "pinCode": "494661"
+        },
+        {
+          "serialNumber": 131,
+          "name": "Raigarh",
+          "pinCode": "496001"
+        },
+        {
+          "serialNumber": 132,
+          "name": "Raipur",
+          "pinCode": "492001"
+        },
+        {
+          "serialNumber": 133,
+          "name": "Rajnandgaon",
+          "pinCode": "491441"
+        },
+        {
+          "serialNumber": 134,
+          "name": "Sukma",
+          "pinCode": "494111"
+        },
+        {
+          "serialNumber": 135,
+          "name": "Surajpur",
+          "pinCode": "497229"
+        },
+        {
+          "serialNumber": 136,
+          "name": "Surguja",
+          "pinCode": "497101"
+        }
+      ]
+    },
+    {
+      "state": "Dadra and Nagar Haveli and Daman and Diu",
+      "stateCode": "DN",
+      "districts": [
+        {
+          "serialNumber": 137,
+          "name": "Daman",
+          "pinCode": "396210"
+        },
+        {
+          "serialNumber": 138,
+          "name": "Diu",
+          "pinCode": "362520"
+        },
+        {
+          "serialNumber": 139,
+          "name": "Dadra and Nagar Haveli",
+          "pinCode": "396230"
+        }
+      ]
+    },
+    {
+      "state": "Delhi",
+      "stateCode": "DL",
+      "districts": [
+        {
+          "serialNumber": 140,
+          "name": "Central Delhi",
+          "pinCode": "110001"
+        },
+        {
+          "serialNumber": 141,
+          "name": "East Delhi",
+          "pinCode": "110031"
+        },
+        {
+          "serialNumber": 142,
+          "name": "New Delhi",
+          "pinCode": "110011"
+        },
+        {
+          "serialNumber": 143,
+          "name": "North Delhi",
+          "pinCode": "110007"
+        },
+        {
+          "serialNumber": 144,
+          "name": "North East Delhi",
+          "pinCode": "110053"
+        },
+        {
+          "serialNumber": 145,
+          "name": "North West Delhi",
+          "pinCode": "110033"
+        },
+        {
+          "serialNumber": 146,
+          "name": "Shahdara",
+          "pinCode": "110032"
+        },
+        {
+          "serialNumber": 147,
+          "name": "South Delhi",
+          "pinCode": "110017"
+        },
+        {
+          "serialNumber": 148,
+          "name": "South East Delhi",
+          "pinCode": "110025"
+        },
+        {
+          "serialNumber": 149,
+          "name": "South West Delhi",
+          "pinCode": "110010"
+        },
+        {
+          "serialNumber": 150,
+          "name": "West Delhi",
+          "pinCode": "110026"
+        }
+      ]
+    },
+    {
+      "state": "Goa",
+      "stateCode": "GA",
+      "districts": [
+        {
+          "serialNumber": 151,
+          "name": "North Goa",
+          "pinCode": "403001"
+        },
+        {
+          "serialNumber": 152,
+          "name": "South Goa",
+          "pinCode": "403601"
+        }
+      ]
+    },
+    {
+      "state": "Gujarat",
+      "stateCode": "GJ",
+      "districts": [
+        {
+          "serialNumber": 153,
+          "name": "Ahmedabad",
+          "pinCode": "380001"
+        },
+        {
+          "serialNumber": 154,
+          "name": "Amreli",
+          "pinCode": "365601"
+        },
+        {
+          "serialNumber": 155,
+          "name": "Anand",
+          "pinCode": "388001"
+        },
+        {
+          "serialNumber": 156,
+          "name": "Aravalli",
+          "pinCode": "383001"
+        },
+        {
+          "serialNumber": 157,
+          "name": "Banaskantha",
+          "pinCode": "385001"
+        },
+        {
+          "serialNumber": 158,
+          "name": "Bharuch",
+          "pinCode": "392001"
+        },
+        {
+          "serialNumber": 159,
+          "name": "Bhavnagar",
+          "pinCode": "364001"
+        },
+        {
+          "serialNumber": 160,
+          "name": "Botad",
+          "pinCode": "364710"
+        },
+        {
+          "serialNumber": 161,
+          "name": "Chhota Udaipur",
+          "pinCode": "391165"
+        },
+        {
+          "serialNumber": 162,
+          "name": "Dahod",
+          "pinCode": "389151"
+        },
+        {
+          "serialNumber": 163,
+          "name": "Dang",
+          "pinCode": "394710"
+        },
+        {
+          "serialNumber": 164,
+          "name": "Devbhumi Dwarka",
+          "pinCode": "361305"
+        },
+        {
+          "serialNumber": 165,
+          "name": "Gandhinagar",
+          "pinCode": "382010"
+        },
+        {
+          "serialNumber": 166,
+          "name": "Gir Somnath",
+          "pinCode": "362265"
+        },
+        {
+          "serialNumber": 167,
+          "name": "Jamnagar",
+          "pinCode": "361001"
+        },
+        {
+          "serialNumber": 168,
+          "name": "Junagadh",
+          "pinCode": "362001"
+        },
+        {
+          "serialNumber": 169,
+          "name": "Kheda",
+          "pinCode": "387001"
+        },
+        {
+          "serialNumber": 170,
+          "name": "Kutch",
+          "pinCode": "370001"
+        },
+        {
+          "serialNumber": 171,
+          "name": "Mahisagar",
+          "pinCode": "389230"
+        },
+        {
+          "serialNumber": 172,
+          "name": "Mehsana",
+          "pinCode": "384001"
+        },
+        {
+          "serialNumber": 173,
+          "name": "Morbi",
+          "pinCode": "363641"
+        },
+        {
+          "serialNumber": 174,
+          "name": "Narmada",
+          "pinCode": "393145"
+        },
+        {
+          "serialNumber": 175,
+          "name": "Navsari",
+          "pinCode": "396445"
+        },
+        {
+          "serialNumber": 176,
+          "name": "Panchmahal",
+          "pinCode": "389001"
+        },
+        {
+          "serialNumber": 177,
+          "name": "Patan",
+          "pinCode": "384265"
+        },
+        {
+          "serialNumber": 178,
+          "name": "Porbandar",
+          "pinCode": "360575"
+        },
+        {
+          "serialNumber": 179,
+          "name": "Rajkot",
+          "pinCode": "360001"
+        },
+        {
+          "serialNumber": 180,
+          "name": "Sabarkantha",
+          "pinCode": "383001"
+        },
+        {
+          "serialNumber": 181,
+          "name": "Surat",
+          "pinCode": "395003"
+        },
+        {
+          "serialNumber": 182,
+          "name": "Surendranagar",
+          "pinCode": "363001"
+        },
+        {
+          "serialNumber": 183,
+          "name": "Tapi",
+          "pinCode": "394650"
+        },
+        {
+          "serialNumber": 184,
+          "name": "Vadodara",
+          "pinCode": "390001"
+        },
+        {
+          "serialNumber": 185,
+          "name": "Valsad",
+          "pinCode": "396001"
+        }
+      ]
+    },
+    {
+      "state": "Haryana",
+      "stateCode": "HR",
+      "districts": [
+        {
+          "serialNumber": 186,
+          "name": "Ambala",
+          "pinCode": "133001"
+        },
+        {
+          "serialNumber": 187,
+          "name": "Bhiwani",
+          "pinCode": "127021"
+        },
+        {
+          "serialNumber": 188,
+          "name": "Charkhi Dadri",
+          "pinCode": "127306"
+        },
+        {
+          "serialNumber": 189,
+          "name": "Faridabad",
+          "pinCode": "121001"
+        },
+        {
+          "serialNumber": 190,
+          "name": "Fatehabad",
+          "pinCode": "125050"
+        },
+        {
+          "serialNumber": 191,
+          "name": "Gurugram",
+          "pinCode": "122001"
+        },
+        {
+          "serialNumber": 192,
+          "name": "Hisar",
+          "pinCode": "125001"
+        },
+        {
+          "serialNumber": 193,
+          "name": "Jhajjar",
+          "pinCode": "124103"
+        },
+        {
+          "serialNumber": 194,
+          "name": "Jind",
+          "pinCode": "126102"
+        },
+        {
+          "serialNumber": 195,
+          "name": "Kaithal",
+          "pinCode": "136027"
+        },
+        {
+          "serialNumber": 196,
+          "name": "Karnal",
+          "pinCode": "132001"
+        },
+        {
+          "serialNumber": 197,
+          "name": "Kurukshetra",
+          "pinCode": "136118"
+        },
+        {
+          "serialNumber": 198,
+          "name": "Mahendragarh",
+          "pinCode": "123029"
+        },
+        {
+          "serialNumber": 199,
+          "name": "Nuh",
+          "pinCode": "122107"
+        },
+        {
+          "serialNumber": 200,
+          "name": "Palwal",
+          "pinCode": "121102"
+        },
+        {
+          "serialNumber": 201,
+          "name": "Panchkula",
+          "pinCode": "134109"
+        },
+        {
+          "serialNumber": 202,
+          "name": "Panipat",
+          "pinCode": "132103"
+        },
+        {
+          "serialNumber": 203,
+          "name": "Rewari",
+          "pinCode": "123401"
+        },
+        {
+          "serialNumber": 204,
+          "name": "Rohtak",
+          "pinCode": "124001"
+        },
+        {
+          "serialNumber": 205,
+          "name": "Sirsa",
+          "pinCode": "125055"
+        },
+        {
+          "serialNumber": 206,
+          "name": "Sonipat",
+          "pinCode": "131001"
+        },
+        {
+          "serialNumber": 207,
+          "name": "Yamunanagar",
+          "pinCode": "135001"
+        }
+      ]
+    },
+    {
+      "state": "Himachal Pradesh",
+      "stateCode": "HP",
+      "districts": [
+        {
+          "serialNumber": 208,
+          "name": "Bilaspur",
+          "pinCode": "174001"
+        },
+        {
+          "serialNumber": 209,
+          "name": "Chamba",
+          "pinCode": "176310"
+        },
+        {
+          "serialNumber": 210,
+          "name": "Hamirpur",
+          "pinCode": "177001"
+        },
+        {
+          "serialNumber": 211,
+          "name": "Kangra",
+          "pinCode": "176001"
+        },
+        {
+          "serialNumber": 212,
+          "name": "Kinnaur",
+          "pinCode": "172107"
+        },
+        {
+          "serialNumber": 213,
+          "name": "Kullu",
+          "pinCode": "175101"
+        },
+        {
+          "serialNumber": 214,
+          "name": "Lahaul and Spiti",
+          "pinCode": "175132"
+        },
+        {
+          "serialNumber": 215,
+          "name": "Mandi",
+          "pinCode": "175001"
+        },
+        {
+          "serialNumber": 216,
+          "name": "Shimla",
+          "pinCode": "171001"
+        },
+        {
+          "serialNumber": 217,
+          "name": "Sirmaur",
+          "pinCode": "173001"
+        },
+        {
+          "serialNumber": 218,
+          "name": "Solan",
+          "pinCode": "173212"
+        },
+        {
+          "serialNumber": 219,
+          "name": "Una",
+          "pinCode": "174303"
+        }
+      ]
+    },
+    {
+      "state": "Jammu and Kashmir",
+      "stateCode": "JK",
+      "districts": [
+        {
+          "serialNumber": 220,
+          "name": "Anantnag",
+          "pinCode": "192101"
+        },
+        {
+          "serialNumber": 221,
+          "name": "Bandipora",
+          "pinCode": "193502"
+        },
+        {
+          "serialNumber": 222,
+          "name": "Baramulla",
+          "pinCode": "193101"
+        },
+        {
+          "serialNumber": 223,
+          "name": "Budgam",
+          "pinCode": "191111"
+        },
+        {
+          "serialNumber": 224,
+          "name": "Doda",
+          "pinCode": "182202"
+        },
+        {
+          "serialNumber": 225,
+          "name": "Ganderbal",
+          "pinCode": "191201"
+        },
+        {
+          "serialNumber": 226,
+          "name": "Jammu",
+          "pinCode": "180001"
+        },
+        {
+          "serialNumber": 227,
+          "name": "Kathua",
+          "pinCode": "184101"
+        },
+        {
+          "serialNumber": 228,
+          "name": "Kishtwar",
+          "pinCode": "182204"
+        },
+        {
+          "serialNumber": 229,
+          "name": "Kulgam",
+          "pinCode": "192231"
+        },
+        {
+          "serialNumber": 230,
+          "name": "Kupwara",
+          "pinCode": "193222"
+        },
+        {
+          "serialNumber": 231,
+          "name": "Poonch",
+          "pinCode": "185101"
+        },
+        {
+          "serialNumber": 232,
+          "name": "Pulwama",
+          "pinCode": "192301"
+        },
+        {
+          "serialNumber": 233,
+          "name": "Rajouri",
+          "pinCode": "185131"
+        },
+        {
+          "serialNumber": 234,
+          "name": "Ramban",
+          "pinCode": "182144"
+        },
+        {
+          "serialNumber": 235,
+          "name": "Reasi",
+          "pinCode": "182311"
+        },
+        {
+          "serialNumber": 236,
+          "name": "Samba",
+          "pinCode": "184121"
+        },
+        {
+          "serialNumber": 237,
+          "name": "Shopian",
+          "pinCode": "192303"
+        },
+        {
+          "serialNumber": 238,
+          "name": "Srinagar",
+          "pinCode": "190001"
+        },
+        {
+          "serialNumber": 239,
+          "name": "Udhampur",
+          "pinCode": "182101"
+        }
+      ]
+    },
+    {
+      "state": "Jharkhand",
+      "stateCode": "JH",
+      "districts": [
+        {
+          "serialNumber": 240,
+          "name": "Bokaro",
+          "pinCode": "827001"
+        },
+        {
+          "serialNumber": 241,
+          "name": "Chatra",
+          "pinCode": "825401"
+        },
+        {
+          "serialNumber": 242,
+          "name": "Deoghar",
+          "pinCode": "814112"
+        },
+        {
+          "serialNumber": 243,
+          "name": "Dhanbad",
+          "pinCode": "826001"
+        },
+        {
+          "serialNumber": 244,
+          "name": "Dumka",
+          "pinCode": "814101"
+        },
+        {
+          "serialNumber": 245,
+          "name": "East Singhbhum",
+          "pinCode": "831001"
+        },
+        {
+          "serialNumber": 246,
+          "name": "Garhwa",
+          "pinCode": "822114"
+        },
+        {
+          "serialNumber": 247,
+          "name": "Giridih",
+          "pinCode": "815301"
+        },
+        {
+          "serialNumber": 248,
+          "name": "Godda",
+          "pinCode": "814133"
+        },
+        {
+          "serialNumber": 249,
+          "name": "Gumla",
+          "pinCode": "835207"
+        },
+        {
+          "serialNumber": 250,
+          "name": "Hazaribagh",
+          "pinCode": "825301"
+        },
+        {
+          "serialNumber": 251,
+          "name": "Jamtara",
+          "pinCode": "815351"
+        },
+        {
+          "serialNumber": 252,
+          "name": "Khunti",
+          "pinCode": "835210"
+        },
+        {
+          "serialNumber": 253,
+          "name": "Koderma",
+          "pinCode": "825410"
+        },
+        {
+          "serialNumber": 254,
+          "name": "Latehar",
+          "pinCode": "829206"
+        },
+        {
+          "serialNumber": 255,
+          "name": "Lohardaga",
+          "pinCode": "835302"
+        },
+        {
+          "serialNumber": 256,
+          "name": "Pakur",
+          "pinCode": "816107"
+        },
+        {
+          "serialNumber": 257,
+          "name": "Palamu",
+          "pinCode": "822101"
+        },
+        {
+          "serialNumber": 258,
+          "name": "Ramgarh",
+          "pinCode": "829122"
+        },
+        {
+          "serialNumber": 259,
+          "name": "Ranchi",
+          "pinCode": "834001"
+        },
+        {
+          "serialNumber": 260,
+          "name": "Sahibganj",
+          "pinCode": "816109"
+        },
+        {
+          "serialNumber": 261,
+          "name": "Seraikela Kharsawan",
+          "pinCode": "833219"
+        },
+        {
+          "serialNumber": 262,
+          "name": "Simdega",
+          "pinCode": "835223"
+        },
+        {
+          "serialNumber": 263,
+          "name": "West Singhbhum",
+          "pinCode": "833201"
+        }
+      ]
+    },
+    {
+      "state": "Karnataka",
+      "stateCode": "KA",
+      "districts": [
+        {
+          "serialNumber": 264,
+          "name": "Bagalkot",
+          "pinCode": "587101"
+        },
+        {
+          "serialNumber": 265,
+          "name": "Ballari",
+          "pinCode": "583101"
+        },
+        {
+          "serialNumber": 266,
+          "name": "Belagavi",
+          "pinCode": "590001"
+        },
+        {
+          "serialNumber": 267,
+          "name": "Bengaluru Rural",
+          "pinCode": "562123"
+        },
+        {
+          "serialNumber": 268,
+          "name": "Bengaluru Urban",
+          "pinCode": "560001"
+        },
+        {
+          "serialNumber": 269,
+          "name": "Bidar",
+          "pinCode": "585401"
+        },
+        {
+          "serialNumber": 270,
+          "name": "Chamarajanagar",
+          "pinCode": "571313"
+        },
+        {
+          "serialNumber": 271,
+          "name": "Chikkaballapur",
+          "pinCode": "562101"
+        },
+        {
+          "serialNumber": 272,
+          "name": "Chikkamagaluru",
+          "pinCode": "577101"
+        },
+        {
+          "serialNumber": 273,
+          "name": "Chitradurga",
+          "pinCode": "577501"
+        },
+        {
+          "serialNumber": 274,
+          "name": "Dakshina Kannada",
+          "pinCode": "575001"
+        },
+        {
+          "serialNumber": 275,
+          "name": "Davanagere",
+          "pinCode": "577001"
+        },
+        {
+          "serialNumber": 276,
+          "name": "Dharwad",
+          "pinCode": "580001"
+        },
+        {
+          "serialNumber": 277,
+          "name": "Gadag",
+          "pinCode": "582101"
+        },
+        {
+          "serialNumber": 278,
+          "name": "Hassan",
+          "pinCode": "573201"
+        },
+        {
+          "serialNumber": 279,
+          "name": "Haveri",
+          "pinCode": "581110"
+        },
+        {
+          "serialNumber": 280,
+          "name": "Kalaburagi",
+          "pinCode": "585101"
+        },
+        {
+          "serialNumber": 281,
+          "name": "Kodagu",
+          "pinCode": "571201"
+        },
+        {
+          "serialNumber": 282,
+          "name": "Kolar",
+          "pinCode": "563101"
+        },
+        {
+          "serialNumber": 283,
+          "name": "Koppal",
+          "pinCode": "583231"
+        },
+        {
+          "serialNumber": 284,
+          "name": "Mandya",
+          "pinCode": "571401"
+        },
+        {
+          "serialNumber": 285,
+          "name": "Mysuru",
+          "pinCode": "570001"
+        },
+        {
+          "serialNumber": 286,
+          "name": "Raichur",
+          "pinCode": "584101"
+        },
+        {
+          "serialNumber": 287,
+          "name": "Ramanagara",
+          "pinCode": "562159"
+        },
+        {
+          "serialNumber": 288,
+          "name": "Shivamogga",
+          "pinCode": "577201"
+        },
+        {
+          "serialNumber": 289,
+          "name": "Tumakuru",
+          "pinCode": "572101"
+        },
+        {
+          "serialNumber": 290,
+          "name": "Udupi",
+          "pinCode": "576101"
+        },
+        {
+          "serialNumber": 291,
+          "name": "Uttara Kannada",
+          "pinCode": "581301"
+        },
+        {
+          "serialNumber": 292,
+          "name": "Vijayapura",
+          "pinCode": "586101"
+        },
+        {
+          "serialNumber": 293,
+          "name": "Yadgir",
+          "pinCode": "585201"
+        }
+      ]
+    },
+    {
+      "state": "Kerala",
+      "stateCode": "KL",
+      "districts": [
+        {
+          "serialNumber": 294,
+          "name": "Alappuzha",
+          "pinCode": "688001"
+        },
+        {
+          "serialNumber": 295,
+          "name": "Ernakulam",
+          "pinCode": "682001"
+        },
+        {
+          "serialNumber": 296,
+          "name": "Idukki",
+          "pinCode": "685501"
+        },
+        {
+          "serialNumber": 297,
+          "name": "Kannur",
+          "pinCode": "670001"
+        },
+        {
+          "serialNumber": 298,
+          "name": "Kasaragod",
+          "pinCode": "671121"
+        },
+        {
+          "serialNumber": 299,
+          "name": "Kollam",
+          "pinCode": "691001"
+        },
+        {
+          "serialNumber": 300,
+          "name": "Kottayam",
+          "pinCode": "686001"
+        },
+        {
+          "serialNumber": 301,
+          "name": "Kozhikode",
+          "pinCode": "673001"
+        },
+        {
+          "serialNumber": 302,
+          "name": "Malappuram",
+          "pinCode": "676501"
+        },
+        {
+          "serialNumber": 303,
+          "name": "Palakkad",
+          "pinCode": "678001"
+        },
+        {
+          "serialNumber": 304,
+          "name": "Pathanamthitta",
+          "pinCode": "689645"
+        },
+        {
+          "serialNumber": 305,
+          "name": "Thiruvananthapuram",
+          "pinCode": "695001"
+        },
+        {
+          "serialNumber": 306,
+          "name": "Thrissur",
+          "pinCode": "680001"
+        },
+        {
+          "serialNumber": 307,
+          "name": "Wayanad",
+          "pinCode": "670645"
+        }
+      ]
+    },
+    {
+      "state": "Ladakh",
+      "stateCode": "LA",
+      "districts": [
+        {
+          "serialNumber": 308,
+          "name": "Kargil",
+          "pinCode": "194103"
+        },
+        {
+          "serialNumber": 309,
+          "name": "Leh",
+          "pinCode": "194101"
+        }
+      ]
+    },
+    {
+      "state": "Lakshadweep",
+      "stateCode": "LD",
+      "districts": [
+        {
+          "serialNumber": 310,
+          "name": "Lakshadweep",
+          "pinCode": "682555"
+        }
+      ]
+    },
+    {
+      "state": "Madhya Pradesh",
+      "stateCode": "MP",
+      "districts": [
+        {
+          "serialNumber": 311,
+          "name": "Agar Malwa",
+          "pinCode": "465441"
+        },
+        {
+          "serialNumber": 312,
+          "name": "Alirajpur",
+          "pinCode": "457887"
+        },
+        {
+          "serialNumber": 313,
+          "name": "Anuppur",
+          "pinCode": "484224"
+        },
+        {
+          "serialNumber": 314,
+          "name": "Ashoknagar",
+          "pinCode": "473331"
+        },
+        {
+          "serialNumber": 315,
+          "name": "Balaghat",
+          "pinCode": "481001"
+        },
+        {
+          "serialNumber": 316,
+          "name": "Barwani",
+          "pinCode": "451551"
+        },
+        {
+          "serialNumber": 317,
+          "name": "Betul",
+          "pinCode": "460001"
+        },
+        {
+          "serialNumber": 318,
+          "name": "Bhind",
+          "pinCode": "477001"
+        },
+        {
+          "serialNumber": 319,
+          "name": "Bhopal",
+          "pinCode": "462001"
+        },
+        {
+          "serialNumber": 320,
+          "name": "Burhanpur",
+          "pinCode": "450331"
+        },
+        {
+          "serialNumber": 321,
+          "name": "Chhatarpur",
+          "pinCode": "471001"
+        },
+        {
+          "serialNumber": 322,
+          "name": "Chhindwara",
+          "pinCode": "480001"
+        },
+        {
+          "serialNumber": 323,
+          "name": "Damoh",
+          "pinCode": "470661"
+        },
+        {
+          "serialNumber": 324,
+          "name": "Datia",
+          "pinCode": "475661"
+        },
+        {
+          "serialNumber": 325,
+          "name": "Dewas",
+          "pinCode": "455001"
+        },
+        {
+          "serialNumber": 326,
+          "name": "Dhar",
+          "pinCode": "454001"
+        },
+        {
+          "serialNumber": 327,
+          "name": "Dindori",
+          "pinCode": "481880"
+        },
+        {
+          "serialNumber": 328,
+          "name": "Guna",
+          "pinCode": "473001"
+        },
+        {
+          "serialNumber": 329,
+          "name": "Gwalior",
+          "pinCode": "474001"
+        },
+        {
+          "serialNumber": 330,
+          "name": "Harda",
+          "pinCode": "461331"
+        },
+        {
+          "serialNumber": 331,
+          "name": "Hoshangabad",
+          "pinCode": "461001"
+        },
+        {
+          "serialNumber": 332,
+          "name": "Indore",
+          "pinCode": "452001"
+        },
+        {
+          "serialNumber": 333,
+          "name": "Jabalpur",
+          "pinCode": "482001"
+        },
+        {
+          "serialNumber": 334,
+          "name": "Jhabua",
+          "pinCode": "457661"
+        },
+        {
+          "serialNumber": 335,
+          "name": "Katni",
+          "pinCode": "483501"
+        },
+        {
+          "serialNumber": 336,
+          "name": "Khandwa",
+          "pinCode": "450001"
+        },
+        {
+          "serialNumber": 337,
+          "name": "Khargone",
+          "pinCode": "451001"
+        },
+        {
+          "serialNumber": 338,
+          "name": "Mandla",
+          "pinCode": "481661"
+        },
+        {
+          "serialNumber": 339,
+          "name": "Mandsaur",
+          "pinCode": "458001"
+        },
+        {
+          "serialNumber": 340,
+          "name": "Morena",
+          "pinCode": "476001"
+        },
+        {
+          "serialNumber": 341,
+          "name": "Narsinghpur",
+          "pinCode": "487001"
+        },
+        {
+          "serialNumber": 342,
+          "name": "Neemuch",
+          "pinCode": "458441"
+        },
+        {
+          "serialNumber": 343,
+          "name": "Niwari",
+          "pinCode": "472442"
+        },
+        {
+          "serialNumber": 344,
+          "name": "Panna",
+          "pinCode": "488001"
+        },
+        {
+          "serialNumber": 345,
+          "name": "Raisen",
+          "pinCode": "464551"
+        },
+        {
+          "serialNumber": 346,
+          "name": "Rajgarh",
+          "pinCode": "465661"
+        },
+        {
+          "serialNumber": 347,
+          "name": "Ratlam",
+          "pinCode": "457001"
+        },
+        {
+          "serialNumber": 348,
+          "name": "Rewa",
+          "pinCode": "486001"
+        },
+        {
+          "serialNumber": 349,
+          "name": "Sagar",
+          "pinCode": "470001"
+        },
+        {
+          "serialNumber": 350,
+          "name": "Satna",
+          "pinCode": "485001"
+        },
+        {
+          "serialNumber": 351,
+          "name": "Sehore",
+          "pinCode": "466001"
+        },
+        {
+          "serialNumber": 352,
+          "name": "Seoni",
+          "pinCode": "480661"
+        },
+        {
+          "serialNumber": 353,
+          "name": "Shahdol",
+          "pinCode": "484001"
+        },
+        {
+          "serialNumber": 354,
+          "name": "Shajapur",
+          "pinCode": "465001"
+        },
+        {
+          "serialNumber": 355,
+          "name": "Sheopur",
+          "pinCode": "476337"
+        },
+        {
+          "serialNumber": 356,
+          "name": "Shivpuri",
+          "pinCode": "473551"
+        },
+        {
+          "serialNumber": 357,
+          "name": "Sidhi",
+          "pinCode": "486661"
+        },
+        {
+          "serialNumber": 358,
+          "name": "Singrauli",
+          "pinCode": "486889"
+        },
+        {
+          "serialNumber": 359,
+          "name": "Tikamgarh",
+          "pinCode": "472001"
+        },
+        {
+          "serialNumber": 360,
+          "name": "Ujjain",
+          "pinCode": "456001"
+        },
+        {
+          "serialNumber": 361,
+          "name": "Umaria",
+          "pinCode": "484661"
+        },
+        {
+          "serialNumber": 362,
+          "name": "Vidisha",
+          "pinCode": "464001"
+        }
+      ]
+    },
+    {
+      "state": "Maharashtra",
+      "stateCode": "MH",
+      "districts": [
+        {
+          "serialNumber": 363,
+          "name": "Ahmednagar",
+          "pinCode": "414001"
+        },
+        {
+          "serialNumber": 364,
+          "name": "Akola",
+          "pinCode": "444001"
+        },
+        {
+          "serialNumber": 365,
+          "name": "Amravati",
+          "pinCode": "444601"
+        },
+        {
+          "serialNumber": 366,
+          "name": "Aurangabad",
+          "pinCode": "431001"
+        },
+        {
+          "serialNumber": 367,
+          "name": "Beed",
+          "pinCode": "431122"
+        },
+        {
+          "serialNumber": 368,
+          "name": "Bhandara",
+          "pinCode": "441904"
+        },
+        {
+          "serialNumber": 369,
+          "name": "Buldhana",
+          "pinCode": "443001"
+        },
+        {
+          "serialNumber": 370,
+          "name": "Chandrapur",
+          "pinCode": "442401"
+        },
+        {
+          "serialNumber": 371,
+          "name": "Dhule",
+          "pinCode": "424001"
+        },
+        {
+          "serialNumber": 372,
+          "name": "Gadchiroli",
+          "pinCode": "442605"
+        },
+        {
+          "serialNumber": 373,
+          "name": "Gondia",
+          "pinCode": "441601"
+        },
+        {
+          "serialNumber": 374,
+          "name": "Hingoli",
+          "pinCode": "431513"
+        },
+        {
+          "serialNumber": 375,
+          "name": "Jalgaon",
+          "pinCode": "425001"
+        },
+        {
+          "serialNumber": 376,
+          "name": "Jalna",
+          "pinCode": "431203"
+        },
+        {
+          "serialNumber": 377,
+          "name": "Kolhapur",
+          "pinCode": "416001"
+        },
+        {
+          "serialNumber": 378,
+          "name": "Latur",
+          "pinCode": "413512"
+        },
+        {
+          "serialNumber": 379,
+          "name": "Mumbai City",
+          "pinCode": "400001"
+        },
+        {
+          "serialNumber": 380,
+          "name": "Mumbai Suburban",
+          "pinCode": "400069"
+        },
+        {
+          "serialNumber": 381,
+          "name": "Nagpur",
+          "pinCode": "440001"
+        },
+        {
+          "serialNumber": 382,
+          "name": "Nanded",
+          "pinCode": "431601"
+        },
+        {
+          "serialNumber": 383,
+          "name": "Nandurbar",
+          "pinCode": "425412"
+        },
+        {
+          "serialNumber": 384,
+          "name": "Nashik",
+          "pinCode": "422001"
+        },
+        {
+          "serialNumber": 385,
+          "name": "Osmanabad",
+          "pinCode": "413501"
+        },
+        {
+          "serialNumber": 386,
+          "name": "Palghar",
+          "pinCode": "401404"
+        },
+        {
+          "serialNumber": 387,
+          "name": "Parbhani",
+          "pinCode": "431401"
+        },
+        {
+          "serialNumber": 388,
+          "name": "Pune",
+          "pinCode": "411001"
+        },
+        {
+          "serialNumber": 389,
+          "name": "Raigad",
+          "pinCode": "402101"
+        },
+        {
+          "serialNumber": 390,
+          "name": "Ratnagiri",
+          "pinCode": "415612"
+        },
+        {
+          "serialNumber": 391,
+          "name": "Sangli",
+          "pinCode": "416416"
+        },
+        {
+          "serialNumber": 392,
+          "name": "Satara",
+          "pinCode": "415001"
+        },
+        {
+          "serialNumber": 393,
+          "name": "Sindhudurg",
+          "pinCode": "416520"
+        },
+        {
+          "serialNumber": 394,
+          "name": "Solapur",
+          "pinCode": "413001"
+        },
+        {
+          "serialNumber": 395,
+          "name": "Thane",
+          "pinCode": "400601"
+        },
+        {
+          "serialNumber": 396,
+          "name": "Wardha",
+          "pinCode": "442001"
+        },
+        {
+          "serialNumber": 397,
+          "name": "Washim",
+          "pinCode": "444505"
+        },
+        {
+          "serialNumber": 398,
+          "name": "Yavatmal",
+          "pinCode": "445001"
+        }
+      ]
+    },
+    {
+      "state": "Manipur",
+      "stateCode": "MN",
+      "districts": [
+        {
+          "serialNumber": 399,
+          "name": "Bishnupur",
+          "pinCode": "795126"
+        },
+        {
+          "serialNumber": 400,
+          "name": "Chandel",
+          "pinCode": "795127"
+        }
+      ]
+    },
+    {
+      "state": "Manipur",
+      "stateCode": "MN",
+      "districts": [
+        {
+          "serialNumber": 401,
+          "name": "Churachandpur",
+          "pinCode": "795128"
+        },
+        {
+          "serialNumber": 402,
+          "name": "Imphal East",
+          "pinCode": "795001"
+        },
+        {
+          "serialNumber": 403,
+          "name": "Imphal West",
+          "pinCode": "795001"
+        },
+        {
+          "serialNumber": 404,
+          "name": "Jiribam",
+          "pinCode": "795116"
+        },
+        {
+          "serialNumber": 405,
+          "name": "Kakching",
+          "pinCode": "795103"
+        },
+        {
+          "serialNumber": 406,
+          "name": "Kamjong",
+          "pinCode": "795145"
+        },
+        {
+          "serialNumber": 407,
+          "name": "Kangpokpi",
+          "pinCode": "795112"
+        },
+        {
+          "serialNumber": 408,
+          "name": "Noney",
+          "pinCode": "795159"
+        },
+        {
+          "serialNumber": 409,
+          "name": "Pherzawl",
+          "pinCode": "795006"
+        },
+        {
+          "serialNumber": 410,
+          "name": "Senapati",
+          "pinCode": "795106"
+        },
+        {
+          "serialNumber": 411,
+          "name": "Tamenglong",
+          "pinCode": "795141"
+        },
+        {
+          "serialNumber": 412,
+          "name": "Tengnoupal",
+          "pinCode": "795131"
+        },
+        {
+          "serialNumber": 413,
+          "name": "Thoubal",
+          "pinCode": "795138"
+        },
+        {
+          "serialNumber": 414,
+          "name": "Ukhrul",
+          "pinCode": "795142"
+        }
+      ]
+    },
+    {
+      "state": "Meghalaya",
+      "stateCode": "ML",
+      "districts": [
+        {
+          "serialNumber": 415,
+          "name": "East Garo Hills",
+          "pinCode": "794111"
+        },
+        {
+          "serialNumber": 416,
+          "name": "East Jaintia Hills",
+          "pinCode": "793110"
+        },
+        {
+          "serialNumber": 417,
+          "name": "East Khasi Hills",
+          "pinCode": "793001"
+        },
+        {
+          "serialNumber": 418,
+          "name": "Mawkyrwat",
+          "pinCode": "793114"
+        },
+        {
+          "serialNumber": 419,
+          "name": "North Garo Hills",
+          "pinCode": "794108"
+        },
+        {
+          "serialNumber": 420,
+          "name": "Ri Bhoi",
+          "pinCode": "793101"
+        },
+        {
+          "serialNumber": 421,
+          "name": "South Garo Hills",
+          "pinCode": "794102"
+        },
+        {
+          "serialNumber": 422,
+          "name": "South West Garo Hills",
+          "pinCode": "794105"
+        },
+        {
+          "serialNumber": 423,
+          "name": "South West Khasi Hills",
+          "pinCode": "793119"
+        },
+        {
+          "serialNumber": 424,
+          "name": "West Garo Hills",
+          "pinCode": "794101"
+        },
+        {
+          "serialNumber": 425,
+          "name": "West Jaintia Hills",
+          "pinCode": "793109"
+        },
+        {
+          "serialNumber": 426,
+          "name": "West Khasi Hills",
+          "pinCode": "793106"
+        }
+      ]
+    },
+    {
+      "state": "Mizoram",
+      "stateCode": "MZ",
+      "districts": [
+        {
+          "serialNumber": 427,
+          "name": "Aizawl",
+          "pinCode": "796001"
+        },
+        {
+          "serialNumber": 428,
+          "name": "Champhai",
+          "pinCode": "796321"
+        },
+        {
+          "serialNumber": 429,
+          "name": "Hnahthial",
+          "pinCode": "796571"
+        },
+        {
+          "serialNumber": 430,
+          "name": "Khawzawl",
+          "pinCode": "796310"
+        },
+        {
+          "serialNumber": 431,
+          "name": "Kolasib",
+          "pinCode": "796070"
+        },
+        {
+          "serialNumber": 432,
+          "name": "Lawngtlai",
+          "pinCode": "796891"
+        },
+        {
+          "serialNumber": 433,
+          "name": "Lunglei",
+          "pinCode": "796701"
+        },
+        {
+          "serialNumber": 434,
+          "name": "Mamit",
+          "pinCode": "796441"
+        },
+        {
+          "serialNumber": 435,
+          "name": "Saiha",
+          "pinCode": "796901"
+        },
+        {
+          "serialNumber": 436,
+          "name": "Saitual",
+          "pinCode": "796261"
+        },
+        {
+          "serialNumber": 437,
+          "name": "Serchhip",
+          "pinCode": "796181"
+        }
+      ]
+    },
+    {
+      "state": "Nagaland",
+      "stateCode": "NL",
+      "districts": [
+        {
+          "serialNumber": 438,
+          "name": "Chumukedima",
+          "pinCode": "797103"
+        },
+        {
+          "serialNumber": 439,
+          "name": "Dimapur",
+          "pinCode": "797112"
+        },
+        {
+          "serialNumber": 440,
+          "name": "Kiphire",
+          "pinCode": "798611"
+        },
+        {
+          "serialNumber": 441,
+          "name": "Kohima",
+          "pinCode": "797001"
+        },
+        {
+          "serialNumber": 442,
+          "name": "Longleng",
+          "pinCode": "798625"
+        },
+        {
+          "serialNumber": 443,
+          "name": "Mokokchung",
+          "pinCode": "798601"
+        },
+        {
+          "serialNumber": 444,
+          "name": "Mon",
+          "pinCode": "798621"
+        },
+        {
+          "serialNumber": 445,
+          "name": "Niuland",
+          "pinCode": "797105"
+        },
+        {
+          "serialNumber": 446,
+          "name": "Noklak",
+          "pinCode": "798626"
+        },
+        {
+          "serialNumber": 447,
+          "name": "Peren",
+          "pinCode": "797101"
+        },
+        {
+          "serialNumber": 448,
+          "name": "Phek",
+          "pinCode": "797108"
+        },
+        {
+          "serialNumber": 449,
+          "name": "Shamator",
+          "pinCode": "798612"
+        },
+        {
+          "serialNumber": 450,
+          "name": "Tseminu",
+          "pinCode": "797109"
+        },
+        {
+          "serialNumber": 451,
+          "name": "Tuensang",
+          "pinCode": "798612"
+        },
+        {
+          "serialNumber": 452,
+          "name": "Wokha",
+          "pinCode": "797111"
+        },
+        {
+          "serialNumber": 453,
+          "name": "Zunheboto",
+          "pinCode": "798620"
+        }
+      ]
+    },
+    {
+      "state": "Odisha",
+      "stateCode": "OD",
+      "districts": [
+        {
+          "serialNumber": 454,
+          "name": "Angul",
+          "pinCode": "759122"
+        },
+        {
+          "serialNumber": 455,
+          "name": "Balangir",
+          "pinCode": "767001"
+        },
+        {
+          "serialNumber": 456,
+          "name": "Balasore",
+          "pinCode": "756001"
+        },
+        {
+          "serialNumber": 457,
+          "name": "Bargarh",
+          "pinCode": "768028"
+        },
+        {
+          "serialNumber": 458,
+          "name": "Bhadrak",
+          "pinCode": "756100"
+        },
+        {
+          "serialNumber": 459,
+          "name": "Boudh",
+          "pinCode": "762014"
+        },
+        {
+          "serialNumber": 460,
+          "name": "Cuttack",
+          "pinCode": "753001"
+        },
+        {
+          "serialNumber": 461,
+          "name": "Deogarh",
+          "pinCode": "768108"
+        },
+        {
+          "serialNumber": 462,
+          "name": "Dhenkanal",
+          "pinCode": "759001"
+        },
+        {
+          "serialNumber": 463,
+          "name": "Gajapati",
+          "pinCode": "761200"
+        },
+        {
+          "serialNumber": 464,
+          "name": "Ganjam",
+          "pinCode": "761026"
+        },
+        {
+          "serialNumber": 465,
+          "name": "Jagatsinghpur",
+          "pinCode": "754103"
+        },
+        {
+          "serialNumber": 466,
+          "name": "Jajpur",
+          "pinCode": "755001"
+        },
+        {
+          "serialNumber": 467,
+          "name": "Jharsuguda",
+          "pinCode": "768201"
+        },
+        {
+          "serialNumber": 468,
+          "name": "Kalahandi",
+          "pinCode": "766001"
+        },
+        {
+          "serialNumber": 469,
+          "name": "Kandhamal",
+          "pinCode": "762001"
+        },
+        {
+          "serialNumber": 470,
+          "name": "Kendrapara",
+          "pinCode": "754211"
+        },
+        {
+          "serialNumber": 471,
+          "name": "Kendujhar",
+          "pinCode": "758001"
+        },
+        {
+          "serialNumber": 472,
+          "name": "Khordha",
+          "pinCode": "751001"
+        },
+        {
+          "serialNumber": 473,
+          "name": "Koraput",
+          "pinCode": "764001"
+        },
+        {
+          "serialNumber": 474,
+          "name": "Malkangiri",
+          "pinCode": "764045"
+        },
+        {
+          "serialNumber": 475,
+          "name": "Mayurbhanj",
+          "pinCode": "757001"
+        },
+        {
+          "serialNumber": 476,
+          "name": "Nabarangpur",
+          "pinCode": "764059"
+        },
+        {
+          "serialNumber": 477,
+          "name": "Nayagarh",
+          "pinCode": "752069"
+        },
+        {
+          "serialNumber": 478,
+          "name": "Nuapada",
+          "pinCode": "766105"
+        },
+        {
+          "serialNumber": 479,
+          "name": "Puri",
+          "pinCode": "752001"
+        },
+        {
+          "serialNumber": 480,
+          "name": "Rayagada",
+          "pinCode": "765001"
+        },
+        {
+          "serialNumber": 481,
+          "name": "Sambalpur",
+          "pinCode": "768001"
+        },
+        {
+          "serialNumber": 482,
+          "name": "Subarnapur",
+          "pinCode": "767017"
+        },
+        {
+          "serialNumber": 483,
+          "name": "Sundargarh",
+          "pinCode": "770001"
+        }
+      ]
+    },
+    {
+      "state": "Puducherry",
+      "stateCode": "PY",
+      "districts": [
+        {
+          "serialNumber": 484,
+          "name": "Karaikal",
+          "pinCode": "609602"
+        },
+        {
+          "serialNumber": 485,
+          "name": "Mahe",
+          "pinCode": "673310"
+        },
+        {
+          "serialNumber": 486,
+          "name": "Puducherry",
+          "pinCode": "605001"
+        },
+        {
+          "serialNumber": 487,
+          "name": "Yanam",
+          "pinCode": "533464"
+        }
+      ]
+    },
+    {
+      "state": "Punjab",
+      "stateCode": "PB",
+      "districts": [
+        {
+          "serialNumber": 488,
+          "name": "Amritsar",
+          "pinCode": "143001"
+        },
+        {
+          "serialNumber": 489,
+          "name": "Barnala",
+          "pinCode": "148101"
+        },
+        {
+          "serialNumber": 490,
+          "name": "Bathinda",
+          "pinCode": "151001"
+        },
+        {
+          "serialNumber": 491,
+          "name": "Faridkot",
+          "pinCode": "151203"
+        },
+        {
+          "serialNumber": 492,
+          "name": "Fatehgarh Sahib",
+          "pinCode": "140406"
+        },
+        {
+          "serialNumber": 493,
+          "name": "Fazilka",
+          "pinCode": "152123"
+        },
+        {
+          "serialNumber": 494,
+          "name": "Ferozepur",
+          "pinCode": "152001"
+        },
+        {
+          "serialNumber": 495,
+          "name": "Gurdaspur",
+          "pinCode": "143521"
+        },
+        {
+          "serialNumber": 496,
+          "name": "Hoshiarpur",
+          "pinCode": "146001"
+        },
+        {
+          "serialNumber": 497,
+          "name": "Jalandhar",
+          "pinCode": "144001"
+        },
+        {
+          "serialNumber": 498,
+          "name": "Kapurthala",
+          "pinCode": "144601"
+        },
+        {
+          "serialNumber": 499,
+          "name": "Ludhiana",
+          "pinCode": "141001"
+        },
+        {
+          "serialNumber": 500,
+          "name": "Malerkotla",
+          "pinCode": "148023"
+        },
+        {
+          "serialNumber": 501,
+          "name": "Mansa",
+          "pinCode": "151505"
+        },
+        {
+          "serialNumber": 502,
+          "name": "Moga",
+          "pinCode": "142001"
+        },
+        {
+          "serialNumber": 503,
+          "name": "Muktsar",
+          "pinCode": "152026"
+        },
+        {
+          "serialNumber": 504,
+          "name": "Nawanshahr",
+          "pinCode": "144514"
+        },
+        {
+          "serialNumber": 505,
+          "name": "Pathankot",
+          "pinCode": "145001"
+        },
+        {
+          "serialNumber": 506,
+          "name": "Patiala",
+          "pinCode": "147001"
+        },
+        {
+          "serialNumber": 507,
+          "name": "Rupnagar",
+          "pinCode": "140001"
+        },
+        {
+          "serialNumber": 508,
+          "name": "Sangrur",
+          "pinCode": "148001"
+        },
+        {
+          "serialNumber": 509,
+          "name": "SAS Nagar",
+          "pinCode": "160055"
+        },
+        {
+          "serialNumber": 510,
+          "name": "Tarn Taran",
+          "pinCode": "143401"
+        }
+      ]
+    },
+    {
+      "state": "Rajasthan",
+      "stateCode": "RJ",
+      "districts": [
+        {
+          "serialNumber": 511,
+          "name": "Ajmer",
+          "pinCode": "305001"
+        },
+        {
+          "serialNumber": 512,
+          "name": "Alwar",
+          "pinCode": "301001"
+        },
+        {
+          "serialNumber": 513,
+          "name": "Banswara",
+          "pinCode": "327001"
+        },
+        {
+          "serialNumber": 514,
+          "name": "Baran",
+          "pinCode": "325205"
+        },
+        {
+          "serialNumber": 515,
+          "name": "Barmer",
+          "pinCode": "344001"
+        },
+        {
+          "serialNumber": 516,
+          "name": "Bharatpur",
+          "pinCode": "321001"
+        },
+        {
+          "serialNumber": 517,
+          "name": "Bhilwara",
+          "pinCode": "311001"
+        },
+        {
+          "serialNumber": 518,
+          "name": "Bikaner",
+          "pinCode": "334001"
+        },
+        {
+          "serialNumber": 519,
+          "name": "Bundi",
+          "pinCode": "323001"
+        },
+        {
+          "serialNumber": 520,
+          "name": "Chittorgarh",
+          "pinCode": "312001"
+        },
+        {
+          "serialNumber": 521,
+          "name": "Churu",
+          "pinCode": "331001"
+        },
+        {
+          "serialNumber": 522,
+          "name": "Dausa",
+          "pinCode": "303303"
+        },
+        {
+          "serialNumber": 523,
+          "name": "Dholpur",
+          "pinCode": "328001"
+        },
+        {
+          "serialNumber": 524,
+          "name": "Dungarpur",
+          "pinCode": "314001"
+        },
+        {
+          "serialNumber": 525,
+          "name": "Hanumangarh",
+          "pinCode": "335512"
+        },
+        {
+          "serialNumber": 526,
+          "name": "Jaipur",
+          "pinCode": "302001"
+        },
+        {
+          "serialNumber": 527,
+          "name": "Jaisalmer",
+          "pinCode": "345001"
+        },
+        {
+          "serialNumber": 528,
+          "name": "Jalore",
+          "pinCode": "343001"
+        },
+        {
+          "serialNumber": 529,
+          "name": "Jhalawar",
+          "pinCode": "326001"
+        },
+        {
+          "serialNumber": 530,
+          "name": "Jhunjhunu",
+          "pinCode": "333001"
+        },
+        {
+          "serialNumber": 531,
+          "name": "Jodhpur",
+          "pinCode": "342001"
+        },
+        {
+          "serialNumber": 532,
+          "name": "Karauli",
+          "pinCode": "322241"
+        },
+        {
+          "serialNumber": 533,
+          "name": "Kota",
+          "pinCode": "324001"
+        },
+        {
+          "serialNumber": 534,
+          "name": "Nagaur",
+          "pinCode": "341001"
+        },
+        {
+          "serialNumber": 535,
+          "name": "Pali",
+          "pinCode": "306401"
+        },
+        {
+          "serialNumber": 536,
+          "name": "Pratapgarh",
+          "pinCode": "312605"
+        },
+        {
+          "serialNumber": 537,
+          "name": "Rajsamand",
+          "pinCode": "313324"
+        },
+        {
+          "serialNumber": 538,
+          "name": "Sawai Madhopur",
+          "pinCode": "322001"
+        },
+        {
+          "serialNumber": 539,
+          "name": "Sikar",
+          "pinCode": "332001"
+        },
+        {
+          "serialNumber": 540,
+          "name": "Sirohi",
+          "pinCode": "307001"
+        },
+        {
+          "serialNumber": 541,
+          "name": "Sri Ganganagar",
+          "pinCode": "335001"
+        },
+        {
+          "serialNumber": 542,
+          "name": "Tonk",
+          "pinCode": "304001"
+        },
+        {
+          "serialNumber": 543,
+          "name": "Udaipur",
+          "pinCode": "313001"
+        }
+      ]
+    },
+    {
+      "state": "Sikkim",
+      "stateCode": "SK",
+      "districts": [
+        {
+          "serialNumber": 544,
+          "name": "East Sikkim",
+          "pinCode": "737101"
+        },
+        {
+          "serialNumber": 545,
+          "name": "North Sikkim",
+          "pinCode": "737116"
+        },
+        {
+          "serialNumber": 546,
+          "name": "South Sikkim",
+          "pinCode": "737126"
+        },
+        {
+          "serialNumber": 547,
+          "name": "West Sikkim",
+          "pinCode": "737111"
+        }
+      ]
+    },
+    {
+      "state": "Tamil Nadu",
+      "stateCode": "TN",
+      "districts": [
+        {
+          "serialNumber": 548,
+          "name": "Ariyalur",
+          "pinCode": "621704"
+        },
+        {
+          "serialNumber": 549,
+          "name": "Chennai",
+          "pinCode": "600001"
+        },
+        {
+          "serialNumber": 550,
+          "name": "Coimbatore",
+          "pinCode": "641001"
+        },
+        {
+          "serialNumber": 551,
+          "name": "Cuddalore",
+          "pinCode": "607001"
+        },
+        {
+          "serialNumber": 552,
+          "name": "Dharmapuri",
+          "pinCode": "636701"
+        },
+        {
+          "serialNumber": 553,
+          "name": "Dindigul",
+          "pinCode": "624001"
+        },
+        {
+          "serialNumber": 554,
+          "name": "Erode",
+          "pinCode": "638001"
+        },
+        {
+          "serialNumber": 555,
+          "name": "Kallakurichi",
+          "pinCode": "606202"
+        },
+        {
+          "serialNumber": 556,
+          "name": "Kanchipuram",
+          "pinCode": "631501"
+        },
+        {
+          "serialNumber": 557,
+          "name": "Kanyakumari",
+          "pinCode": "629001"
+        },
+        {
+          "serialNumber": 558,
+          "name": "Karur",
+          "pinCode": "639001"
+        },
+        {
+          "serialNumber": 559,
+          "name": "Krishnagiri",
+          "pinCode": "635001"
+        },
+        {
+          "serialNumber": 560,
+          "name": "Madurai",
+          "pinCode": "625001"
+        },
+        {
+          "serialNumber": 561,
+          "name": "Mayiladuthurai",
+          "pinCode": "609001"
+        },
+        {
+          "serialNumber": 562,
+          "name": "Nagapattinam",
+          "pinCode": "611001"
+        },
+        {
+          "serialNumber": 563,
+          "name": "Namakkal",
+          "pinCode": "637001"
+        },
+        {
+          "serialNumber": 564,
+          "name": "Nilgiris",
+          "pinCode": "643001"
+        },
+        {
+          "serialNumber": 565,
+          "name": "Perambalur",
+          "pinCode": "621212"
+        },
+        {
+          "serialNumber": 566,
+          "name": "Pudukkottai",
+          "pinCode": "622001"
+        },
+        {
+          "serialNumber": 567,
+          "name": "Ramanathapuram",
+          "pinCode": "623501"
+        },
+        {
+          "serialNumber": 568,
+          "name": "Ranipet",
+          "pinCode": "632401"
+        },
+        {
+          "serialNumber": 569,
+          "name": "Salem",
+          "pinCode": "636001"
+        },
+        {
+          "serialNumber": 570,
+          "name": "Sivaganga",
+          "pinCode": "630561"
+        },
+        {
+          "serialNumber": 571,
+          "name": "Tenkasi",
+          "pinCode": "627811"
+        },
+        {
+          "serialNumber": 572,
+          "name": "Thanjavur",
+          "pinCode": "613001"
+        },
+        {
+          "serialNumber": 573,
+          "name": "Theni",
+          "pinCode": "625531"
+        },
+        {
+          "serialNumber": 574,
+          "name": "Thoothukudi",
+          "pinCode": "628001"
+        },
+        {
+          "serialNumber": 575,
+          "name": "Tiruchirappalli",
+          "pinCode": "620001"
+        },
+        {
+          "serialNumber": 576,
+          "name": "Tirunelveli",
+          "pinCode": "627001"
+        },
+        {
+          "serialNumber": 577,
+          "name": "Tirupathur",
+          "pinCode": "635601"
+        },
+        {
+          "serialNumber": 578,
+          "name": "Tiruppur",
+          "pinCode": "641601"
+        },
+        {
+          "serialNumber": 579,
+          "name": "Tiruvallur",
+          "pinCode": "602001"
+        },
+        {
+          "serialNumber": 580,
+          "name": "Tiruvannamalai",
+          "pinCode": "606601"
+        },
+        {
+          "serialNumber": 581,
+          "name": "Vellore",
+          "pinCode": "632001"
+        },
+        {
+          "serialNumber": 582,
+          "name": "Viluppuram",
+          "pinCode": "605602"
+        },
+        {
+          "serialNumber": 583,
+          "name": "Virudhunagar",
+          "pinCode": "626001"
+        }
+      ]
+    },
+    {
+      "state": "Telangana",
+      "stateCode": "TG",
+      "districts": [
+        {
+          "serialNumber": 584,
+          "name": "Adilabad",
+          "pinCode": "504001"
+        },
+        {
+          "serialNumber": 585,
+          "name": "Bhadradri Kothagudem",
+          "pinCode": "507101"
+        },
+        {
+          "serialNumber": 586,
+          "name": "Hyderabad",
+          "pinCode": "500001"
+        },
+        {
+          "serialNumber": 587,
+          "name": "Jagtial",
+          "pinCode": "505327"
+        },
+        {
+          "serialNumber": 588,
+          "name": "Jangaon",
+          "pinCode": "506167"
+        },
+        {
+          "serialNumber": 589,
+          "name": "Jayashankar Bhupalpally",
+          "pinCode": "506169"
+        },
+        {
+          "serialNumber": 590,
+          "name": "Jogulamba Gadwal",
+          "pinCode": "509125"
+        },
+        {
+          "serialNumber": 591,
+          "name": "Kamareddy",
+          "pinCode": "503111"
+        },
+        {
+          "serialNumber": 592,
+          "name": "Karimnagar",
+          "pinCode": "505001"
+        },
+        {
+          "serialNumber": 593,
+          "name": "Khammam",
+          "pinCode": "507001"
+        },
+        {
+          "serialNumber": 594,
+          "name": "Komaram Bheem",
+          "pinCode": "504293"
+        },
+        {
+          "serialNumber": 595,
+          "name": "Mahabubabad",
+          "pinCode": "506101"
+        },
+        {
+          "serialNumber": 596,
+          "name": "Mahabubnagar",
+          "pinCode": "509001"
+        },
+        {
+          "serialNumber": 597,
+          "name": "Mancherial",
+          "pinCode": "504208"
+        },
+        {
+          "serialNumber": 598,
+          "name": "Medak",
+          "pinCode": "502110"
+        },
+        {
+          "serialNumber": 599,
+          "name": "Medchal Malkajgiri",
+          "pinCode": "500014"
+        },
+        {
+          "serialNumber": 600,
+          "name": "Mulugu",
+          "pinCode": "506343"
+        },
+        {
+          "serialNumber": 601,
+          "name": "Nagarkurnool",
+          "pinCode": "509209"
+        },
+        {
+          "serialNumber": 602,
+          "name": "Nalgonda",
+          "pinCode": "508001"
+        },
+        {
+          "serialNumber": 603,
+          "name": "Narayanpet",
+          "pinCode": "509210"
+        },
+        {
+          "serialNumber": 604,
+          "name": "Nirmal",
+          "pinCode": "504106"
+        },
+        {
+          "serialNumber": 605,
+          "name": "Nizamabad",
+          "pinCode": "503001"
+        },
+        {
+          "serialNumber": 606,
+          "name": "Peddapalli",
+          "pinCode": "505172"
+        },
+        {
+          "serialNumber": 607,
+          "name": "Rajanna Sircilla",
+          "pinCode": "505301"
+        },
+        {
+          "serialNumber": 608,
+          "name": "Ranga Reddy",
+          "pinCode": "500032"
+        },
+        {
+          "serialNumber": 609,
+          "name": "Sangareddy",
+          "pinCode": "502001"
+        },
+        {
+          "serialNumber": 610,
+          "name": "Siddipet",
+          "pinCode": "502103"
+        },
+        {
+          "serialNumber": 611,
+          "name": "Suryapet",
+          "pinCode": "508213"
+        },
+        {
+          "serialNumber": 612,
+          "name": "Vikarabad",
+          "pinCode": "501101"
+        },
+        {
+          "serialNumber": 613,
+          "name": "Wanaparthy",
+          "pinCode": "509103"
+        },
+        {
+          "serialNumber": 614,
+          "name": "Warangal Rural",
+          "pinCode": "506144"
+        },
+        {
+          "serialNumber": 615,
+          "name": "Warangal Urban",
+          "pinCode": "506002"
+        },
+        {
+          "serialNumber": 616,
+          "name": "Yadadri Bhuvanagiri",
+          "pinCode": "508116"
+        }
+      ]
+    },
+    {
+      "state": "Tripura",
+      "stateCode": "TR",
+      "districts": [
+        {
+          "serialNumber": 617,
+          "name": "Dhalai",
+          "pinCode": "799278"
+        },
+        {
+          "serialNumber": 618,
+          "name": "Gomati",
+          "pinCode": "799101"
+        },
+        {
+          "serialNumber": 619,
+          "name": "Khowai",
+          "pinCode": "799202"
+        },
+        {
+          "serialNumber": 620,
+          "name": "North Tripura",
+          "pinCode": "799251"
+        },
+        {
+          "serialNumber": 621,
+          "name": "Sepahijala",
+          "pinCode": "799102"
+        },
+        {
+          "serialNumber": 622,
+          "name": "South Tripura",
+          "pinCode": "799155"
+        },
+        {
+          "serialNumber": 623,
+          "name": "Unakoti",
+          "pinCode": "799264"
+        },
+        {
+          "serialNumber": 624,
+          "name": "West Tripura",
+          "pinCode": "799001"
+        }
+      ]
+    },
+    {
+      "state": "Uttar Pradesh",
+      "stateCode": "UP",
+      "districts": [
+        {
+          "serialNumber": 625,
+          "name": "Agra",
+          "pinCode": "282001"
+        },
+        {
+          "serialNumber": 626,
+          "name": "Aligarh",
+          "pinCode": "202001"
+        },
+        {
+          "serialNumber": 627,
+          "name": "Ambedkar Nagar",
+          "pinCode": "224122"
+        },
+        {
+          "serialNumber": 628,
+          "name": "Amethi",
+          "pinCode": "227405"
+        },
+        {
+          "serialNumber": 629,
+          "name": "Amroha",
+          "pinCode": "244221"
+        },
+        {
+          "serialNumber": 630,
+          "name": "Auraiya",
+          "pinCode": "206122"
+        },
+        {
+          "serialNumber": 631,
+          "name": "Ayodhya",
+          "pinCode": "224123"
+        },
+        {
+          "serialNumber": 632,
+          "name": "Azamgarh",
+          "pinCode": "276001"
+        },
+        {
+          "serialNumber": 633,
+          "name": "Baghpat",
+          "pinCode": "250609"
+        },
+        {
+          "serialNumber": 634,
+          "name": "Bahraich",
+          "pinCode": "271801"
+        },
+        {
+          "serialNumber": 635,
+          "name": "Ballia",
+          "pinCode": "277001"
+        },
+        {
+          "serialNumber": 636,
+          "name": "Balrampur",
+          "pinCode": "271201"
+        },
+        {
+          "serialNumber": 637,
+          "name": "Banda",
+          "pinCode": "210001"
+        },
+        {
+          "serialNumber": 638,
+          "name": "Barabanki",
+          "pinCode": "225001"
+        },
+        {
+          "serialNumber": 639,
+          "name": "Bareilly",
+          "pinCode": "243001"
+        },
+        {
+          "serialNumber": 640,
+          "name": "Basti",
+          "pinCode": "272001"
+        },
+        {
+          "serialNumber": 641,
+          "name": "Bhadohi",
+          "pinCode": "221401"
+        },
+        {
+          "serialNumber": 642,
+          "name": "Bijnor",
+          "pinCode": "246701"
+        },
+        {
+          "serialNumber": 643,
+          "name": "Budaun",
+          "pinCode": "243601"
+        },
+        {
+          "serialNumber": 644,
+          "name": "Bulandshahr",
+          "pinCode": "203001"
+        },
+        {
+          "serialNumber": 645,
+          "name": "Chandauli",
+          "pinCode": "232104"
+        },
+        {
+          "serialNumber": 646,
+          "name": "Chitrakoot",
+          "pinCode": "210204"
+        },
+        {
+          "serialNumber": 647,
+          "name": "Deoria",
+          "pinCode": "274001"
+        },
+        {
+          "serialNumber": 648,
+          "name": "Etah",
+          "pinCode": "207001"
+        },
+        {
+          "serialNumber": 649,
+          "name": "Etawah",
+          "pinCode": "206001"
+        },
+        {
+          "serialNumber": 650,
+          "name": "Farrukhabad",
+          "pinCode": "209625"
+        },
+        {
+          "serialNumber": 651,
+          "name": "Fatehpur",
+          "pinCode": "212601"
+        },
+        {
+          "serialNumber": 652,
+          "name": "Firozabad",
+          "pinCode": "283203"
+        },
+        {
+          "serialNumber": 653,
+          "name": "Gautam Buddha Nagar",
+          "pinCode": "201301"
+        },
+        {
+          "serialNumber": 654,
+          "name": "Ghaziabad",
+          "pinCode": "201001"
+        },
+        {
+          "serialNumber": 655,
+          "name": "Ghazipur",
+          "pinCode": "233001"
+        },
+        {
+          "serialNumber": 656,
+          "name": "Gonda",
+          "pinCode": "271001"
+        },
+        {
+          "serialNumber": 657,
+          "name": "Gorakhpur",
+          "pinCode": "273001"
+        },
+        {
+          "serialNumber": 658,
+          "name": "Hamirpur",
+          "pinCode": "210301"
+        },
+        {
+          "serialNumber": 659,
+          "name": "Hapur",
+          "pinCode": "245101"
+        },
+        {
+          "serialNumber": 660,
+          "name": "Hardoi",
+          "pinCode": "241001"
+        },
+        {
+          "serialNumber": 661,
+          "name": "Hathras",
+          "pinCode": "204101"
+        },
+        {
+          "serialNumber": 662,
+          "name": "Jalaun",
+          "pinCode": "285123"
+        },
+        {
+          "serialNumber": 663,
+          "name": "Jaunpur",
+          "pinCode": "222001"
+        },
+        {
+          "serialNumber": 664,
+          "name": "Jhansi",
+          "pinCode": "284001"
+        },
+        {
+          "serialNumber": 665,
+          "name": "Kannauj",
+          "pinCode": "209727"
+        },
+        {
+          "serialNumber": 666,
+          "name": "Kanpur Dehat",
+          "pinCode": "209111"
+        },
+        {
+          "serialNumber": 667,
+          "name": "Kanpur Nagar",
+          "pinCode": "208001"
+        },
+        {
+          "serialNumber": 668,
+          "name": "Kasganj",
+          "pinCode": "207123"
+        },
+        {
+          "serialNumber": 669,
+          "name": "Kaushambi",
+          "pinCode": "212201"
+        },
+        {
+          "serialNumber": 670,
+          "name": "Kushinagar",
+          "pinCode": "274403"
+        },
+        {
+          "serialNumber": 671,
+          "name": "Lakhimpur Kheri",
+          "pinCode": "262701"
+        },
+        {
+          "serialNumber": 672,
+          "name": "Lalitpur",
+          "pinCode": "284403"
+        },
+        {
+          "serialNumber": 673,
+          "name": "Lucknow",
+          "pinCode": "226001"
+        },
+        {
+          "serialNumber": 674,
+          "name": "Maharajganj",
+          "pinCode": "273303"
+        },
+        {
+          "serialNumber": 675,
+          "name": "Mahoba",
+          "pinCode": "210427"
+        },
+        {
+          "serialNumber": 676,
+          "name": "Mainpuri",
+          "pinCode": "205001"
+        },
+        {
+          "serialNumber": 677,
+          "name": "Mathura",
+          "pinCode": "281001"
+        },
+        {
+          "serialNumber": 678,
+          "name": "Mau",
+          "pinCode": "275101"
+        },
+        {
+          "serialNumber": 679,
+          "name": "Meerut",
+          "pinCode": "250001"
+        },
+        {
+          "serialNumber": 680,
+          "name": "Mirzapur",
+          "pinCode": "231001"
+        },
+        {
+          "serialNumber": 681,
+          "name": "Moradabad",
+          "pinCode": "244001"
+        },
+        {
+          "serialNumber": 682,
+          "name": "Muzaffarnagar",
+          "pinCode": "251001"
+        },
+        {
+          "serialNumber": 683,
+          "name": "Pilibhit",
+          "pinCode": "262001"
+        },
+        {
+          "serialNumber": 684,
+          "name": "Pratapgarh",
+          "pinCode": "230001"
+        },
+        {
+          "serialNumber": 685,
+          "name": "Prayagraj",
+          "pinCode": "211001"
+        },
+        {
+          "serialNumber": 686,
+          "name": "Raebareli",
+          "pinCode": "229001"
+        },
+        {
+          "serialNumber": 687,
+          "name": "Rampur",
+          "pinCode": "244901"
+        },
+        {
+          "serialNumber": 688,
+          "name": "Saharanpur",
+          "pinCode": "247001"
+        },
+        {
+          "serialNumber": 689,
+          "name": "Sambhal",
+          "pinCode": "244302"
+        },
+        {
+          "serialNumber": 690,
+          "name": "Sant Kabir Nagar",
+          "pinCode": "272175"
+        },
+        {
+          "serialNumber": 691,
+          "name": "Shahjahanpur",
+          "pinCode": "242001"
+        },
+        {
+          "serialNumber": 692,
+          "name": "Shamli",
+          "pinCode": "247776"
+        },
+        {
+          "serialNumber": 693,
+          "name": "Shravasti",
+          "pinCode": "271831"
+        },
+        {
+          "serialNumber": 694,
+          "name": "Siddharthnagar",
+          "pinCode": "272207"
+        },
+        {
+          "serialNumber": 695,
+          "name": "Sitapur",
+          "pinCode": "261001"
+        },
+        {
+          "serialNumber": 696,
+          "name": "Sonbhadra",
+          "pinCode": "231216"
+        },
+        {
+          "serialNumber": 697,
+          "name": "Sultanpur",
+          "pinCode": "228001"
+        },
+        {
+          "serialNumber": 698,
+          "name": "Unnao",
+          "pinCode": "209801"
+        },
+        {
+          "serialNumber": 699,
+          "name": "Varanasi",
+          "pinCode": "221001"
+        }
+      ]
+    },
+    {
+      "state": "Uttarakhand",
+      "stateCode": "UT",
+      "districts": [
+        {
+          "serialNumber": 700,
+          "name": "Almora",
+          "pinCode": "263601"
+        },
+        {
+          "serialNumber": 701,
+          "name": "Bageshwar",
+          "pinCode": "263642"
+        },
+        {
+          "serialNumber": 702,
+          "name": "Chamoli",
+          "pinCode": "246401"
+        },
+        {
+          "serialNumber": 703,
+          "name": "Champawat",
+          "pinCode": "262523"
+        },
+        {
+          "serialNumber": 704,
+          "name": "Dehradun",
+          "pinCode": "248001"
+        },
+        {
+          "serialNumber": 705,
+          "name": "Haridwar",
+          "pinCode": "249401"
+        },
+        {
+          "serialNumber": 706,
+          "name": "Nainital",
+          "pinCode": "263001"
+        },
+        {
+          "serialNumber": 707,
+          "name": "Pauri Garhwal",
+          "pinCode": "246001"
+        },
+        {
+          "serialNumber": 708,
+          "name": "Pithoragarh",
+          "pinCode": "262501"
+        },
+        {
+          "serialNumber": 709,
+          "name": "Rudraprayag",
+          "pinCode": "246171"
+        },
+        {
+          "serialNumber": 710,
+          "name": "Tehri Garhwal",
+          "pinCode": "249145"
+        },
+        {
+          "serialNumber": 711,
+          "name": "Udham Singh Nagar",
+          "pinCode": "263153"
+        },
+        {
+          "serialNumber": 712,
+          "name": "Uttarkashi",
+          "pinCode": "249193"
+        }
+      ]
+    },
+    {
+      "state": "West Bengal",
+      "stateCode": "WB",
+      "districts": [
+        {
+          "serialNumber": 713,
+          "name": "Alipurduar",
+          "pinCode": "736121"
+        },
+        {
+          "serialNumber": 714,
+          "name": "Bankura",
+          "pinCode": "722101"
+        },
+        {
+          "serialNumber": 715,
+          "name": "Birbhum",
+          "pinCode": "731101"
+        },
+        {
+          "serialNumber": 716,
+          "name": "Cooch Behar",
+          "pinCode": "736101"
+        },
+        {
+          "serialNumber": 717,
+          "name": "Dakshin Dinajpur",
+          "pinCode": "733101"
+        },
+        {
+          "serialNumber": 718,
+          "name": "Darjeeling",
+          "pinCode": "734101"
+        },
+        {
+          "serialNumber": 719,
+          "name": "Hooghly",
+          "pinCode": "712101"
+        },
+        {
+          "serialNumber": 720,
+          "name": "Howrah",
+          "pinCode": "711101"
+        },
+        {
+          "serialNumber": 721,
+          "name": "Jalpaiguri",
+          "pinCode": "735101"
+        },
+        {
+          "serialNumber": 722,
+          "name": "Jhargram",
+          "pinCode": "721507"
+        },
+        {
+          "serialNumber": 723,
+          "name": "Kalimpong",
+          "pinCode": "734301"
+        },
+        {
+          "serialNumber": 724,
+          "name": "Kolkata",
+          "pinCode": "700001"
+        },
+        {
+          "serialNumber": 725,
+          "name": "Malda",
+          "pinCode": "732101"
+        },
+        {
+          "serialNumber": 726,
+          "name": "Murshidabad",
+          "pinCode": "742101"
+        },
+        {
+          "serialNumber": 727,
+          "name": "Nadia",
+          "pinCode": "741101"
+        },
+        {
+          "serialNumber": 728,
+          "name": "North 24 Parganas",
+          "pinCode": "700110"
+        },
+        {
+          "serialNumber": 729,
+          "name": "Paschim Bardhaman",
+          "pinCode": "713201"
+        },
+        {
+          "serialNumber": 730,
+          "name": "Paschim Medinipur",
+          "pinCode": "721101"
+        },
+        {
+          "serialNumber": 731,
+          "name": "Purba Bardhaman",
+          "pinCode": "713101"
+        },
+        {
+          "serialNumber": 732,
+          "name": "Purba Medinipur",
+          "pinCode": "721401"
+        },
+        {
+          "serialNumber": 733,
+          "name": "Purulia",
+          "pinCode": "723101"
+        },
+        {
+          "serialNumber": 734,
+          "name": "South 24 Parganas",
+          "pinCode": "700140"
+        },
+        {
+          "serialNumber": 735,
+          "name": "Uttar Dinajpur",
+          "pinCode": "733134"
+        }
+      ]
+    },
+    {
+      "state": "Andaman and Nicobar Islands",
+      "stateCode": "AN",
+      "districts": [
+        {
+          "serialNumber": 736,
+          "name": "Nicobar",
+          "pinCode": "744301"
+        },
+        {
+          "serialNumber": 737,
+          "name": "North and Middle Andaman",
+          "pinCode": "744205"
+        },
+        {
+          "serialNumber": 738,
+          "name": "South Andaman",
+          "pinCode": "744101"
+        }
+      ]
+    },
+    {
+      "state": "Chandigarh",
+      "stateCode": "CH",
+      "districts": [
+        {
+          "serialNumber": 739,
+          "name": "Chandigarh",
+          "pinCode": "160017"
+        }
+      ]
+    },
+    {
+      "state": "Dadra and Nagar Haveli and Daman and Diu",
+      "stateCode": "DN",
+      "districts": [
+        {
+          "serialNumber": 740,
+          "name": "Dadra and Nagar Haveli",
+          "pinCode": "396230"
+        },
+        {
+          "serialNumber": 741,
+          "name": "Daman",
+          "pinCode": "396210"
+        },
+        {
+          "serialNumber": 742,
+          "name": "Diu",
+          "pinCode": "362520"
+        }
+      ]
+    },
+    {
+      "state": "Lakshadweep",
+      "stateCode": "LD",
+      "districts": [
+        {
+          "serialNumber": 743,
+          "name": "Lakshadweep",
+          "pinCode": "682555"
+        }
+      ]
+    },
+    {
+      "state": "Delhi",
+      "stateCode": "DL",
+      "districts": [
+        {
+          "serialNumber": 744,
+          "name": "Central Delhi",
+          "pinCode": "110001"
+        },
+        {
+          "serialNumber": 745,
+          "name": "East Delhi",
+          "pinCode": "110096"
+        },
+        {
+          "serialNumber": 746,
+          "name": "New Delhi",
+          "pinCode": "110011"
+        },
+        {
+          "serialNumber": 747,
+          "name": "North Delhi",
+          "pinCode": "110007"
+        },
+        {
+          "serialNumber": 748,
+          "name": "North East Delhi",
+          "pinCode": "110053"
+        },
+        {
+          "serialNumber": 749,
+          "name": "North West Delhi",
+          "pinCode": "110081"
+        },
+        {
+          "serialNumber": 750,
+          "name": "Shahdara",
+          "pinCode": "110032"
+        },
+        {
+          "serialNumber": 751,
+          "name": "South Delhi",
+          "pinCode": "110025"
+        },
+        {
+          "serialNumber": 752,
+          "name": "South East Delhi",
+          "pinCode": "110044"
+        },
+        {
+          "serialNumber": 753,
+          "name": "South West Delhi",
+          "pinCode": "110061"
+        },
+        {
+          "serialNumber": 754,
+          "name": "West Delhi",
+          "pinCode": "110026"
+        }
+      ]
+    },
+    {
+      "state": "Ladakh",
+      "stateCode": "LA",
+      "districts": [
+        {
+          "serialNumber": 755,
+          "name": "Kargil",
+          "pinCode": "194103"
+        },
+        {
+          "serialNumber": 756,
+          "name": "Leh",
+          "pinCode": "194101"
+        }
+      ]
+    },
+    {
+      "state": "Jammu and Kashmir",
+      "stateCode": "JK",
+      "districts": [
+        {
+          "serialNumber": 757,
+          "name": "Anantnag",
+          "pinCode": "192101"
+        },
+        {
+          "serialNumber": 758,
+          "name": "Bandipora",
+          "pinCode": "193502"
+        },
+        {
+          "serialNumber": 759,
+          "name": "Baramulla",
+          "pinCode": "193101"
+        },
+        {
+          "serialNumber": 760,
+          "name": "Budgam",
+          "pinCode": "191111"
+        },
+        {
+          "serialNumber": 761,
+          "name": "Doda",
+          "pinCode": "182202"
+        },
+        {
+          "serialNumber": 762,
+          "name": "Ganderbal",
+          "pinCode": "191201"
+        },
+        {
+          "serialNumber": 763,
+          "name": "Jammu",
+          "pinCode": "180001"
+        },
+        {
+          "serialNumber": 764,
+          "name": "Kathua",
+          "pinCode": "184101"
+        },
+        {
+          "serialNumber": 765,
+          "name": "Kishtwar",
+          "pinCode": "182204"
+        },
+        {
+          "serialNumber": 766,
+          "name": "Kulgam",
+          "pinCode": "192231"
+        },
+        {
+          "serialNumber": 767,
+          "name": "Kupwara",
+          "pinCode": "193222"
+        },
+        {
+          "serialNumber": 768,
+          "name": "Poonch",
+          "pinCode": "185101"
+        },
+        {
+          "serialNumber": 769,
+          "name": "Pulwama",
+          "pinCode": "192301"
+        },
+        {
+          "serialNumber": 770,
+          "name": "Rajouri",
+          "pinCode": "185131"
+        },
+        {
+          "serialNumber": 771,
+          "name": "Ramban",
+          "pinCode": "182144"
+        },
+        {
+          "serialNumber": 772,
+          "name": "Reasi",
+          "pinCode": "182311"
+        },
+        {
+          "serialNumber": 773,
+          "name": "Samba",
+          "pinCode": "184121"
+        },
+        {
+          "serialNumber": 774,
+          "name": "Shopian",
+          "pinCode": "192303"
+        },
+        {
+          "serialNumber": 775,
+          "name": "Srinagar",
+          "pinCode": "190001"
+        },
+        {
+          "serialNumber": 776,
+          "name": "Udhampur",
+          "pinCode": "182101"
+        }
+      ]
+    },
+    {
+      "state": "Rajasthan",
+      "stateCode": "RJ",
+      "districts": [
+        {
+          "serialNumber": 777,
+          "name": "Anupgarh",
+          "pinCode": "335701"
+        },
+        {
+          "serialNumber": 778,
+          "name": "Balotra",
+          "pinCode": "344022"
+        },
+        {
+          "serialNumber": 779,
+          "name": "Beawar",
+          "pinCode": "305901"
+        },
+        {
+          "serialNumber": 780,
+          "name": "Deeg",
+          "pinCode": "321203"
+        },
+        {
+          "serialNumber": 781,
+          "name": "Didwana-Kuchaman",
+          "pinCode": "341508"
+        },
+        {
+          "serialNumber": 782,
+          "name": "Dudu",
+          "pinCode": "303008"
+        },
+        {
+          "serialNumber": 783,
+          "name": "Kekri",
+          "pinCode": "305404"
+        },
+        {
+          "serialNumber": 784,
+          "name": "Khairthal-Tijara",
+          "pinCode": "301404"
+        },
+        {
+          "serialNumber": 785,
+          "name": "Kotputli-Behror",
+          "pinCode": "303108"
+        },
+        {
+          "serialNumber": 786,
+          "name": "Phalodi",
+          "pinCode": "342301"
+        },
+        {
+          "serialNumber": 787,
+          "name": "Salumbar",
+          "pinCode": "313027"
+        }
+      ]
+    }
+  ] 
